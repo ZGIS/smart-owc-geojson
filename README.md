@@ -21,3 +21,10 @@ Owc Context GeoJSON Encoding for Play
 <p><a href="https://api.travis-ci.org/repos/ZGIS/smart-owc-geojson/builds.atom"><img src="https://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg" align="left" height="32" width="32" alt="Builds Feed"></a></p>
 
 [Site Docs](https://zgis.github.io/smart-owc-geojson/)
+
+```bash
+git checkout develop || git checkout -b develop
+git reset --hard origin/develop
+git branch --set-upstream-to=origin/develop develop
+git pull
+```

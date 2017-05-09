@@ -1,6 +1,6 @@
 name := """smart-owc-geojson"""
 organization := "info.smart-project"
-version := "0.9.3-SNAPSHOT"
+version := "0.9.4"
 scalaVersion := "2.11.8"
 
 scalacOptions in ThisBuild ++= Seq(
