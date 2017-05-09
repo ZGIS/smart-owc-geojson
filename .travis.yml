@@ -6,7 +6,7 @@ scala:
 - 2.11.8
 
 script:
-- sbt compile coverage test scapegoat check
+- sbt compile test
 
 notifications:
   email:
