@@ -1,8 +1,21 @@
+#Typical-.gitignore-file
+bin/
+/db
+/lib/
+logs
+/modules
+project/project
+project/target
+target
+tmp
+dist
+test-result
+.cache
+
 *.class
 *.log
 
 # sbt specific
-.cache
 .history
 .lib/
 dist/*
@@ -15,3 +28,29 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+
+.idea/
+.ensime*
+
+##intellij
+/.idea
+/.idea_modules
+*.iml
+*.eml
+
+##eclipse items
+/.eclipse
+/.classpath
+/.project
+/.settings
+/.history
+
+##other IDEs, activator ui, misc.
+.sbtserver/
+project/.sbtserver*
+/project/sbt-ui.sbt
+
+## generated files for sbt-site
+src/site/generated/*
+/cookie-jar.txt
+client_secret.json
