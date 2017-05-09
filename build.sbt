@@ -1,6 +1,6 @@
 name := """smart-owc-geojson"""
 organization := "info.smart-project"
-version := "0.9.2"
+version := "0.9.3"
 scalaVersion := "2.11.8"
 
 scalacOptions in ThisBuild ++= Seq(
@@ -33,16 +33,28 @@ libraryDependencies ++= {
     "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
     "ch.qos.logback" % "logback-classic" % "1.1.7",
 
-    "org.scalatest"       %%  "scalatest"      % ScalaTestV  % "it,test",
-    "org.scalacheck"      %% "scalacheck"      % ScalaCheckV  % "it,test",
-    "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % "it,test"
+    "org.scalatest"       %%  "scalatest"      % ScalaTestV  % Test,
+    "org.scalacheck"      %% "scalacheck"      % ScalaCheckV  % Test,
+    "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % Test
   )
 }
 
-lazy val root = project.in(file(".")).configs(IntegrationTest)
-Defaults.itSettings
+// bintrayReleaseOnPublish in ThisBuild := false
 
-initialCommands :=
-  """|import scala.concurrent._
-     |import scala.concurrent.duration._""".stripMargin
+publishArtifact in Test := false
+
+bintrayRepository := "ivy2"
+
+publishArtifact in Test := false
+
+publishMavenStyle := false
+
+bintrayVcsUrl := Some("https://github.com/ZGIS/smart-owc-geojson")
+
+bintrayPackageLabels := Seq("owc", "geojson", "play", "scala")
+
+bintrayPackage := "smart-owc-geojson"
+
+licenses += ("Apache-2.0", url("https://opensource.org/licenses/apache-2.0"))
+
 
