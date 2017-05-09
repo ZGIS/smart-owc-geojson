@@ -1,5 +1,14 @@
 language: scala
 jdk:
-  - oraclejdk8
+  - openjdk8
+
 scala:
-  - 2.12.1
+- 2.11.8
+
+script:
+- sbt compile coverage test scapegoat check
+
+notifications:
+  email:
+  - allixender@gmail.com
+  - grmpfhmbl@gmail.com
