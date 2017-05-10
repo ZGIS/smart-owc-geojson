@@ -1,6 +1,6 @@
 name := """smart-owc-geojson"""
 organization := "info.smart-project"
-version := "0.9.4"
+version := "0.9.5-SNAPSHOT"
 scalaVersion := "2.11.8"
 
 scalacOptions in ThisBuild ++= Seq(
@@ -28,6 +28,7 @@ libraryDependencies ++= {
     "org.locationtech.spatial4j" % "spatial4j" % "0.6",
     "org.noggit" % "noggit" % "0.7",
     "com.typesafe.play" %% "play-json" % playV,
+    "com.typesafe.play" %% "play-functional" % playV,
 
     "com.typesafe"        % "config"           % "1.3.1",
     "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",

@@ -17,8 +17,14 @@
  * limitations under the License.
  */
 
-package info.smart.models.owc
+package info.smart.models.owc100
 
-import com.typesafe.scalalogging.LazyLogging
+/**
+  + type :CharacterString
+  + URL :URI [0..1]
+  + content :Any [0..1]
+  + extension :Any [0..*]
+  */
+class OwcContent {
 
-trait ClassnameLogger extends LazyLogging
+}

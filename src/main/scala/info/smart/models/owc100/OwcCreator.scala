@@ -17,8 +17,26 @@
  * limitations under the License.
  */
 
-package info.smart.models.owc
+package info.smart.models.owc100
 
-import com.typesafe.scalalogging.LazyLogging
+/**
+  + creatorApplication :CreatorApplication [0..1]
+  + creatorDisplay :CreatorDisplay [0..1]
+  + extension :Any [0..*]
+  */
+class OwcCreator {
 
-trait ClassnameLogger extends LazyLogging
+}
+
+/*
+CreatorApplication
++ title :CharacterString [0..1]
++ uri :URI [0..1]
++ version :Version [0..1]
+
+CreatorDisplay
++ pixelWidth :int [0..1]
++ pixelHeight :int [0..1]
++ mmPerPixel :double [0..1]
++ extension :Any [0..*]
+ */

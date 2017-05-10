@@ -17,8 +17,29 @@
  * limitations under the License.
  */
 
-package info.smart.models.owc
+package info.smart.models.owc100
 
-import com.typesafe.scalalogging.LazyLogging
+/**
+  + id :CharacterString
+  + title :CharacterString
+  + abstract :CharacterString [0..1]
+  + updateDate :TM_Date [0..1]
+  + author :CharacterString [0..*]
+  + publisher :CharacterString [0..1]
+  + rights :CharacterString [0..1]
+  + geospatialExtent :GM_Envelope [0..1]
+  + temporalExtent :TM_GeometricPrimitive [0..1]
+  + contentDescription :Any [0..1]
+  + preview :URI [0..*]
+  + contentByRef :URI [0..*]
+  + offering :Offering [0..*]
+  + active :Boolean [0..1]
+  + keyword :CharacterString [0..*]
+  + maxScaleDenominator :double [0..1]
+  + minScaleDenominator :double [0..1]
+  + folder :CharacterString [0..1]
+  + extension :Any [0..*]
+  */
+class OwcResource {
 
-trait ClassnameLogger extends LazyLogging
+}
