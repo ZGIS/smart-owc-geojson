@@ -9,8 +9,9 @@ before_script:
 - sudo chmod +x /usr/local/bin/sbt
 
 script:
-- sbt compile test
-- sbt compile coverage test scapegoat check coverageReport copyCoverage
+- sbt compile coverage test scapegoat dependencyCheckAggregate coverageReport dependencyUpdatesReport copyCoverage
+- sbt dependencyList dependencyLicenseInfo dependencyStats makeSite
+# - sbt ghpagesPushSite
 
 notifications:
   email:

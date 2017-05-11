@@ -51,6 +51,5 @@ project/.sbtserver*
 /project/sbt-ui.sbt
 
 ## generated files for sbt-site
-src/site/generated/*
 /cookie-jar.txt
 client_secret.json

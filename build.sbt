@@ -70,7 +70,6 @@ libraryDependencies ++= {
 }
 
 // bintrayReleaseOnPublish in ThisBuild := false
-
 publishArtifact in Test := false
 
 bintrayRepository := "ivy2"
@@ -94,8 +93,13 @@ testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Test).toTask
 
 // -----------------
 // coverage, style and dependency checks
+enablePlugins(SiteScaladocPlugin)
+// Puts Scaladoc output in `target/site/api/latest`
+siteSubdirName in SiteScaladoc := "api/latest"
 
 val genSiteDir = "src/site/generated"
+
+includeFilter in makeSite := "*.txt" | "*.html" | "*.md" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.xml"
 
 scapegoatVersion := "1.2.1"
 
@@ -114,6 +118,7 @@ coverageCopyTask := {
   val result = Seq("cp", "-r", "./target/scala-2.11/scoverage-report", genSiteDir + "/scoverage-report") !!
 }
 
+// sbt-dependency-graph
 dependencyCheckOutputDirectory := Some(file(genSiteDir + "/dep-sec"))
 
 // Use e.g. yEd to format the graph
@@ -121,3 +126,10 @@ dependencyGraphMLFile := file(genSiteDir + "/dep-sec/dependencies.graphml")
 
 // Use e.g.graphviz to render
 dependencyDotFile := file(genSiteDir + "/dep-sec/dependencies.dot")
+
+// sbt-updates
+dependencyUpdatesReportFile := file(genSiteDir + "/dep-sec/dependency-updates.txt")
+
+scmInfo := Some(ScmInfo(url("https://github.com/ZGIS/smart-owc-geojson"), "git@github.com:ZGIS/smart-owc-geojson.git"))
+ghpages.settings
+git.remoteRepo := scmInfo.value.get.connection
