@@ -19,12 +19,25 @@
 
 package info.smart.models.owc100
 
+import java.net.URL
+import java.util.UUID
+
+import com.typesafe.scalalogging.LazyLogging
+
 /**
-  + creatorApplication :CreatorApplication [0..1]
-  + creatorDisplay :CreatorDisplay [0..1]
-  + extension :Any [0..*]
+  * + creatorApplication :CreatorApplication [0..1]
+  * + creatorDisplay :CreatorDisplay [0..1]
+  * + extension :Any [0..*]
   */
-class OwcCreator {
+case class OwcCreator(
+                       creatorApplication: Option[OwcCreatorApplication],
+                       creatorDisplay: Option[OwcCreatorDisplay],
+                       uuid: UUID
+                     ) extends LazyLogging {
+
+}
+
+object OwcCreator extends LazyLogging {
 
 }
 
@@ -33,10 +46,39 @@ CreatorApplication
 + title :CharacterString [0..1]
 + uri :URI [0..1]
 + version :Version [0..1]
++ the single only class that doesn't have explicit extension???
+*/
 
+case class OwcCreatorApplication(
+                                  title: Option[String],
+                                  uri: Option[URL],
+                                  version: Option[String],
+                                  uuid: UUID
+                                ) extends LazyLogging {
+
+}
+
+object OwcCreatorApplication extends LazyLogging {
+
+}
+
+/*
 CreatorDisplay
 + pixelWidth :int [0..1]
 + pixelHeight :int [0..1]
 + mmPerPixel :double [0..1]
 + extension :Any [0..*]
  */
+
+case class OwcCreatorDisplay(
+                              pixelWidth: Option[Int],
+                              pixelHeight: Option[Int],
+                              mmPerPixel: Option[Double],
+                              uuid: UUID
+                            ) extends LazyLogging {
+
+}
+
+object OwcCreatorDisplay extends LazyLogging {
+
+}

@@ -19,80 +19,33 @@
 
 package info.smart.models.owc100
 
+import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.libs.json.Writes._
-import play.api.libs.json._
 
 /**
-  *
-  * @param uuid
-  * @param rel one of typically "self", "profile", "icon", "via"
-  * @param mimeType
-  * @param href
-  * @param title
+  * OwcLink in most cases will have anarray of links under the path of the rel
+  * where the super-ordinate rel is one of "self", "profile", "icon", "previews", "via", "data" or "alternates"
+  * + href :URI
+  * + type :String [0..1]
+  * + lang :String [0..1]
+  * + title :String [0..1]
+  * + length :Integer [0..1]
+  * + extension :Any [0..*]
   */
-case class OwcLink(uuid: UUID, rel: String, mimeType: Option[String], href: String, title: Option[String]) extends LazyLogging {
+case class OwcLink(
+                    href: URL,
+                    mimeType: Option[String],
+                    lang: Option[String],
+                    title: Option[String],
+                    length: Option[Int],
+                    rel: String, // can at least stay here via extension :-)
+                    uuid: UUID
+                  ) extends LazyLogging {
 
-  /**
-    *
-    * @return
-    */
-  def toJson: JsValue = Json.toJson(this)
 }
 
-/**
-  * companion object for [[OwcLink]]
-  */
 object OwcLink extends LazyLogging {
 
-  implicit val owcLinkReads: Reads[OwcLink] = (
-    (JsPath \ "rel").read[String] and
-      (JsPath \ "type").readNullable[String] and
-      (JsPath \ "href").read[String] and
-      (JsPath \ "title").readNullable[String]
-    )(OwcLinkJs.apply _)
-
-  implicit val owcLinkWrites: Writes[OwcLink] = (
-    (JsPath \ "rel").write[String] and
-      (JsPath \ "type").writeNullable[String] and
-      (JsPath \ "href").write[String] and
-      (JsPath \ "title").writeNullable[String]
-    )(unlift(OwcLinkJs.unapply))
-
-  implicit val owcLinkFormat: Format[OwcLink] =
-    Format(owcLinkReads, owcLinkWrites)
-
-}
-
-/**
-  * OwcLink Json stuff
-  */
-object OwcLinkJs extends LazyLogging {
-
-  /**
-    *
-    * @param rel
-    * @param mimeType
-    * @param href
-    * @param title
-    * @return
-    */
-  def apply(rel: String, mimeType: Option[String], href: String, title: Option[String]): OwcLink = {
-    // Todo, we might find a way to find an existing UUID from DB if entry exists
-    val uuid = UUID.randomUUID()
-    OwcLink(uuid, rel, mimeType, href, title)
-  }
-
-  /**
-    *
-    * @param arg
-    * @return
-    */
-  def unapply(arg: OwcLink): Option[(String, Option[String], String, Option[String])] = {
-    Some(arg.rel, arg.mimeType, arg.href, arg.title)
-  }
 }

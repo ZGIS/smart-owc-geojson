@@ -19,13 +19,28 @@
 
 package info.smart.models.owc100
 
+import java.net.URL
+import java.util.UUID
+
+import com.typesafe.scalalogging.LazyLogging
+
 /**
-  + code :URI
-  + operation :Operation [0..*]
-  + content :Content [0..*]
-  + styleSet :StyleSet [0..*]
-  + extension :Any [0..*]
+  * + code :URI
+  * + operation :Operation [0..*]
+  * + content :Content [0..*]
+  * + styleSet :StyleSet [0..*]
+  * + extension :Any [0..*]
   */
-class OwcOffering {
+case class OwcOffering(
+                        code: URL,
+                        operation: List[OwcOperation],
+                        content: List[OwcContent],
+                        styleSet: List[OwcStyleSet],
+                        uuid: UUID
+                      ) extends LazyLogging {
+
+}
+
+object OwcOffering extends LazyLogging {
 
 }

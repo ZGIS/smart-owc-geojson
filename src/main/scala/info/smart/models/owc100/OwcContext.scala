@@ -56,7 +56,7 @@ case class OwcContext(
                        creator: Option[OwcCreator],
                        rights: Option[String],
                        areaOfInterest: Option[Rectangle],
-                       timeIntervalOfInterest: Option[Tuple2[ZonedDateTime, ZonedDateTime]],
+                       timeIntervalOfInterest: Option[List[ZonedDateTime]],
                        keyword: List[OwcCategory]
                      ) extends LazyLogging {
 }
