@@ -23,6 +23,9 @@ import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 /**
   * + name :CharacterString
@@ -38,13 +41,34 @@ case class OwcStyleSet(
                         title: String,
                         abstrakt: Option[String],
                         default: Option[Boolean],
-                        legendURL: Option[URL],
+                        legendUrl: Option[URL],
                         content: Option[OwcContent],
                         uuid: UUID
                       ) extends LazyLogging {
-
+  def toJson: JsValue = Json.toJson(this)
 }
 
 object OwcStyleSet extends LazyLogging {
 
+  implicit val owc100StyleSetReads: Reads[OwcStyleSet] = (
+    (JsPath \ "name").read[String](minLength[String](1)) and
+    (JsPath \ "title").read[String](minLength[String](1)) and
+      (JsPath \ "abstract").readNullable[String](minLength[String](1)) and
+      (JsPath \ "default").readNullable[Boolean] and
+      (JsPath \ "legendURL").readNullable[URL](new UrlFormat) and
+      (JsPath \ "content").readNullable[OwcContent] and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
+    )(OwcStyleSet.apply _)
+
+  implicit val owc100StyleSetWrites: Writes[OwcStyleSet] = (
+    (JsPath \ "name").write[String] and
+      (JsPath \ "title").write[String] and
+      (JsPath \ "abstract").writeNullable[String] and
+      (JsPath \ "default").writeNullable[Boolean] and
+      (JsPath \ "legendURL").writeNullable[URL](new UrlFormat) and
+      (JsPath \ "content").writeNullable[OwcContent] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcStyleSet.unapply))
+
+  implicit val owc100StyleSetFormat: Format[OwcStyleSet] = Format(owc100StyleSetReads, owc100StyleSetWrites)
 }

@@ -23,6 +23,9 @@ import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads.{minLength, _}
+import play.api.libs.json._
 
 /**
   * + type :CharacterString
@@ -32,13 +35,34 @@ import com.typesafe.scalalogging.LazyLogging
   */
 case class OwcContent(
                        mimeType: String,
-                       URL: Option[URL],
+                       url: Option[URL],
+                       title: Option[String],
                        content: Option[String],
-                       uuid: UUID
+                       uuid: UUID = UUID.randomUUID()
                      ) extends LazyLogging {
 
+  def toJson: JsValue = Json.toJson(this)
 }
 
 object OwcContent extends LazyLogging {
 
+  implicit val owc100ContentReads: Reads[OwcContent] = (
+    (JsPath \ "type").read[String](minLength[String](1)) and
+      (JsPath \ "href").readNullable[URL](new UrlFormat) and
+      (JsPath \ "title").readNullable[String](minLength[String](1)) and
+      (JsPath \ "content").readNullable[String](minLength[String](1)) and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
+    )(OwcContent.apply _).filter{ owc =>
+    (owc.url.isDefined && owc.content.isEmpty) || (owc.url.isEmpty && owc.content.isDefined)
+  }
+
+  implicit val owc100ContentWrites: Writes[OwcContent] = (
+    (JsPath \ "type").write[String] and
+      (JsPath \ "href").writeNullable[URL](new UrlFormat) and
+      (JsPath \ "title").writeNullable[String] and
+      (JsPath \ "content").writeNullable[String] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcContent.unapply))
+
+  implicit val owc100ContentFormat: Format[OwcContent] = Format(owc100ContentReads, owc100ContentWrites)
 }

@@ -47,6 +47,13 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
     }
   }
 
+  "DataType OWC:StyleSet GeoJSON Section 7.1.6" should {
+
+    "<off>.styles[k].name SHALL have Unique name of the styleSet within a given offering" in {
+
+    }
+  }
+
   "OwcOffering GeoJson Offering Extensions" should {
 
     "handle WMS: http://www.opengis.net/spec/owc-geojson/1.0/req/wms" in {

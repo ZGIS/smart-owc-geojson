@@ -23,25 +23,11 @@ import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
 import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.libs.json.Writes._
+import play.api.libs.json.Reads.{minLength, _}
 import play.api.libs.json._
 
-/**
-  * reusable pattern of tagging things in the entry lists for declaration in subsequent processes,
-  * e.g. accordeon groups in legends panel(we have to implement that in the mapviewer though)
-  *
-  * @param uuid
-  * @param scheme e.g. for mapviewer: view-groups
-  * @param term   identifier of a view group: nz-overview
-  * @param label  human readable name of the term: New Zealand Overview, National Scale models..
-  */
-case class OwcCategory(uuid: UUID, scheme: String, term: String, label: Option[String]) extends LazyLogging {
+case class OwcCategory(term: String, scheme: Option[String], label: Option[String], uuid: UUID = UUID.randomUUID()) extends LazyLogging {
 
-  /**
-    *
-    * @return
-    */
   def toJson: JsValue = Json.toJson(this)
 }
 
@@ -50,48 +36,22 @@ case class OwcCategory(uuid: UUID, scheme: String, term: String, label: Option[S
   */
 object OwcCategory extends LazyLogging {
 
-  implicit val owcCategoryReads: Reads[OwcCategory] = (
-    (JsPath \ "scheme").read[String] and
-      (JsPath \ "term").read[String] and
-      (JsPath \ "label").readNullable[String]
-    )(OwcCategoryJs.apply _)
+  implicit val owc100CategoryReads: Reads[OwcCategory] = (
+    (JsPath \ "term").read[String](minLength[String](1)) and
+      (JsPath \ "scheme").readNullable[String](minLength[String](1)) and
+      (JsPath \ "label").readNullable[String](minLength[String](1)) and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
+    ) (OwcCategory.apply _)
 
-  implicit val owcCategoryWrites: Writes[OwcCategory] = (
-    (JsPath \ "scheme").write[String] and
-      (JsPath \ "term").write[String] and
-      (JsPath \ "label").writeNullable[String]
-    )(unlift(OwcCategoryJs.unapply))
+  implicit val owc100CategoryWrites: Writes[OwcCategory] = (
+    (JsPath \ "term").write[String] and
+      (JsPath \ "scheme").writeNullable[String] and
+      (JsPath \ "label").writeNullable[String] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcCategory.unapply))
 
-  implicit val owcCategoryFormat: Format[OwcCategory] =
-    Format(owcCategoryReads, owcCategoryWrites)
+  implicit val owc100CategoryFormat: Format[OwcCategory] = Format(owc100CategoryReads, owc100CategoryWrites)
 
 }
 
-/**
-  * OwcCategory Json stuff
-  */
-object OwcCategoryJs extends LazyLogging {
-
-  /**
-    *
-    * @param scheme
-    * @param term
-    * @param label
-    * @return
-    */
-  def apply(scheme: String, term: String, label: Option[String]): OwcCategory = {
-    // Todo, we might find a way to find an existing UUID from DB if entry exists
-    val uuid = UUID.randomUUID()
-    OwcCategory(uuid, scheme, term, label)
-  }
-
-  /**
-    *
-    * @param arg
-    * @return
-    */
-  def unapply(arg: OwcCategory): Option[(String, String, Option[String])] = {
-    Some(arg.scheme, arg.term, arg.label)
-  }
-}
 
