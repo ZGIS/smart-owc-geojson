@@ -27,21 +27,6 @@ import play.api.libs.json._
 
 class OwcCreatorSpec extends WordSpec with MustMatchers with LazyLogging{
 
-  "DataType OWC:Creator GeoJSON Section 7.1.7" should {
-
-    "<xz>.properties.generator MAY have The name, reference and version of the creator application " +
-      "used to create the context document owc:CreatorApplication (0..1)" in {
-      logger.info("Extension: Any encoding should allow the user to extend the Creator information to include custom items (0..*)")
-
-    }
-
-    "<xz>.properties.display MAY have Properties of the display in use when the context document was created " +
-      "(for display based applications only). owc:CreatorDisplay (0..1)" in {
-
-    }
-  }
-
-
   "DataType OWC:CreatorApplication GeoJSON Section 7.1.8" should {
 
     val jsCreator1 = """{

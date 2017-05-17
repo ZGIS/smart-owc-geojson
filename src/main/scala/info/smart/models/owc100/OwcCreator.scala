@@ -38,13 +38,8 @@ import play.api.libs.json._
 case class OwcCreator(
                        creatorApplication: Option[OwcCreatorApplication],
                        creatorDisplay: Option[OwcCreatorDisplay]
-                     ) extends LazyLogging {
+                     )
 
-}
-
-object OwcCreator extends LazyLogging {
-
-}
 
 /*
 CreatorApplication

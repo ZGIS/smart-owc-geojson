@@ -23,25 +23,44 @@ import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 /**
   * + code :URI
-  * + operation :Operation [0..*]
-  * + content :Content [0..*]
-  * + styleSet :StyleSet [0..*]
+  * + operations :Offering [0..*]
+  * + contents :Content [0..*]
+  * + styles :StyleSet [0..*]
   * + extension :Any [0..*]
   */
 case class OwcOffering(
                         code: URL,
-                        operation: List[OwcOperation],
-                        content: List[OwcContent],
-                        styleSet: List[OwcStyleSet],
+                        operations: List[OwcOperation],
+                        contents: List[OwcContent],
+                        styles: List[OwcStyleSet],
                         uuid: UUID
                       ) extends LazyLogging {
-
+  def toJson: JsValue = Json.toJson(this)
 }
 
 object OwcOffering extends LazyLogging {
 
+  implicit val owc100OfferingReads: Reads[OwcOffering] = (
+    (JsPath \ "code").read[URL](new UrlFormatOfferingExtensions) and
+      (JsPath \ "operations").read[List[OwcOperation]] and
+      (JsPath \ "contents").read[List[OwcContent]] and
+      (JsPath \ "styles").read[List[OwcStyleSet]] and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
+    ) (OwcOffering.apply _)
+
+  implicit val owc100OfferingWrites: Writes[OwcOffering] = (
+    (JsPath \ "code").write[URL](new UrlFormat) and
+      (JsPath \ "operations").write[List[OwcOperation]] and
+      (JsPath \ "contents").write[List[OwcContent]] and
+      (JsPath \ "styles").write[List[OwcStyleSet]] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcOffering.unapply))
+
+  implicit val owc100OfferingFormat: Format[OwcOffering] = Format(owc100OfferingReads, owc100OfferingWrites)
 }

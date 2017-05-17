@@ -36,6 +36,8 @@ import play.api.libs.json.{Reads, Writes}
   * + author :CharacterString [0..*]
   * + publisher :CharacterString [0..1]
   * + creator :Creator [0..1]
+  * +----+ creatorApplication :CreatorApplication [0..1]
+  * +----+ creatorDisplay :CreatorDisplay [0..1]
   * + rights :CharacterString [0..1]
   * + areaOfInterest :GM_Envelope [0..1]
   * + timeIntervalOfInterest :TM_GeometricPrimitive [0..1]
@@ -53,7 +55,8 @@ case class OwcContext(
                        updateDate: ZonedDateTime,
                        author: List[String],
                        publisher: Option[String],
-                       creator: Option[OwcCreator],
+                       creatorApplication: Option[OwcCreatorApplication],
+                       creatorDisplay: Option[OwcCreatorDisplay],
                        rights: Option[String],
                        areaOfInterest: Option[Rectangle],
                        timeIntervalOfInterest: Option[List[ZonedDateTime]],

@@ -21,24 +21,43 @@ package info.smart.models.owc100
 
 import java.net.URL
 
-import com.typesafe.scalalogging.LazyLogging
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}
 
-class UrlFormat extends Format[URL] with LazyLogging {
+class UrlFormatOfferingExtensions extends UrlFormat {
 
-  def parseURL(url: String): Try[URL] = Try(new URL(url))
+  override def parseURL(url: String): Try[URL] = super.parseURL(url)
 
-  def reads(json: JsValue): JsResult[URL] = {
+  override def writes(url: URL): JsValue = super.writes(url)
 
+  val supportedGeoJsonOfferingExtensions: List[URL] =
+    List(
+      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms"),
+      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wfs"),
+      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wcs"),
+      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wps"),
+      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/csw"),
+      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/geotiff"),
+      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/sos")
+    )
+
+  override def reads(json: JsValue): JsResult[URL] = {
     json match {
       case JsString(url) => parseURL(url) match {
-        case Success(s) => JsSuccess(s)
+        case Success(u) => {
+          if (supportedGeoJsonOfferingExtensions.contains(u)) {
+
+            JsSuccess(u)
+          } else {
+            logger.error("JsError ValidationError error.expected.supportedofferingcode")
+            JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.supportedofferingcode"))))
+          }
+        }
         case Failure(ex) => {
-          logger.error("JsError ValidationError error.expected.url")
-          JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.url"))))
+          logger.error("JsError ValidationError error.expected.offeringcodeurl")
+          JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.offeringcodeurl"))))
         }
       }
       case _ => {
@@ -46,9 +65,5 @@ class UrlFormat extends Format[URL] with LazyLogging {
         JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsstring"))))
       }
     }
-  }
-
-  def writes(url: URL): JsValue = {
-    Json.toJson(url.toString)
   }
 }
