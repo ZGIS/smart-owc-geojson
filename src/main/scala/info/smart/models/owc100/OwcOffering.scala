@@ -23,6 +23,7 @@ import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
+import play.api.libs.json.{JsValue, Json}
 
 /**
   * + code :URI

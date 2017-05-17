@@ -23,16 +23,21 @@ import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 /**
   * + creatorApplication :CreatorApplication [0..1]
   * + creatorDisplay :CreatorDisplay [0..1]
   * + extension :Any [0..*]
+  *
+  * OwcCreator base class is never realized, neither in Atom nor in GeoJSON Encoding;
+  * Creator/Display and Creator/Application are instantiated as completely separate entities in both Atom and GeoJSON
   */
 case class OwcCreator(
                        creatorApplication: Option[OwcCreatorApplication],
-                       creatorDisplay: Option[OwcCreatorDisplay],
-                       uuid: UUID
+                       creatorDisplay: Option[OwcCreatorDisplay]
                      ) extends LazyLogging {
 
 }
@@ -46,7 +51,7 @@ CreatorApplication
 + title :CharacterString [0..1]
 + uri :URI [0..1]
 + version :Version [0..1]
-+ the single only class that doesn't have explicit extension???
++ the single only class that doesn't have explicit extension? (but would be inherited from OWC:Creator?)
 */
 
 case class OwcCreatorApplication(
@@ -55,11 +60,26 @@ case class OwcCreatorApplication(
                                   version: Option[String],
                                   uuid: UUID
                                 ) extends LazyLogging {
-
+  def toJson: JsValue = Json.toJson(this)
 }
 
 object OwcCreatorApplication extends LazyLogging {
 
+  implicit val owc100CreatorApplictionReads: Reads[OwcCreatorApplication] = (
+    (JsPath \ "title").readNullable[String](minLength[String](1)) and
+      (JsPath \ "uri").readNullable[URL](new UrlFormat) and
+      (JsPath \ "version").readNullable[String](minLength[String](1)) and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
+    ) (OwcCreatorApplication.apply _)
+
+  implicit val owc100OCreatorApplicationWrites: Writes[OwcCreatorApplication] = (
+    (JsPath \ "title").writeNullable[String] and
+      (JsPath \ "uri").writeNullable[URL](new UrlFormat) and
+      (JsPath \ "version").writeNullable[String] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcCreatorApplication.unapply))
+
+  implicit val owc100CreatorApplicationFormat: Format[OwcCreatorApplication] = Format(owc100CreatorApplictionReads, owc100OCreatorApplicationWrites)
 }
 
 /*
@@ -76,9 +96,24 @@ case class OwcCreatorDisplay(
                               mmPerPixel: Option[Double],
                               uuid: UUID
                             ) extends LazyLogging {
-
+  def toJson: JsValue = Json.toJson(this)
 }
 
 object OwcCreatorDisplay extends LazyLogging {
 
+  implicit val owc100CreatorDisplayReads: Reads[OwcCreatorDisplay] = (
+    (JsPath \ "pixelWidth").readNullable[Int](min[Int](0)) and
+      (JsPath \ "pixelHeight").readNullable[Int](min[Int](0)) and
+      (JsPath \ "mmPerPixel").readNullable[Double](min[Double](0)) and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
+    ) (OwcCreatorDisplay.apply _)
+
+  implicit val owc100OCreatorDisplayWrites: Writes[OwcCreatorDisplay] = (
+    (JsPath \ "pixelWidth").writeNullable[Int] and
+      (JsPath \ "pixelHeight").writeNullable[Int] and
+      (JsPath \ "mmPerPixel").writeNullable[Double] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcCreatorDisplay.unapply))
+
+  implicit val owc100CreatorDisplayFormat: Format[OwcCreatorDisplay] = Format(owc100CreatorDisplayReads, owc100OCreatorDisplayWrites)
 }
