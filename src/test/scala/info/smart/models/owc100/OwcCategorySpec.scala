@@ -75,16 +75,16 @@ class OwcCategorySpec extends WordSpec with MustMatchers with LazyLogging {
         |}""".stripMargin
 
     "<props>.categories.term SHALL have a keyword related to the context document or resource" in {
-      val jsCatVal = Json.parse(jsCategory1)
+      val jsVal = Json.parse(jsCategory1)
 
-      val owcCategoryFromJson: JsResult[OwcCategory] = Json.fromJson[OwcCategory](jsCatVal)
-      owcCategoryFromJson match {
+      val fromJson: JsResult[OwcCategory] = Json.fromJson[OwcCategory](jsVal)
+      fromJson match {
         case JsSuccess(r: OwcCategory, path: JsPath) => println("Term: " + r.term)
         case e: JsError => println("Errors: " + JsError.toJson(e).toString())
       }
 
-      val owcCategoryResult: JsResult[OwcCategory] = jsCatVal.validate[OwcCategory]
-      owcCategoryResult match {
+      val result: JsResult[OwcCategory] = jsVal.validate[OwcCategory]
+      result match {
         case s: JsSuccess[OwcCategory] => println("Term: " + s.get.term)
         case e: JsError => println("Errors: " + JsError.toJson(e).toString())
       }

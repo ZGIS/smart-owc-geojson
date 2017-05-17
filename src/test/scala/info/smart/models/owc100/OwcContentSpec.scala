@@ -68,7 +68,7 @@ class OwcContentSpec extends WordSpec with MustMatchers with LazyLogging{
 
     val jsContent3 =
     """{"type": "application/gml+xml",
-      |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature$typename=my_srf:RoadCollection",
+      |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature&typename=my_srf:RoadCollection",
       |"title": "ID_ROADS1:M30"
       |}
     """.stripMargin
@@ -82,14 +82,14 @@ class OwcContentSpec extends WordSpec with MustMatchers with LazyLogging{
 
     val jsContent3_2 =
       """{"type": "application/gml+xml",
-        |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature$typename=my_srf:RoadCollection",
+        |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature&typename=my_srf:RoadCollection",
         |"title": ""
         |}
       """.stripMargin
 
     val jsContent4 =
       """{"type": "application/gml+xml",
-        |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature$typename=my_srf:RoadCollection",
+        |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature&typename=my_srf:RoadCollection",
         |"title": "ID_ROADS1:M30",
         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
         |}
@@ -97,7 +97,7 @@ class OwcContentSpec extends WordSpec with MustMatchers with LazyLogging{
 
     val jsContent4_1 =
       s"""{"type": "application/gml+xml",
-        |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature$$typename=my_srf:RoadCollection",
+        |"href": "http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature&typename=my_srf:RoadCollection",
         |"title": "ID_ROADS1:M30",
         |"content": ${inlineContent},
         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
@@ -111,17 +111,24 @@ class OwcContentSpec extends WordSpec with MustMatchers with LazyLogging{
          |}
       """.stripMargin
 
-    "<cont>.type SHALL have MIME type of the Content" in {
-      val jsContentVal = Json.parse(jsContent4_1)
+    val jsContent4_3 =
+      s"""{"type": "not-good-mimetype",
+         |"title": "ID_ROADS1:M30",
+         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+         |}
+      """.stripMargin
 
-      val owcCategoryFromJson: JsResult[OwcContent] = Json.fromJson[OwcContent](jsContentVal)
-      owcCategoryFromJson match {
+    "<cont>.type SHALL have MIME type of the Content" in {
+      val jsVal = Json.parse(jsContent4_1)
+
+      val fromJson: JsResult[OwcContent] = Json.fromJson[OwcContent](jsVal)
+      fromJson match {
         case JsSuccess(r: OwcContent, path: JsPath) => println("url: " + r.url)
         case e: JsError => logger.error("Errors: " + JsError.toJson(e).toString())
       }
 
-      val owcCategoryResult: JsResult[OwcContent] = jsContentVal.validate[OwcContent]
-      owcCategoryResult match {
+      val result: JsResult[OwcContent] = jsVal.validate[OwcContent]
+      result match {
         case s: JsSuccess[OwcContent] => println("content: " + s.get.content)
         case e: JsError => logger.error("Errors: " + JsError.toJson(e).toString())
       }
@@ -132,14 +139,15 @@ class OwcContentSpec extends WordSpec with MustMatchers with LazyLogging{
       Json.parse(jsContent3).validate[OwcContent].get.mimeType mustEqual "application/gml+xml"
       Json.parse(jsContent3_1).validate[OwcContent].get.mimeType mustEqual "application/gml+xml"
       Json.parse(jsContent4).validate[OwcContent].get.mimeType mustEqual "application/gml+xml"
+      Json.parse(jsContent4_3).validate[OwcContent].isInstanceOf[JsError] mustBe true
     }
 
     "<cont>.href MAY have URL of the Content (0..1)" in {
       Json.parse(jsContent1).validate[OwcContent].get.url mustEqual Some(new java.net.URL("http://www.gns.cri.nz"))
       Json.parse(jsContent2).validate[OwcContent].get.url mustEqual None
-      Json.parse(jsContent3).validate[OwcContent].get.url mustEqual Some(new java.net.URL("http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature$typename=my_srf:RoadCollection"))
+      Json.parse(jsContent3).validate[OwcContent].get.url mustEqual Some(new java.net.URL("http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature&typename=my_srf:RoadCollection"))
       Json.parse(jsContent3_1).validate[OwcContent].get.url mustEqual None
-      Json.parse(jsContent4).validate[OwcContent].get.url mustEqual Some(new java.net.URL("http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature$typename=my_srf:RoadCollection"))
+      Json.parse(jsContent4).validate[OwcContent].get.url mustEqual Some(new java.net.URL("http://data.roads.wherever.com/wfs?service=WFS&request=GetFeature&typename=my_srf:RoadCollection"))
     }
 
     "<cont>.content MAY have In-line content for the Content element that can contain any text encoded media type (0..1)" in {

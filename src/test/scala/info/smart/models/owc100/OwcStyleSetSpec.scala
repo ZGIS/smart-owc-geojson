@@ -114,16 +114,16 @@ class OwcStyleSetSpec extends WordSpec with MustMatchers with LazyLogging{
 
     "<style>.name SHALL have Unique name of the styleSet within a given offering" in {
       logger.info(" Uniqueness of name within a given offering deferred to OwcOfferingSpec")
-      val jsStyleVal = Json.parse(jsStyle2)
+      val jsVal = Json.parse(jsStyle2)
 
-      val owcCategoryFromJson: JsResult[OwcStyleSet] = Json.fromJson[OwcStyleSet](jsStyleVal)
-      owcCategoryFromJson match {
+      val fromJson: JsResult[OwcStyleSet] = Json.fromJson[OwcStyleSet](jsVal)
+      fromJson match {
         case JsSuccess(r: OwcStyleSet, path: JsPath) => println("name: " + r.name)
         case e: JsError => logger.error("Errors: " + JsError.toJson(e).toString())
       }
 
-      val owcCategoryResult: JsResult[OwcStyleSet] = jsStyleVal.validate[OwcStyleSet]
-      owcCategoryResult match {
+      val result: JsResult[OwcStyleSet] = jsVal.validate[OwcStyleSet]
+      result match {
         case s: JsSuccess[OwcStyleSet] => println("title: " + s.get.title)
         case e: JsError => logger.error("Errors: " + JsError.toJson(e).toString())
       }

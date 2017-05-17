@@ -23,6 +23,10 @@ import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
+import play.api.data.validation.ValidationError
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 /**
   * + code :CharacterString
@@ -34,17 +38,60 @@ import com.typesafe.scalalogging.LazyLogging
   * + extension :Any [0..*]
   */
 case class OwcOperation(
-                         code: String,
-                         method: String,
-                         operationType: String,
-                         requestURL: URL,
+                         code: String, // operation, i.e. GetCapabilities
+                         method: String, // HTTP verb
+                         mimeType: Option[String], // MIME media type of the expected results
+                         requestUrl: URL,
                          request: Option[OwcContent],
                          result: Option[OwcContent],
                          uuid: UUID
                        ) extends LazyLogging {
 
+  def toJson: JsValue = Json.toJson(this)
+
 }
 
 object OwcOperation extends LazyLogging {
 
+  val verifyingHttpMethodsReads = new Reads[String] {
+    override def reads(json: JsValue): JsResult[String] = {
+      val allowedVerbs = List("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS", "CONNECT")
+      json match {
+        case JsString(verb) => {
+          if (allowedVerbs.contains(verb.toUpperCase)) {
+            JsSuccess(verb.toUpperCase)
+          } else {
+            logger.error("JsError ValidationError error.expected.validhttpverb")
+            JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.validhttpverb"))))
+          }
+        }
+        case _ => {
+          logger.error("JsError ValidationError error.expected.jsstring")
+          JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsstring"))))
+        }
+      }
+    }
+  }
+
+  implicit val owc100OperationReads: Reads[OwcOperation] = (
+    (JsPath \ "code").read[String](minLength[String](1)) and
+      (JsPath \ "method").read[String](minLength[String](1) andKeep verifyingHttpMethodsReads) and
+      (JsPath \ "type").readNullable[String](minLength[String](1) andKeep new MimeTypeFormat) and
+      (JsPath \ "href").read[URL](new UrlFormat) and
+      (JsPath \ "request").readNullable[OwcContent] and
+      (JsPath \ "result").readNullable[OwcContent] and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
+    ) (OwcOperation.apply _)
+
+  implicit val owc100OperationWrites: Writes[OwcOperation] = (
+    (JsPath \ "code").write[String] and
+      (JsPath \ "method").write[String] and
+      (JsPath \ "type").writeNullable[String] and
+      (JsPath \ "href").write[URL](new UrlFormat) and
+      (JsPath \ "request").writeNullable[OwcContent] and
+      (JsPath \ "result").writeNullable[OwcContent] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcOperation.unapply))
+
+  implicit val owc100OperationFormat: Format[OwcOperation] = Format(owc100OperationReads, owc100OperationWrites)
 }

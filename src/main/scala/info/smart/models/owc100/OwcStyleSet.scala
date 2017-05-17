@@ -45,6 +45,7 @@ case class OwcStyleSet(
                         content: Option[OwcContent],
                         uuid: UUID
                       ) extends LazyLogging {
+
   def toJson: JsValue = Json.toJson(this)
 }
 

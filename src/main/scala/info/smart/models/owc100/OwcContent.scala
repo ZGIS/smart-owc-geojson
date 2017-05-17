@@ -47,7 +47,7 @@ case class OwcContent(
 object OwcContent extends LazyLogging {
 
   implicit val owc100ContentReads: Reads[OwcContent] = (
-    (JsPath \ "type").read[String](minLength[String](1)) and
+    (JsPath \ "type").read[String](minLength[String](1) andKeep new MimeTypeFormat) and
       (JsPath \ "href").readNullable[URL](new UrlFormat) and
       (JsPath \ "title").readNullable[String](minLength[String](1)) and
       (JsPath \ "content").readNullable[String](minLength[String](1)) and
