@@ -19,6 +19,8 @@
 
 package info.smart.models.owc100
 
+import java.util.UUID
+
 import com.typesafe.scalalogging.LazyLogging
 import org.scalatest.{MustMatchers, WordSpec}
 import play.api.libs.json._
@@ -60,6 +62,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
         |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
         |"operations" : [{
         |  "code" : "GetCapabilities",
+        |  "method" : "GET",
         |  "href" : "http://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1"
         |  }],
         |"uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
@@ -75,16 +78,17 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
                       |}
                    """.stripMargin
 
-    val inlineStyleSet3 = Json.stringify(Json.parse(jsStyle1))
+    // val inlineStyleSet3 = Json.stringify(Json.parse(jsStyle1))
 
     val jsOff4 =
       s"""{
         |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
         |"operations" : [{
         |  "code" : "GetCapabilities",
+        |  "method" : "GET",
         |  "href" : "http://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1"
         |  }],
-        |"styles": [ $inlineStyleSet3 ],
+        |"styles": [ $jsStyle1 ],
         |"uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
         |}
       """.stripMargin
@@ -108,23 +112,24 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
          |}
     """.stripMargin
 
-    val inlineJsContent1 = Json.stringify(Json.parse(jsContent1))
+    // val inlineJsContent1 = Json.stringify(Json.parse(jsContent1))
 
     val jsOff5 =
       s"""{
          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wfs",
          |"operations" : [{
          |  "code" : "GetCapabilities",
+         |  "method" : "GET",
          |  "href" : "http://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WFS&VERSION=2.0.0"
          |  }],
-         |"content": [ $inlineJsContent1 ],
-         |"styles": [ $inlineStyleSet3 ],
+         |"contents": [ $jsContent1 ],
+         |"styles": [ $jsStyle1 ],
          |"uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
          |}
       """.stripMargin
 
     "<off>.code SHALL have Code identifying the requirement class identifier (URI) for the type of offering" in {
-      val jsVal = Json.parse(jsOff1)
+      val jsVal = Json.parse(jsOff5)
 
       val fromJson: JsResult[OwcOffering] = Json.fromJson[OwcOffering](jsVal)
       fromJson match {
@@ -148,26 +153,76 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
     }
 
     "<off>.operations[k] MAY have Array of operations used to invoke the service owc:OperationType (0..*)" in {
-
+      Json.parse(jsOff1).validate[OwcOffering].get.operations mustEqual List()
+      Json.parse(jsOff2).validate[OwcOffering].get.operations.length mustEqual 0
+      Json.parse(jsOff3).validate[OwcOffering].get.operations.head.code mustEqual "GetCapabilities"
+      Json.parse(jsOff4).validate[OwcOffering].get.operations.head.requestUrl mustEqual new java.net.URL("http://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1")
+      Json.parse(jsOff5).validate[OwcOffering].get.operations.head.uuid.isInstanceOf[UUID] mustBe true
     }
 
     "<off>.contents[k] MAY have Array of contents (inline or byRef) owc:ContentType (0..*)" in {
-
+      Json.parse(jsOff1).validate[OwcOffering].get.contents mustEqual List()
+      Json.parse(jsOff2).validate[OwcOffering].get.contents.length mustEqual 0
+      Json.parse(jsOff3).validate[OwcOffering].get.contents.isEmpty mustBe true
+      Json.parse(jsOff5).validate[OwcOffering].get.contents.length mustEqual 1
+      Json.parse(jsOff5).validate[OwcOffering].get.contents.head.content mustEqual Some(xmlContent1)
+      Json.parse(jsOff5).validate[OwcOffering].get.contents.head.mimeType mustEqual "application/gml+xml"
+      Json.parse(jsOff5).validate[OwcOffering].get.contents.head.uuid.isInstanceOf[UUID] mustBe true
     }
 
     "<off>.styles[k] MAY have Array of style sets owc:StyleSetType (0..*)" in {
-
+      Json.parse(jsOff1).validate[OwcOffering].get.styles mustEqual List()
+      Json.parse(jsOff2).validate[OwcOffering].get.styles.length mustEqual 0
+      Json.parse(jsOff3).validate[OwcOffering].get.styles.isEmpty mustBe true
+      Json.parse(jsOff5).validate[OwcOffering].get.styles.length mustEqual 1
+      Json.parse(jsOff5).validate[OwcOffering].get.styles.head.name mustEqual "Simple Line"
+      Json.parse(jsOff5).validate[OwcOffering].get.styles.head.title mustEqual "SLD Cook Book: Simple Line"
+      Json.parse(jsOff5).validate[OwcOffering].get.styles.head.abstrakt mustEqual Some(sldAbstrakt)
+      Json.parse(jsOff5).validate[OwcOffering].get.styles.head.uuid.isInstanceOf[UUID] mustBe true
     }
 
     "<off>.* MAY contain Any other element Extension outside of the scope of OWS Context (0..*)" in {
-      logger.warn("MAY contain <off>.uuid as unique identifier")
+      logger.info("MAY contain <off>.uuid as unique identifier")
+      Json.parse(jsOff1).validate[OwcOffering].get.uuid.isInstanceOf[UUID] mustBe true
+      Json.parse(jsOff2).validate[OwcOffering].get.uuid.isInstanceOf[UUID] mustBe true
+      Json.parse(jsOff3).validate[OwcOffering].get.uuid.isInstanceOf[UUID] mustBe true
+      Json.parse(jsOff4).validate[OwcOffering].get.uuid mustEqual UUID.fromString("012c7aeb-a822-49d7-8a66-e77fa7137240")
+      Json.parse(jsOff5).validate[OwcOffering].get.uuid mustEqual UUID.fromString("012c7aeb-a822-49d7-8a66-e77fa7137240")
+      Json.parse(jsOff5).validate[OwcOffering].get.uuid mustEqual UUID.fromString("012c7aeb-a822-49d7-8a66-e77fa7137240")
     }
   }
 
   "DataType OWC:StyleSet GeoJSON Section 7.1.6" should {
 
     "<off>.styles[k].name SHALL have Unique name of the styleSet within a given offering" in {
+      val jsStyle1 = s"""{
+                        |"name": "Simple Line 1",
+                        |"title": "SLD Cook Book: Simple Line 1"
+                        |}
+                   """.stripMargin
 
+      val jsStyle2 = s"""{
+                        |"name": "Simple Line 2",
+                        |"title": "SLD Cook Book: Simple Line 2"
+                        |}
+                   """.stripMargin
+
+      val jsOff1 =
+        s"""{
+           |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+           |"styles": [ $jsStyle1, $jsStyle2 ]
+           |}
+      """.stripMargin
+
+      val jsOff2 =
+        s"""{
+           |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+           |"styles": [ $jsStyle1, $jsStyle1 ]
+           |}
+      """.stripMargin
+
+      Json.parse(jsOff1).validate[OwcOffering].get.styles.length mustEqual 2
+      Json.parse(jsOff2).validate[OwcOffering].get.styles.length mustEqual 1
     }
   }
 
@@ -175,50 +230,124 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
 
     "handle WMS: http://www.opengis.net/spec/owc-geojson/1.0/req/wms" in {
 
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wms"
+          |}
+        """.stripMargin
+
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms")
+
     }
 
     "handle WFS: http://www.opengis.net/spec/owc-geojson/1.0/req/wfs" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wfs"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wfs")
     }
 
     "handle WCS: http://www.opengis.net/spec/owc-geojson/1.0/req/wcs" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wcs"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wcs")
     }
 
     "handle WPS: http://www.opengis.net/spec/owc-geojson/1.0/req/wps" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wps"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wps")
     }
 
     "not handle WMTS: http://www.opengis.net/spec/owc-geojson/1.0/req/wmts" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wmts"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].isInstanceOf[JsError] mustBe true
     }
 
     "handle CSW: http://www.opengis.net/spec/owc-geojson/1.0/req/csw" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/csw"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/csw")
     }
 
     "not handle GML: http://www.opengis.net/spec/owc-geojson/1.0/req/gml" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/gml"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].isInstanceOf[JsError] mustBe true
     }
 
     "not handle KML: http://www.opengis.net/spec/owc-geojson/1.0/req/kml" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/kml"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].isInstanceOf[JsError] mustBe true
     }
 
     "handle GeoTIFF: http://www.opengis.net/spec/owc-geojson/1.0/req/geotiff" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/geotiff"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/geotiff")
     }
 
     "not handle GMLJP2: http://www.opengis.net/spec/owc-geojson/1.0/req/gmljp2" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/gmljp2"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].isInstanceOf[JsError] mustBe true
     }
 
     "not handle GMLCOV: http://www.opengis.net/spec/owc-geojson/1.0/req/gmlcov" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/gmlcov"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].isInstanceOf[JsError] mustBe true
     }
 
     "define and handle SOS: http://www.opengis.net/spec/owc-geojson/1.0/req/sos" in {
+      val jsOff1 =
+        """{
+          |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/sos"
+          |}
+        """.stripMargin
 
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/sos")
     }
 
   }

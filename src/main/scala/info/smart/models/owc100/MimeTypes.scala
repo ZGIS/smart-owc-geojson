@@ -43,7 +43,6 @@ object MimeTypes {
         # OGC stuffs
         application/gml+xml
         application/vnd.ogc.sld+xml
-
     """.split('\n').map(_.trim).filter(_.size > 0).filter(_ (0) != '#')
 
   lazy val additionalText: Array[String] =

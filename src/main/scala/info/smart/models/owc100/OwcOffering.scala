@@ -48,11 +48,14 @@ object OwcOffering extends LazyLogging {
 
   implicit val owc100OfferingReads: Reads[OwcOffering] = (
     (JsPath \ "code").read[URL](new UrlFormatOfferingExtensions) and
-      (JsPath \ "operations").read[List[OwcOperation]] and
-      (JsPath \ "contents").read[List[OwcContent]] and
-      (JsPath \ "styles").read[List[OwcStyleSet]] and
+      ((JsPath \ "operations").read[List[OwcOperation]] orElse Reads.pure(List[OwcOperation]())) and
+      ((JsPath \ "contents").read[List[OwcContent]] orElse Reads.pure(List[OwcContent]())) and
+      ((JsPath \ "styles").read[List[OwcStyleSet]] orElse Reads.pure(List[OwcStyleSet]())) and
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
-    ) (OwcOffering.apply _)
+    ) (OwcOffering.apply _).map { owc =>
+      val distinctStyles = owc.styles.map( sty => (sty.name, sty)).toMap.values.toList
+      owc.copy(styles = distinctStyles)
+    }
 
   implicit val owc100OfferingWrites: Writes[OwcOffering] = (
     (JsPath \ "code").write[URL](new UrlFormat) and
