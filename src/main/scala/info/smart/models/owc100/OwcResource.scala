@@ -72,7 +72,5 @@ case class OwcResource(
 
 object OwcResource extends LazyLogging {
 
-  implicit val rectangleWrites: Writes[Rectangle] = new RectangleWriter()
-  implicit val rectangleReads: Reads[Option[Rectangle]] = new JtsPolygonReader()
 
 }
