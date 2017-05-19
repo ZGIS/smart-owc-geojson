@@ -21,13 +21,38 @@ package info.smart.models.owc100
 
 import com.typesafe.scalalogging.LazyLogging
 import org.scalatest.{MustMatchers, WordSpec}
+import play.api.libs.json._
 
 class OwcResourceSpec extends WordSpec with MustMatchers with LazyLogging{
 
-
   "Class OWC:Resource GeoJson Section 7.1.2" should {
 
+    lazy val owcResource1 = this.getClass().getResource("/owc100/owc1.geojson")
+    lazy val owcResource2 = this.getClass().getResource("/owc100/owc2.geojson")
+    lazy val owcResource3 = this.getClass().getResource("/owc100/owc3.geojson")
+
+    val jsonTestCollection1 = Json.parse(scala.io.Source.fromURL(owcResource1).getLines.mkString)
+    val jsonTestCollection2 = Json.parse(scala.io.Source.fromURL(owcResource2).getLines.mkString)
+    val jsonTestCollection3 = Json.parse(scala.io.Source.fromURL(owcResource3).getLines.mkString)
+
     "<xz>.features[i].type String type that SHALL have the value 'Feature'" in {
+
+      val jsVal = (jsonTestCollection1 \ "features")(0).get
+
+      val fromJson: JsResult[OwcResource] = Json.fromJson[OwcResource](jsVal)
+      fromJson match {
+        case JsSuccess(r: OwcResource, path: JsPath) => println("id: " + r.id)
+        case e: JsError => println("Errors: " + JsError.toJson(e).toString())
+      }
+
+      val result: JsResult[OwcResource] = jsVal.validate[OwcResource]
+      result match {
+        case s: JsSuccess[OwcResource] => println("title: " + s.get.title)
+        case e: JsError => println("Errors: " + JsError.toJson(e).toString())
+      }
+
+      val jsRes1 = (jsonTestCollection1 \ "features")(0).get
+      jsRes1.validate[OwcResource].get.isInstanceOf[OwcResource] mustBe true
 
     }
 
@@ -115,7 +140,7 @@ class OwcResourceSpec extends WordSpec with MustMatchers with LazyLogging{
     }
 
     "<xz>.features[i].properties.* MAY contain Any other element Extension outside of the scope of OWS Context (0..*)" in {
-      logger.warn("MAY contain <xz>.features[i].properties.uuid, but in Ows:Resource we use <xz>.features[i].id as unique identifier")
+      logger.info("MAY contain <xz>.features[i].properties.uuid, but in Ows:Resource we use <xz>.features[i].id as unique identifier")
     }
   }
 }
