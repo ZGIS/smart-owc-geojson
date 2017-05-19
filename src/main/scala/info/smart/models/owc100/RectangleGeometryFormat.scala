@@ -35,6 +35,7 @@ class RectangleGeometryFormat extends Format[Rectangle] with LazyLogging {
   factory.geo = false
   private lazy val geoJsonWriter = jtsCtx.getFormats().getWriter(ShapeIO.GeoJSON)
 
+  // ATTENTION: using GEO SpatialContext will break reading geojson world polygons to Rectangle
   // private lazy val jtsCtx = JtsSpatialContext.GEO
 
   private lazy val jtsCtx = new JtsSpatialContext(factory)

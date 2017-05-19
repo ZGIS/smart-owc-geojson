@@ -22,8 +22,7 @@ package info.smart.models.owc100
 import java.net.URL
 
 import com.typesafe.scalalogging.LazyLogging
-import org.locationtech.spatial4j.context.jts.{JtsSpatialContext, JtsSpatialContextFactory}
-import org.locationtech.spatial4j.io.ShapeIO
+import org.locationtech.spatial4j.context.jts.JtsSpatialContext
 import org.locationtech.spatial4j.shape.Rectangle
 import org.scalatest.{MustMatchers, WordSpec}
 import play.api.libs.json._
@@ -152,6 +151,24 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
       val jsVal2 = Json.toJson[Rectangle](geom2)(new RectangleGeometryFormat)
       jsVal2.validate[Rectangle](new RectangleGeometryFormat).get mustEqual
         jtsCtx.getShapeFactory.rect(164.0,180.0,-50.0,-31.0)
+    }
+  }
+
+  "JSON IsoLangFormat" should {
+
+    "Reads IsoLangFormat" in {
+
+      val json1 = Json.parse("""{"lang" : "en"}""")
+      (json1 \ "lang").validate[String](new IsoLangFormat).get mustEqual "en"
+
+      val json2 = Json.parse("""{"lang" : "unknown"}""")
+      (json2 \ "lang").validate[String](new IsoLangFormat).isInstanceOf[JsError] mustBe true
+    }
+
+    "Writes IsoLangFormat" in {
+      val lang = "en"
+      val jsVal = Json.toJson[String](lang)(new IsoLangFormat)
+      jsVal.as[String] mustEqual lang
     }
   }
 

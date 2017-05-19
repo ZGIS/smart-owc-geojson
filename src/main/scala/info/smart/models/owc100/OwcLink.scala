@@ -23,10 +23,25 @@ import java.net.URL
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
+import play.api.data.validation.ValidationError
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json.Writes._
+import play.api.libs.json._
 
 /**
-  * OwcLink in most cases will have anarray of links under the path of the rel
-  * where the super-ordinate rel is one of "self", "profile", "icon", "previews", "via", "data" or "alternates"
+  * OwcLink in most cases will have an array of links under the path of the rel
+  *
+  * OWC:Context specReference attribute: atom rel="profile" - geojson links.profiles[] array
+  * OWC:Context contextMetadata attribute: atom rel="via" - geojson links.via[] array
+  *
+  * OWC:Resource contentDescription attribute: atom rel="alternate" - geojson links.alternates[] array
+  * OWC:Resource preview attribute: atom rel="icon" - geojson links.previews[] array
+  * OWC:Resource contentByRef attribute: atom rel="enclosure" - geojson links.data[] array
+  * OWC:Resource resourceMetadata attribute: atom rel="via" - geojson links.via[] array
+  *
+  * links for data and previews (aka rels enclosure and icon should have length attributes set)
+  *
   * + href :URI
   * + type :String [0..1]
   * + lang :String [0..1]
@@ -41,11 +56,52 @@ case class OwcLink(
                     title: Option[String],
                     length: Option[Int],
                     rel: String, // can at least stay here via extension :-)
-                    uuid: UUID
+                    uuid: UUID = UUID.randomUUID()
                   ) extends LazyLogging {
-
+  def toJson: JsValue = Json.toJson(this)
 }
 
 object OwcLink extends LazyLogging {
 
+  val verifyingKnownRelationsReads = new Reads[String] {
+    override def reads(json: JsValue): JsResult[String] = {
+      val knownRelations = List("profile", "via", "alternate", "icon", "enclosure")
+      json match {
+        case JsString(rel) => {
+          if (knownRelations.contains(rel.toLowerCase())) {
+            JsSuccess(rel.toLowerCase)
+          } else {
+            logger.error("JsError ValidationError error.expected.validrel")
+            JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.validrel"))))
+          }
+        }
+        case _ => {
+          logger.error("JsError ValidationError error.expected.jsstring")
+          JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsstring"))))
+        }
+      }
+    }
+  }
+
+  implicit val owc100LinkReads: Reads[OwcLink] = (
+    (JsPath \ "href").read[URL](new UrlFormat) and
+      (JsPath \ "type").readNullable[String](minLength[String](1) andKeep new MimeTypeFormat) and
+      (JsPath \ "lang").readNullable[String](minLength[String](1) andKeep new IsoLangFormat) and
+      (JsPath \ "title").readNullable[String](minLength[String](1)) and
+      (JsPath \ "length").readNullable[Int](min[Int](0)) and
+      ((JsPath \ "rel").read[String](verifyingKnownRelationsReads) orElse Reads.pure("alternate") ) and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()) )
+    ) (OwcLink.apply _)
+
+  implicit val owc100LinkWrites: Writes[OwcLink] = (
+    (JsPath \ "href").write[URL](new UrlFormat) and
+      (JsPath \ "type").writeNullable[String] and
+      (JsPath \ "lang").writeNullable[String] and
+      (JsPath \ "title").writeNullable[String] and
+      (JsPath \ "length").writeNullable[Int] and
+      (JsPath \ "rel").write[String] and
+      (JsPath \ "uuid").write[UUID]
+    ) (unlift(OwcLink.unapply))
+
+  implicit val owc100OfferingFormat: Format[OwcLink] = Format(owc100LinkReads, owc100LinkWrites)
 }

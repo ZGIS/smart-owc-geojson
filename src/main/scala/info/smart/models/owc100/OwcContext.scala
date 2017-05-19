@@ -20,6 +20,7 @@
 package info.smart.models.owc100
 
 import java.time.ZonedDateTime
+import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
 import info.smart.models.owc.{JtsPolygonReader, RectangleWriter}
@@ -66,7 +67,5 @@ case class OwcContext(
 
 object OwcContext extends LazyLogging {
 
-  implicit val rectangleWrites: Writes[Rectangle] = new RectangleWriter()
-  implicit val rectangleReads: Reads[Option[Rectangle]] = new JtsPolygonReader()
 
 }

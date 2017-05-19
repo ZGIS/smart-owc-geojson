@@ -39,7 +39,7 @@ case class OwcOffering(
                         operations: List[OwcOperation],
                         contents: List[OwcContent],
                         styles: List[OwcStyleSet],
-                        uuid: UUID
+                        uuid: UUID = UUID.randomUUID()
                       ) extends LazyLogging {
   def toJson: JsValue = Json.toJson(this)
 }

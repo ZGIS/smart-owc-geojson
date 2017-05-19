@@ -26,7 +26,12 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{minLength, _}
 import play.api.libs.json._
 
-case class OwcCategory(term: String, scheme: Option[String], label: Option[String], uuid: UUID = UUID.randomUUID()) extends LazyLogging {
+case class OwcCategory(
+                        term: String,
+                        scheme: Option[String],
+                        label: Option[String],
+                        uuid: UUID = UUID.randomUUID()
+                      ) extends LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)
 }

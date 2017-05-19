@@ -43,7 +43,7 @@ case class OwcStyleSet(
                         default: Option[Boolean],
                         legendUrl: Option[URL],
                         content: Option[OwcContent],
-                        uuid: UUID
+                        uuid: UUID = UUID.randomUUID()
                       ) extends LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)

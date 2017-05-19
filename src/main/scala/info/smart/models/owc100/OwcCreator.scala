@@ -53,7 +53,7 @@ case class OwcCreatorApplication(
                                   title: Option[String],
                                   uri: Option[URL],
                                   version: Option[String],
-                                  uuid: UUID
+                                  uuid: UUID = UUID.randomUUID()
                                 ) extends LazyLogging {
   def toJson: JsValue = Json.toJson(this)
 }
@@ -89,7 +89,7 @@ case class OwcCreatorDisplay(
                               pixelWidth: Option[Int],
                               pixelHeight: Option[Int],
                               mmPerPixel: Option[Double],
-                              uuid: UUID
+                              uuid: UUID = UUID.randomUUID()
                             ) extends LazyLogging {
   def toJson: JsValue = Json.toJson(this)
 }
