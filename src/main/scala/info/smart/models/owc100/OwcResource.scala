@@ -19,12 +19,14 @@
 
 package info.smart.models.owc100
 
+import java.net.URL
 import java.time.ZonedDateTime
 
 import com.typesafe.scalalogging.LazyLogging
-import info.smart.models.owc.{JtsPolygonReader, RectangleWriter}
 import org.locationtech.spatial4j.shape.Rectangle
-import play.api.libs.json.{Reads, Writes}
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 /**
   * + id :CharacterString
@@ -48,11 +50,11 @@ import play.api.libs.json.{Reads, Writes}
   * + extension :Any [0..*]
   */
 case class OwcResource(
-                        id: String,
+                        id: URL,
                         title: String,
                         subtitle: Option[String],
                         updateDate: ZonedDateTime,
-                        author: List[String],
+                        author: List[OwcAuthor],
                         publisher: Option[String],
                         rights: Option[String],
                         geospatialExtent: Option[Rectangle],
@@ -68,9 +70,55 @@ case class OwcResource(
                         maxScaleDenominator: Option[Double],
                         folder: Option[String]
                       ) extends LazyLogging {
+  def toJson: JsValue = Json.toJson(this)
 }
 
 object OwcResource extends LazyLogging {
 
+  implicit val owc100ResourceReads: Reads[OwcResource] = (
+    (JsPath \ "id").read[URL](new UrlFormat) and
+      (JsPath \ "properties" \ "title").read[String](minLength[String](1)) and
+      (JsPath \ "properties" \ "abstract").readNullable[String](minLength[String](1)) and
+      (JsPath \ "properties" \ "updated").read[ZonedDateTime] and
+      ((JsPath \ "properties" \ "authors" ).read[List[OwcAuthor]] orElse Reads.pure(List[OwcAuthor]())) and
+      (JsPath \ "properties" \ "publisher").readNullable[String](minLength[String](1)) and
+      (JsPath \ "properties" \ "rights").readNullable[String](minLength[String](1)) and
+      (JsPath \ "geometry").readNullable[Rectangle](new RectangleGeometryFormat) and
+      (JsPath \ "properties" \ "date").readNullable[List[ZonedDateTime]] and
+      ((JsPath \ "properties" \ "links" \ "alternates").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
+      ((JsPath \ "properties" \ "links" \ "previews").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
+      ((JsPath \ "properties" \ "links" \ "data").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
+      ((JsPath \ "properties" \ "offerings").read[List[OwcOffering]] orElse Reads.pure(List[OwcOffering]())) and
+      (JsPath \ "properties" \ "active").readNullable[Boolean] and
+      ((JsPath \ "properties" \ "links" \ "via").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
+      ((JsPath \ "properties" \ "categories" ).read[List[OwcCategory]] orElse Reads.pure(List[OwcCategory]())) and
+      (JsPath \ "properties" \ "minscaledenominator").readNullable[Double](min[Double](0)) and
+      (JsPath \ "properties" \ "maxscaledenominator").readNullable[Double](min[Double](0)) and
+      (JsPath \ "properties" \ "folder").readNullable[String](minLength[String](1))
+    ) (OwcResource.apply _)
+
+  implicit val owc100ResourceWrites: Writes[OwcResource] = (
+    (JsPath \ "id").write[URL](new UrlFormat) and
+      (JsPath \ "properties" \ "title").write[String] and
+      (JsPath \ "properties" \ "abstract").writeNullable[String] and
+      (JsPath \ "properties" \ "updated").write[ZonedDateTime] and
+      (JsPath \ "properties" \ "authors").write[List[OwcAuthor]] and
+      (JsPath \ "properties" \ "publisher").writeNullable[String] and
+      (JsPath \ "properties" \ "rights").writeNullable[String] and
+      (JsPath \ "geometry").writeNullable[Rectangle](new RectangleGeometryFormat) and
+      (JsPath \ "properties" \ "date").writeNullable[List[ZonedDateTime]] and
+      (JsPath \ "properties" \ "links" \ "alternates").write[List[OwcLink]] and
+      (JsPath \ "properties" \ "links" \ "previews").write[List[OwcLink]] and
+      (JsPath \ "properties" \ "links" \ "data").write[List[OwcLink]] and
+      (JsPath \ "properties" \ "offerings").write[List[OwcOffering]] and
+      (JsPath \ "properties" \ "active").writeNullable[Boolean] and
+      (JsPath \ "properties" \ "links" \ "via").write[List[OwcLink]] and
+      (JsPath \ "properties" \ "categories").write[List[OwcCategory]] and
+      (JsPath \ "properties" \ "minscaledenominator").writeNullable[Double] and
+      (JsPath \ "properties" \ "maxscaledenominator").writeNullable[Double] and
+      (JsPath \ "properties" \ "folder").writeNullable[String]
+    ) (unlift(OwcResource.unapply))
+
+  implicit val owc100OfferingFormat: Format[OwcResource] = Format(owc100ResourceReads, owc100ResourceWrites)
 
 }

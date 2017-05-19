@@ -59,6 +59,8 @@ libraryDependencies ++= {
     "com.typesafe.play" %% "play-json" % playV,
     "com.typesafe.play" %% "play-functional" % playV,
 
+    "uk.gov.hmrc"  %% "emailaddress" % "2.1.0",
+
     "com.typesafe"        % "config"           % "1.3.1",
     "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
     "ch.qos.logback" % "logback-classic" % "1.1.7",
@@ -68,6 +70,8 @@ libraryDependencies ++= {
     "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % Test
   )
 }
+
+resolvers += Resolver.bintrayRepo("hmrc", "releases")
 
 // bintrayReleaseOnPublish in ThisBuild := false
 publishArtifact in Test := false
