@@ -41,7 +41,7 @@
           "data" : [{
             "href" : "http://www.acme.com/products/algal20090123090856.hdf",
             "type" : "application/x-hdf5",
-            "length" : "453123432",
+            "length" : 453123432,
             "title" : "HDF file for the entry 2009-01-23 09:08:56"
           }],
           "via" : [{

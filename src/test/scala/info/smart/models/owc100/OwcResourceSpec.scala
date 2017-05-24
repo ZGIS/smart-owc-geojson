@@ -126,36 +126,60 @@ class OwcResourceSpec extends WordSpec with MustMatchers with LazyLogging {
 
     "<xz>.features[i].properties.links.alternates MAY contain Reference to a description of the Context resource " +
       "in alternative format, Array of link objects (0..*)" in {
-
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.contentDescription mustEqual List()
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.contentDescription.head.mimeType mustEqual Some("text/html")
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.contentDescription.head.href.isInstanceOf[URL] mustBe true
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.contentDescription.isEmpty mustBe true
     }
 
     "<xz>.features[i].properties.links.previews MAY contain Reference to a quick-look or browse image representing " +
       "the resource, Array of link objects, 'length' SHOULD be provided (0..*)" in {
-
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.preview mustEqual List()
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.preview.isEmpty mustBe true
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.preview.head.mimeType mustEqual Some("image/png")
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.preview.head.href.isInstanceOf[URL] mustBe true
     }
 
     "<xz>.features[i].properties.links.data MAY contain Reference to the location of the data resource described in the Context resource, " +
       "Array of link objects (0..*)" in {
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.contentByRef.length mustEqual 1
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.contentByRef.head.mimeType mustEqual Some("application/x-hdf5")
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.contentByRef.head.length mustEqual Some(453123432)
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.contentByRef.isEmpty mustBe true
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.contentByRef.isEmpty mustBe true
 
     }
 
     "<xz>.features[i].properties.offering MAY contain Service or inline content offering for the resource " +
       "targeted at OGC compliant clients, owc:OfferingType (0..*)" in {
-
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.offering.length mustEqual 1
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.offering.length mustEqual 2
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.offering.length mustEqual 2
     }
 
     "<xz>.features[i].properties.active MAY contain Flag value indicating if the Context resource should be displayed by default, 'true' or 'false' (0..*)" in {
-
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.active mustEqual None
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.active mustEqual Some(false)
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.active mustEqual Some(true)
     }
 
     "<xz>.features[i].properties.links.via MAY contain Reference to a resource from which the Context resource is derived, " +
       "(e.g. source of the information) Link object (0..*)" in {
       logger.warn("the spec says, 'link object' not  'Array of link objects', example doesn NOT show an array, but spec defines multiplicity as 'Zero or more(optional)'")
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.resourceMetadata.length mustEqual 1
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.resourceMetadata.head.mimeType mustEqual Some("application/xml")
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.resourceMetadata.head.length mustEqual Some(435)
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.resourceMetadata.head.lang mustEqual Some("es")
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.resourceMetadata.isEmpty mustBe true
     }
 
     "<xz>.features[i].properties.categories.term MAY contain Category related to this resource. " +
       "It MAY have a related code-list that is identified by the 'scheme' attribute (0..*)" in {
-
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.keyword.isEmpty mustBe true
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.keyword.length mustEqual 1
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.keyword.head.term mustEqual "GEOSSDataCore"
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.keyword.head.scheme mustEqual Some("view-groups")
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.keyword.head.label mustEqual Some("Informative Layers")
     }
 
     "<xz>.features[i].properties.minscaledenominator MAY contain Minimum scale for the display of the Context resource Double (0..1)" in {

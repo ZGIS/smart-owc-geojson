@@ -78,7 +78,7 @@
           "via" : [{
             "href" : "http://www.acme.com/products/algal20090123090856.xml",
             "type" : "application/xml",
-            "length" : "435",
+            "length" : 435,
             "lang" : "es",
             "title" : "XML metadata file for the entry 2009-01-23 09:08:56"
           }]
