@@ -92,7 +92,7 @@ class OwcStyleSetSpec extends WordSpec with MustMatchers with LazyLogging{
                        |<FeatureTypeStyle><Rule><LineSymbolizer><Stroke>
                        |<CssParameter name="stroke">#000000</CssParameter>
                        |<CssParameter name="strokewidth">3</CssParameter></Stroke></LineSymbolizer></Rule></FeatureTypeStyle>
-                       |</UserStyle></NamedLayer></StyledLayerDescriptor>"""
+                       |</UserStyle></NamedLayer></StyledLayerDescriptor>""".stripMargin
 
     val inlineContent = Json.stringify(JsString(sldContent))
 

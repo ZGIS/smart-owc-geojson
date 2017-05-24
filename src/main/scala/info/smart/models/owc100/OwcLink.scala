@@ -64,7 +64,7 @@ case class OwcLink(
 object OwcLink extends LazyLogging {
 
   val verifyingKnownRelationsReads = new Reads[String] {
-    override def reads(json: JsValue): JsResult[String] = {
+    def reads(json: JsValue): JsResult[String] = {
       val knownRelations = List("profile", "via", "alternate", "icon", "enclosure")
       json match {
         case JsString(rel) => {

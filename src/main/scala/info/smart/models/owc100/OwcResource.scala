@@ -20,10 +20,11 @@
 package info.smart.models.owc100
 
 import java.net.URL
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.typesafe.scalalogging.LazyLogging
 import org.locationtech.spatial4j.shape.Rectangle
+import play.api.data.validation.ValidationError
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
@@ -53,38 +54,58 @@ case class OwcResource(
                         id: URL,
                         title: String,
                         subtitle: Option[String],
-                        updateDate: ZonedDateTime,
+                        updateDate: OffsetDateTime,
                         author: List[OwcAuthor],
                         publisher: Option[String],
                         rights: Option[String],
                         geospatialExtent: Option[Rectangle],
-                        temporalExtent: Option[List[ZonedDateTime]],
-                        contentDescription: List[OwcLink], // alternates
-                        preview: List[OwcLink], // aka rel=previews or icon (atom)
-                        contentByRef: List[OwcLink], // aka rel=data or enclosure (atom)
+                        temporalExtent: Option[List[OffsetDateTime]],
+                        contentDescription: List[OwcLink], // links.alternates[] and rel=alternate
+                        preview: List[OwcLink], // aka links.previews[] and rel=icon (atom)
+                        contentByRef: List[OwcLink], // aka links.data[] and rel=enclosure (atom)
                         offering: List[OwcOffering],
                         active: Option[Boolean],
-                        resourceMetadata: List[OwcLink], // aka rel=via
+                        resourceMetadata: List[OwcLink], // aka links.via[] & rel=via
                         keyword: List[OwcCategory],
                         minScaleDenominator: Option[Double],
                         maxScaleDenominator: Option[Double],
                         folder: Option[String]
                       ) extends LazyLogging {
-  def toJson: JsValue = Json.toJson(this)
+
+  // write the "type": "Feature" without using a field in the case class
+  private val addFeatureTypeJsonTransform = (JsPath \ "type").json.put(JsString("Feature"))
+
+  def toJson: JsValue = {
+    val js = Json.toJson(this)
+    js.transform(addFeatureTypeJsonTransform).getOrElse(js)
+  }
 }
 
 object OwcResource extends LazyLogging {
 
-  implicit val owc100ResourceReads: Reads[OwcResource] = (
+  private val verifyingFeatureTypeReads = new Reads[String] {
+    def reads(json: JsValue): JsResult[String] = json.validate[String].flatMap{
+      case s if s.equals("Feature") => JsSuccess(s)
+      case s => {
+        logger.error("JsError ValidationError error.expected.type=feature")
+        JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.type=feature"))))
+      }
+    }
+  }
+
+  // read validate the "type": "Feature" without using a field in the case class
+  private val readFeatureTypeJsonTransform: Reads[String] = (JsPath \ "type").read[String](verifyingFeatureTypeReads)
+
+  private val owc100ResourceReads: Reads[OwcResource] = (
     (JsPath \ "id").read[URL](new UrlFormat) and
       (JsPath \ "properties" \ "title").read[String](minLength[String](1)) and
       (JsPath \ "properties" \ "abstract").readNullable[String](minLength[String](1)) and
-      (JsPath \ "properties" \ "updated").read[ZonedDateTime] and
+      (JsPath \ "properties" \ "updated").read[OffsetDateTime] and
       ((JsPath \ "properties" \ "authors" ).read[List[OwcAuthor]] orElse Reads.pure(List[OwcAuthor]())) and
       (JsPath \ "properties" \ "publisher").readNullable[String](minLength[String](1)) and
       (JsPath \ "properties" \ "rights").readNullable[String](minLength[String](1)) and
       (JsPath \ "geometry").readNullable[Rectangle](new RectangleGeometryFormat) and
-      (JsPath \ "properties" \ "date").readNullable[List[ZonedDateTime]] and
+      (JsPath \ "properties" \ "date").readNullable[List[OffsetDateTime]](new TemporalExtentFormat) and
       ((JsPath \ "properties" \ "links" \ "alternates").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
       ((JsPath \ "properties" \ "links" \ "previews").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
       ((JsPath \ "properties" \ "links" \ "data").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
@@ -97,16 +118,19 @@ object OwcResource extends LazyLogging {
       (JsPath \ "properties" \ "folder").readNullable[String](minLength[String](1))
     ) (OwcResource.apply _)
 
+  // read and validate first Reads[String] and then second Reads[OwcResource and only keep second result
+  implicit val owc100validatedResourceReads: Reads[OwcResource] = readFeatureTypeJsonTransform andKeep owc100ResourceReads
+
   implicit val owc100ResourceWrites: Writes[OwcResource] = (
     (JsPath \ "id").write[URL](new UrlFormat) and
       (JsPath \ "properties" \ "title").write[String] and
       (JsPath \ "properties" \ "abstract").writeNullable[String] and
-      (JsPath \ "properties" \ "updated").write[ZonedDateTime] and
+      (JsPath \ "properties" \ "updated").write[OffsetDateTime] and
       (JsPath \ "properties" \ "authors").write[List[OwcAuthor]] and
       (JsPath \ "properties" \ "publisher").writeNullable[String] and
       (JsPath \ "properties" \ "rights").writeNullable[String] and
       (JsPath \ "geometry").writeNullable[Rectangle](new RectangleGeometryFormat) and
-      (JsPath \ "properties" \ "date").writeNullable[List[ZonedDateTime]] and
+      (JsPath \ "properties" \ "date").writeNullable[List[OffsetDateTime]](new TemporalExtentFormat) and
       (JsPath \ "properties" \ "links" \ "alternates").write[List[OwcLink]] and
       (JsPath \ "properties" \ "links" \ "previews").write[List[OwcLink]] and
       (JsPath \ "properties" \ "links" \ "data").write[List[OwcLink]] and
@@ -119,6 +143,6 @@ object OwcResource extends LazyLogging {
       (JsPath \ "properties" \ "folder").writeNullable[String]
     ) (unlift(OwcResource.unapply))
 
-  implicit val owc100OfferingFormat: Format[OwcResource] = Format(owc100ResourceReads, owc100ResourceWrites)
+  implicit val owc100OfferingFormat: Format[OwcResource] = Format(owc100validatedResourceReads, owc100ResourceWrites)
 
 }

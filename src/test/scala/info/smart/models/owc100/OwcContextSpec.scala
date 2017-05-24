@@ -19,27 +19,39 @@
 
 package info.smart.models.owc100
 
+import java.net.URL
+
 import com.typesafe.scalalogging.LazyLogging
 import org.scalatest.{MustMatchers, WordSpec}
+import play.api.libs.json._
 
 class OwcContextSpec extends WordSpec with MustMatchers with LazyLogging{
 
+  private lazy val owcResource1: URL = this.getClass().getResource("/owc100/owc1.geojson")
+  private lazy val owcResource2: URL = this.getClass().getResource("/owc100/owc2.geojson")
+  private lazy val owcResource3: URL = this.getClass().getResource("/owc100/owc3.geojson")
+
+  private val jsonTestCollection1: JsValue = Json.parse(scala.io.Source.fromURL(owcResource1).getLines.mkString)
+  private val jsonTestCollection2: JsValue = Json.parse(scala.io.Source.fromURL(owcResource2).getLines.mkString)
+  private val jsonTestCollection3: JsValue = Json.parse(scala.io.Source.fromURL(owcResource3).getLines.mkString)
+
   "OwcContext GeoJson Dependency http://www.opengis.net/spec/owc/1.0/core" should {
+
     "comply with Requirement http://www.opengis.net/spec/owc-geojson/1.0/req/geojsonRules" in {
-      logger.warn("An OWS Context document encoded in GeoJSON (GeoJSON Context Document) " +
+      logger.info("An OWS Context document encoded in GeoJSON (GeoJSON Context Document) " +
         "SHALL comply with the rules specified in [IETF GeoJSON]")
     }
 
     "comply with Requirement http://www.opengis.net/spec/owc-geojson/1.0/req/mime-type" in {
-      logger.warn("GeoJSON OWS Context documents SHALL adopt the GeoJSON MIMEtype application/vnd.geo+json")
+      logger.info("GeoJSON OWS Context documents SHALL adopt the GeoJSON MIMEtype application/vnd.geo+json")
     }
 
     "comply with  Requirement http://www.opengis.net/spec/owc-geojson/1.0/req/file-extension" in {
-      logger.warn("GeoJSON OWS Context documents using GeoJSON SHALL use the file extension of '.geojson' or '.json'")
+      logger.info("GeoJSON OWS Context documents using GeoJSON SHALL use the file extension of '.geojson' or '.json'")
     }
 
     "comply with Requirement http://www.opengis.net/spec/owc-geojson/1.0/req/owc-encoding" in {
-      logger.warn("GeoJSON encoded OWS Context documents SHALL comply with the encoding rules given in the section 7.1.1.")
+      logger.info("GeoJSON encoded OWS Context documents SHALL comply with the encoding rules given in the section 7.1.1.")
     }
 
   }
@@ -48,7 +60,23 @@ class OwcContextSpec extends WordSpec with MustMatchers with LazyLogging{
 
     "<xz>.type SHALL have the value FeatureCollection" in {
 
+      val fromJson: JsResult[OwcResource] = Json.fromJson[OwcResource](jsonTestCollection1)
+      fromJson match {
+        case JsSuccess(r: OwcResource, path: JsPath) => println("id: " + r.id)
+        case e: JsError => println("Errors: " + JsError.toJson(e).toString())
+      }
+
+      val result: JsResult[OwcResource] = jsonTestCollection1.validate[OwcResource]
+      result match {
+        case s: JsSuccess[OwcResource] => println("title: " + s.get.title)
+        case e: JsError => println("Errors: " + JsError.toJson(e).toString())
+      }
+
+      val jsRes1 = (jsonTestCollection1 \ "features")(0).get
+      jsRes1.validate[OwcResource].get.isInstanceOf[OwcResource] mustBe true
+
     }
+
 
     "<xz>.properties.links.profiles SHALL have the href value 'http://www.opengis.net/spec/owcgeojson/1.0/req/core'" in {
 

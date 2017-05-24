@@ -19,7 +19,7 @@
 
 package info.smart.models.owc100
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
@@ -46,21 +46,21 @@ import play.api.libs.json.{Reads, Writes}
   * + extension :Any [0..*]
   */
 case class OwcContext(
-                       specReference: OwcLink, // aka profile
-                       contextMetadata: List[OwcLink], // e.g. via and self
+                       specReference: OwcLink, // aka links.profiles[] and rel=profile
+                       contextMetadata: List[OwcLink], // e.g. links.via[] and rel=via
                        resource: List[OwcResource],
                        language: String,
                        id: String,
                        title: String,
                        subtitle: Option[String],
-                       updateDate: ZonedDateTime,
+                       updateDate: OffsetDateTime,
                        author: List[String],
                        publisher: Option[String],
                        creatorApplication: Option[OwcCreatorApplication],
                        creatorDisplay: Option[OwcCreatorDisplay],
                        rights: Option[String],
                        areaOfInterest: Option[Rectangle],
-                       timeIntervalOfInterest: Option[List[ZonedDateTime]],
+                       timeIntervalOfInterest: Option[List[OffsetDateTime]],
                        keyword: List[OwcCategory]
                      ) extends LazyLogging {
 }

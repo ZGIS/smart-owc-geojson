@@ -54,7 +54,7 @@ case class OwcOperation(
 object OwcOperation extends LazyLogging {
 
   val verifyingHttpMethodsReads = new Reads[String] {
-    override def reads(json: JsValue): JsResult[String] = {
+    def reads(json: JsValue): JsResult[String] = {
       val allowedVerbs = List("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS", "CONNECT")
       json match {
         case JsString(verb) => {

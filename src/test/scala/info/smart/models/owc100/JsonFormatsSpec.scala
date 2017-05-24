@@ -20,6 +20,7 @@
 package info.smart.models.owc100
 
 import java.net.URL
+import java.time.{OffsetDateTime, ZoneOffset}
 
 import com.typesafe.scalalogging.LazyLogging
 import org.locationtech.spatial4j.context.jts.JtsSpatialContext
@@ -87,30 +88,34 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
       lazy val jtsCtx = JtsSpatialContext.GEO
 
       val json1 =
-        Json.parse("""{"geometry":{"type":"Polygon","coordinates":[[[164,-50],[180,-50],
-          |[180,-31],[164,-31],[164,-50]]]}}""".stripMargin)
+        Json.parse(
+          """{"geometry":{"type":"Polygon","coordinates":[[[164,-50],[180,-50],
+            |[180,-31],[164,-31],[164,-50]]]}}""".stripMargin)
 
       (json1 \ "geometry").validate[Rectangle](new RectangleGeometryFormat).get mustEqual
-        jtsCtx.getShapeFactory.rect(164.0,180.0,-50.0,-31.0)
+        jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0)
 
       // 500 out of lat bounds
       val json1_1 =
-        Json.parse("""{"geometry":{"type":"Polygon","coordinates":[[[164,-50],[180,-50],
-                     |[180,-31],[164,-31],[164,-500]]]}}""".stripMargin)
+        Json.parse(
+          """{"geometry":{"type":"Polygon","coordinates":[[[164,-50],[180,-50],
+            |[180,-31],[164,-31],[164,-500]]]}}""".stripMargin)
 
       (json1_1 \ "geometry").validate[Rectangle](new RectangleGeometryFormat).isInstanceOf[JsError] mustBe true
 
       val json1_2 =
-        Json.parse("""{"geometry":{"type":"Polygon","coordinates":[[[-164,-50],[-90,-50],
-                     |[-90,-31],[-164,-31],[-164,-50]]]}}""".stripMargin)
+        Json.parse(
+          """{"geometry":{"type":"Polygon","coordinates":[[[-164,-50],[-90,-50],
+            |[-90,-31],[-164,-31],[-164,-50]]]}}""".stripMargin)
 
       (json1_2 \ "geometry").validate[Rectangle](new RectangleGeometryFormat).get mustEqual
-        jtsCtx.getShapeFactory.rect(-164.0,-90.0,-50.0,-31.0)
+        jtsCtx.getShapeFactory.rect(-164.0, -90.0, -50.0, -31.0)
 
       // line string not a polygon
       val json3 =
-        Json.parse("""{"geometry":{"type":"LineString","coordinates":[[-101.744384765625,39.32155002466662],
-                     |[-99.3218994140625,38.89530825492018],[-97.635498046875,38.87392853923629]]}}""".stripMargin)
+        Json.parse(
+          """{"geometry":{"type":"LineString","coordinates":[[-101.744384765625,39.32155002466662],
+            |[-99.3218994140625,38.89530825492018],[-97.635498046875,38.87392853923629]]}}""".stripMargin)
 
       (json3 \ "geometry").validate[Rectangle](new RectangleGeometryFormat).isInstanceOf[JsError] mustBe true
 
@@ -128,29 +133,30 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
         Json.parse("""{"geometry":{"type":"Polygon","coordinates":[[[-180,-90],[-180,90],[180,90],[180,-90],[-180,-90]]]}}""".stripMargin)
 
       (json2 \ "geometry").validate[Rectangle](new RectangleGeometryFormat).get mustEqual
-        jtsCtx.getShapeFactory.rect(-180.0,180.0,-90.0,90.0)
+        jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0)
 
       // counter clockwise (geojsonlint OK)
       val json2_1 =
-        Json.parse("""{"geometry":{"type":"Polygon","coordinates":[[[-180,-90],[180,-90],
-                     |[180,90],[-180,90],[-180,-90]]]}}""".stripMargin)
+        Json.parse(
+          """{"geometry":{"type":"Polygon","coordinates":[[[-180,-90],[180,-90],
+            |[180,90],[-180,90],[-180,-90]]]}}""".stripMargin)
 
       (json2_1 \ "geometry").validate[Rectangle](new RectangleGeometryFormat).get mustEqual
-        jtsCtx.getShapeFactory.rect(-180.0,180.0,-90.0,90.0)
+        jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0)
     }
 
     "Writes RectangleGeometryFormat" in {
       lazy val jtsCtx = JtsSpatialContext.GEO
 
-      val geom1 = jtsCtx.getShapeFactory.rect(-180.0,180.0,-90.0,90.0)
+      val geom1 = jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0)
       val jsVal1 = Json.toJson[Rectangle](geom1)(new RectangleGeometryFormat)
       jsVal1.validate[Rectangle](new RectangleGeometryFormat).get mustEqual
-        jtsCtx.getShapeFactory.rect(-180.0,180.0,-90.0,90.0)
+        jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0)
 
-      val geom2 = jtsCtx.getShapeFactory.rect(164.0,180.0,-50.0,-31.0)
+      val geom2 = jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0)
       val jsVal2 = Json.toJson[Rectangle](geom2)(new RectangleGeometryFormat)
       jsVal2.validate[Rectangle](new RectangleGeometryFormat).get mustEqual
-        jtsCtx.getShapeFactory.rect(164.0,180.0,-50.0,-31.0)
+        jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0)
     }
   }
 
@@ -172,8 +178,60 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
     }
   }
 
-  "JSON BboxDoubleArrayFormat" should {
+  "JSON TemporalExtentFormat" should {
 
+
+    "Reads TemporalExtentFormat Range" in {
+
+      val json1 = Json.parse("""{"date": "2011-11-04T00:01:23Z/2017-12-05T17:28:56Z"}""")
+      (json1 \ "date").validate[List[OffsetDateTime]](new TemporalExtentFormat).get mustEqual List(
+        OffsetDateTime.of(2011, 11, 4, 0, 1, 23, 0, ZoneOffset.ofHours(0)),
+        OffsetDateTime.of(2017, 12, 5, 17, 28, 56, 0, ZoneOffset.ofHours(0))
+      )
+
+      val json2 = Json.parse("""{"date" : "2013-01-02T15:24:24[UTC]"}""")
+      (json2 \ "date").validate[List[OffsetDateTime]](new TemporalExtentFormat).isInstanceOf[JsError] mustBe true
+    }
+
+    "Reads TemporalExtentFormat Single" in {
+
+      val json1 = Json.parse("""{"date" : "2013-11-02T15:24:24+12:00"}""")
+      (json1 \ "date").validate[List[OffsetDateTime]](new TemporalExtentFormat).get mustEqual List(
+        OffsetDateTime.of(2013, 11, 2, 15, 24, 24, 0, ZoneOffset.ofHours(12)))
+
+      val json2 = Json.parse("""{"date" : "2013-11-02T15:24:24.446-03:30"}""")
+      (json2 \ "date").validate[List[OffsetDateTime]](new TemporalExtentFormat).get mustEqual List(
+        OffsetDateTime.of(2013, 11, 2, 15, 24, 24, 446 * 1000000, ZoneOffset.ofHoursMinutes(-3, -30)))
+    }
+
+    "Writes TemporalExtentFormat Range" in {
+      val dateRange = List(
+        OffsetDateTime.of(2011, 11, 4, 0, 1, 23, 0, ZoneOffset.ofHours(0)),
+        OffsetDateTime.of(2017, 12, 5, 17, 28, 56, 0, ZoneOffset.ofHours(0))
+      )
+
+      val jsVal1 = Json.toJson[List[OffsetDateTime]](dateRange)(new TemporalExtentFormat)
+      jsVal1.as[String] mustEqual "2011-11-04T00:01:23Z/2017-12-05T17:28:56Z"
+
+    }
+
+    "Writes TemporalExtentFormat Single" in {
+
+      val date = List(
+        OffsetDateTime.of(2013, 11, 2, 15, 24, 24, 0,  ZoneOffset.ofHours(12)))
+
+      val jsVal = Json.toJson[List[OffsetDateTime]](date)(new TemporalExtentFormat)
+      jsVal.as[String] mustEqual "2013-11-02T15:24:24+12:00"
+
+      val date2 = List(
+        OffsetDateTime.of(2013, 11, 2, 15, 24, 24, 446 * 1000000,  ZoneOffset.ofHours(12)))
+
+      val jsVal2 = Json.toJson[List[OffsetDateTime]](date2)(new TemporalExtentFormat)
+      jsVal2.as[String] mustEqual "2013-11-02T15:24:24.446+12:00"
+    }
+  }
+
+  "JSON BboxDoubleArrayFormat" should {
 
     "Reads BboxDoubleArrayFormat" in {
 
@@ -185,7 +243,4 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
 
     }
   }
-
-
-
 }
