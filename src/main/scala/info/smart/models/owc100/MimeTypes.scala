@@ -41,6 +41,11 @@ object MimeTypes {
         application/rss+xml
         application/atom+xml
         # OGC stuffs
+        text/xml; subtype=gml/3.2.1
+        text/xml; subtype=gml/3.1.1
+        text/xml; subtype=om/1.0
+        text/xml; subtype=om/2.0
+        text/xml; subtype=waterml/2.0
         application/gml+xml
         application/vnd.ogc.sld+xml
         # more science stuffs
@@ -197,6 +202,7 @@ object MimeTypes {
         text/html
         text/webviewhtml
         text/html
+        text/xml
         x-conference/x-cooltalk
         image/x-icon
         text/calendar

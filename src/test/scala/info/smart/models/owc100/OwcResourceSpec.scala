@@ -184,18 +184,46 @@ class OwcResourceSpec extends WordSpec with MustMatchers with LazyLogging {
 
     "<xz>.features[i].properties.minscaledenominator MAY contain Minimum scale for the display of the Context resource Double (0..1)" in {
 
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.minScaleDenominator mustEqual None
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.minScaleDenominator.get mustEqual 100.0
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.minScaleDenominator mustEqual None
     }
 
     "<xz>.features[i].properties.maxscaledenominator MAY contain Maximum scale for the display of the Context resource Double (0..1)" in {
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.maxScaleDenominator mustEqual None
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.maxScaleDenominator.get mustEqual 1000000.0
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.maxScaleDenominator mustEqual None
 
     }
 
     "<xz>.features[i].properties.folder MAY contain Definition string of a folder name in which the resource is placed (0..1)" in {
+      (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.folder mustEqual None
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.folder mustEqual None
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.folder  mustEqual Some("/view-groups/sac_add")
 
     }
 
     "<xz>.features[i].properties.* MAY contain Any other element Extension outside of the scope of OWS Context (0..*)" in {
       logger.info("MAY contain <xz>.features[i].properties.uuid, but in Ows:Resource we use <xz>.features[i].id as unique identifier")
+    }
+  }
+
+  "owcresource writer" should {
+
+    val res1 = (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get
+    val res2 = (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get
+    val res3 = (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get
+
+    "write owcresource geojson" in {
+//      println(Json.prettyPrint(res1.toJson))
+//      val result: JsResult[OwcResource] = res1.toJson.validate[OwcResource]
+//      result match {
+//        case s: JsSuccess[OwcResource] => println("title: " + s.get.title)
+//        case e: JsError => println("Errors: " + JsError.toJson(e).toString())
+//      }
+      res1.toJson.validate[OwcResource].get mustEqual res1
+      res2.toJson.validate[OwcResource].get mustEqual res2
+      res3.toJson.validate[OwcResource].get mustEqual res3
     }
   }
 }

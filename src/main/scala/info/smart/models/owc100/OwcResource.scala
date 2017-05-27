@@ -73,7 +73,7 @@ case class OwcResource(
                       ) extends LazyLogging {
 
   // write the "type": "Feature" without using a field in the case class
-  private val addFeatureTypeJsonTransform = (JsPath \ "type").json.put(JsString("Feature"))
+  private val addFeatureTypeJsonTransform = JsPath.read[JsObject].map( o => o ++ Json.obj("type" -> "Feature"))
 
   def toJson: JsValue = {
     val js = Json.toJson(this)

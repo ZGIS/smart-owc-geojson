@@ -33,7 +33,7 @@ class MimeTypeFormat extends Format[String] with LazyLogging {
       case JsString(mimeType) => validateMimeType(mimeType) match {
         case Some(s) => JsSuccess(s)
         case None => {
-          logger.error("JsError ValidationError error.expected.validmimetype")
+          logger.error(s"JsError ValidationError error.expected.validmimetype: $mimeType")
           JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.validmimetype"))))
         }
       }
