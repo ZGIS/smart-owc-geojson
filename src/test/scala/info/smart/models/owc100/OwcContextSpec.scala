@@ -134,9 +134,10 @@ class OwcContextSpec extends WordSpec with MustMatchers with LazyLogging {
       jsonTestCollection3.validate[OwcContext].get.author.head.name mustEqual Some("Alex Kmoch")
       jsonTestCollection3.validate[OwcContext].get.author.head.uri mustEqual Some(new URL("https://www.gns.cri.nz"))
       jsonTestCollection3.validate[OwcContext].get.author.head.email mustEqual Some(EmailAddress("a.kmoch@gns.cri.nz"))
+    }
 
-      logger.info("Geojson objects MUST contain one or more elements on the properties.author array, " +
-        "unless all of the entries of the features array contain one or more elements on the properties.authors array")
+    "<xz>.properties.authors.name MUST contain one or more elements on the properties.author array " +
+      "unless all of the entries of the features array contain one or more elements on the properties.authors array" in {
 
       val owc = jsonTestCollection1.validate[OwcContext].get
       val failedAuthor = owc.copy(author = List())

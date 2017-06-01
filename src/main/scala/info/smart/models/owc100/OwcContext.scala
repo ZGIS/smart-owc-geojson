@@ -101,7 +101,13 @@ object OwcContext extends LazyLogging {
       (JsPath \ "properties" \ "date").readNullable[List[OffsetDateTime]](new TemporalExtentFormat) and
       ((JsPath \ "properties" \ "categories").read[List[OwcCategory]] orElse Reads.pure(List[OwcCategory]())) and
       ((JsPath \ "features").read[List[OwcResource]] orElse Reads.pure(List[OwcResource]()))
-    ) (OwcContext.apply _)
+    ) (OwcContext.apply _).filter { owc =>
+      (owc.author.nonEmpty) || (
+        owc.author.isEmpty && (
+          owc.resource.filter(res => res.author.length > 0).length == owc.resource.length
+          )
+        )
+    }
 
   // read and validate first Reads[String] and then second Reads[OwcContext and only keep second result
   private val owc100validatedContextReads: Reads[OwcContext] = readFeatureColTypeJsonTransform andKeep owc100ContextReads
