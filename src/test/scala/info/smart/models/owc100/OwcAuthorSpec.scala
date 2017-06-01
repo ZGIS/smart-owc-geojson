@@ -30,55 +30,55 @@ import uk.gov.hmrc.emailaddress.EmailAddress
 
 class OwcAuthorSpec extends WordSpec with MustMatchers with LazyLogging {
 
+  val jsAuthor1 =
+    """{
+      |"name": "John Doe"
+      |}""".stripMargin
+
+  val jsAuthor1_1 =
+    """{
+      |}""".stripMargin
+
+  val jsAuthor1_2 =
+    """{
+      |"name": ""
+      |}""".stripMargin
+
+  val jsAuthor2 =
+    """{
+      |"name" : "Joe Doe",
+      |"email" : "jdoe@some.com"
+      |}""".stripMargin
+
+  val jsAuthor2_1 =
+    """{
+      |"name" : "Joe Doe",
+      |"email" : "jdoe-some.com"
+      |}""".stripMargin
+
+  val jsAuthor3 =
+    """{
+      |"name" : "Joe Doe",
+      |"email" : "jdoe@some.com",
+      |"uri" : "http://some.com/jdoe"
+      |}""".stripMargin
+
+  val jsAuthor3_1 =
+    """{
+      |"name" : "Joe Doe",
+      |"email" : "jdoe@some.com",
+      |"uri" : "httpxx://some.com/jdoe"
+      |}""".stripMargin
+
+  val jsAuthor4 =
+    """{
+      |"name" : "Joe Doe",
+      |"email" : "jdoe@some.com",
+      |"uri" : "http://some.com/jdoe",
+      |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+      |}""".stripMargin
+
   "GeoJSON Authors " should {
-
-    val jsAuthor1 =
-      """{
-        |"name": "John Doe"
-        |}""".stripMargin
-
-    val jsAuthor1_1 =
-      """{
-        |}""".stripMargin
-
-    val jsAuthor1_2 =
-      """{
-        |"name": ""
-        |}""".stripMargin
-
-    val jsAuthor2 =
-      """{
-        |"name" : "Joe Doe",
-        |"email" : "jdoe@some.com"
-        |}""".stripMargin
-
-    val jsAuthor2_1 =
-      """{
-        |"name" : "Joe Doe",
-        |"email" : "jdoe-some.com"
-        |}""".stripMargin
-
-    val jsAuthor3 =
-      """{
-        |"name" : "Joe Doe",
-        |"email" : "jdoe@some.com",
-        |"uri" : "http://some.com/jdoe"
-        |}""".stripMargin
-
-    val jsAuthor3_1 =
-      """{
-        |"name" : "Joe Doe",
-        |"email" : "jdoe@some.com",
-        |"uri" : "httpxx://some.com/jdoe"
-        |}""".stripMargin
-
-    val jsAuthor4 =
-      """{
-        |"name" : "Joe Doe",
-        |"email" : "jdoe@some.com",
-        |"uri" : "http://some.com/jdoe",
-        |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-        |}""".stripMargin
 
     "<props>.authors.name It MAY contain name (conveys a human-readable name for the person)" in {
       val jsVal = Json.parse(jsAuthor1_1)
@@ -121,7 +121,21 @@ class OwcAuthorSpec extends WordSpec with MustMatchers with LazyLogging {
       Json.parse(jsAuthor3).validate[OwcAuthor].get.uuid.isInstanceOf[UUID] mustBe true
       Json.parse(jsAuthor4).validate[OwcAuthor].get.uuid mustEqual UUID.fromString("b9ea2498-fb32-40ef-91ef-0ba00060fe64")
     }
+  }
 
+  "OwcAuthor Writes" should {
 
+    "write OwcAuthor GeoJSON" in {
+
+      val res1 = Json.parse(jsAuthor1).validate[OwcAuthor].get
+      val res2 = Json.parse(jsAuthor2).validate[OwcAuthor].get
+      val res3 = Json.parse(jsAuthor3).validate[OwcAuthor].get
+      val res4 = Json.parse(jsAuthor4).validate[OwcAuthor].get
+
+      res1.toJson.validate[OwcAuthor].get mustEqual res1
+      res2.toJson.validate[OwcAuthor].get mustEqual res2
+      res3.toJson.validate[OwcAuthor].get mustEqual res3
+      res4.toJson.validate[OwcAuthor].get mustEqual res4
+    }
   }
 }

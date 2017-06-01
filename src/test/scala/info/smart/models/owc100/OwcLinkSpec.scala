@@ -28,89 +28,89 @@ import play.api.libs.json._
 
 class OwcLinkSpec extends WordSpec with MustMatchers with LazyLogging{
 
+  val jsLink1 =
+    s"""{"href" : "http://www.acme.com/products/algal20090123090856.html",
+       |"title" : "Information for the entry 2009-01-23 09:08:56",
+       |"rel": "alternate"
+       |}
+      """.stripMargin
+
+  val jsLink1_1 =
+    s"""{"href" : "http://www.acme.com/products/algal20090123090856.html",
+       |"title" : "",
+       |"rel": "alternate"
+       |}
+      """.stripMargin
+
+  val jsLink2 =
+    s"""{"href" : "http://www.acme.com/products/algal20090123090856.xml",
+       |"type" : "application/xml",
+       |"length" : 435,
+       |"title" : "XML metadata file for the entry 2009-01-23 09:08:56",
+       |"rel": "via"
+       |}
+      """.stripMargin
+
+  val jsLink2_1 =
+    s"""{"href" : "http://www.acme.com/products/algal20090123090856.xml",
+       |"type" : "application/xml",
+       |"length" : "435",
+       |"title" : "XML metadata file for the entry 2009-01-23 09:08:56",
+       |"rel": "via"
+       |}
+      """.stripMargin
+
+  val jsLink3 =
+    s"""{"href" : "http://www.acme.com/collections/algal.xml",
+       |"type" : "application/xml",
+       |"title" : "Algal XML metadata",
+       |"lang" : "en",
+       |"rel": "via",
+       |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+       |}
+      """.stripMargin
+
+  val jsLink3_1 =
+    s"""{"href" : "http://www.acme.com/collections/algal.xml",
+       |"type" : "application/xml",
+       |"title" : "Algal XML metadata",
+       |"lang" : "NOLANG",
+       |"rel": "via",
+       |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+       |}
+      """.stripMargin
+
+  val jsLink4 =
+    s"""{"href" : "http://www.acme.com/products/algal20090123090856.png",
+       |"type" : "image/png",
+       |"length" : 12321,
+       |"title" : " Quicklook for the entry 2009-01-23 09:08:56",
+       |"rel": "icon",
+       |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+       |}
+      """.stripMargin
+
+  val jsLink4_1 =
+    s"""{"href" : "http://www.acme.com/products/algal20090123090856.png",
+       |"type" : "image/png",
+       |"length" : 12321,
+       |"title" : " Quicklook for the entry 2009-01-23 09:08:56",
+       |"rel": "boogie",
+       |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+       |}
+      """.stripMargin
+
+  val jsLink5 =
+    s"""{"href" : "http://www.acme.com/products/algal20090123090856.hdf",
+       |"type" : "application/x-hdf5",
+       |"length" : 453123432,
+       |"title" : "HDF file for the entry 2009-01-23 09:08:56",
+       |"rel": "enclosure",
+       |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+       |}
+      """.stripMargin
+
   "DataType 'links' GeoJSON Section 7.1.10" should {
-
-    val jsLink1 =
-      s"""{"href" : "http://www.acme.com/products/algal20090123090856.html",
-         |"title" : "Information for the entry 2009-01-23 09:08:56",
-         |"rel": "alternate"
-         |}
-      """.stripMargin
-
-    val jsLink1_1 =
-      s"""{"href" : "http://www.acme.com/products/algal20090123090856.html",
-         |"title" : "",
-         |"rel": "alternate"
-         |}
-      """.stripMargin
-
-    val jsLink2 =
-      s"""{"href" : "http://www.acme.com/products/algal20090123090856.xml",
-         |"type" : "application/xml",
-         |"length" : 435,
-         |"title" : "XML metadata file for the entry 2009-01-23 09:08:56",
-         |"rel": "via"
-         |}
-      """.stripMargin
-
-    val jsLink2_1 =
-      s"""{"href" : "http://www.acme.com/products/algal20090123090856.xml",
-         |"type" : "application/xml",
-         |"length" : "435",
-         |"title" : "XML metadata file for the entry 2009-01-23 09:08:56",
-         |"rel": "via"
-         |}
-      """.stripMargin
-
-    val jsLink3 =
-      s"""{"href" : "http://www.acme.com/collections/algal.xml",
-         |"type" : "application/xml",
-         |"title" : "Algal XML metadata",
-         |"lang" : "en",
-         |"rel": "via",
-         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-         |}
-      """.stripMargin
-
-    val jsLink3_1 =
-      s"""{"href" : "http://www.acme.com/collections/algal.xml",
-         |"type" : "application/xml",
-         |"title" : "Algal XML metadata",
-         |"lang" : "NOLANG",
-         |"rel": "via",
-         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-         |}
-      """.stripMargin
-
-    val jsLink4 =
-      s"""{"href" : "http://www.acme.com/products/algal20090123090856.png",
-         |"type" : "image/png",
-         |"length" : 12321,
-         |"title" : " Quicklook for the entry 2009-01-23 09:08:56",
-         |"rel": "icon",
-         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-         |}
-      """.stripMargin
-
-    val jsLink4_1 =
-      s"""{"href" : "http://www.acme.com/products/algal20090123090856.png",
-         |"type" : "image/png",
-         |"length" : 12321,
-         |"title" : " Quicklook for the entry 2009-01-23 09:08:56",
-         |"rel": "boogie",
-         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-         |}
-      """.stripMargin
-
-    val jsLink5 =
-      s"""{"href" : "http://www.acme.com/products/algal20090123090856.hdf",
-         |"type" : "application/x-hdf5",
-         |"length" : 453123432,
-         |"title" : "HDF file for the entry 2009-01-23 09:08:56",
-         |"rel": "enclosure",
-         |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-         |}
-      """.stripMargin
 
     "<xz>.href SHALL have URI describing the related resource" in {
 
@@ -176,6 +176,25 @@ class OwcLinkSpec extends WordSpec with MustMatchers with LazyLogging{
       // Json.parse(jsLink4_1).validate[OwcLink].isInstanceOf[JsError] mustBe true
       Json.parse(jsLink4_1).validate[OwcLink].get.rel mustEqual "alternate"
       Json.parse(jsLink5).validate[OwcLink].get.rel mustEqual "enclosure"
+    }
+  }
+
+  "OwcLink Writes" should {
+
+    "write OwcLink GeoJSON" in {
+
+      val res1 = Json.parse(jsLink1).validate[OwcLink].get
+      val res2 = Json.parse(jsLink2).validate[OwcLink].get
+      val res3 = Json.parse(jsLink3).validate[OwcLink].get
+      val res4 = Json.parse(jsLink4).validate[OwcLink].get
+      val res5 = Json.parse(jsLink5).validate[OwcLink].get
+
+
+      res1.toJson.validate[OwcLink].get mustEqual res1
+      res2.toJson.validate[OwcLink].get mustEqual res2
+      res3.toJson.validate[OwcLink].get mustEqual res3
+      res4.toJson.validate[OwcLink].get mustEqual res4
+      res5.toJson.validate[OwcLink].get mustEqual res5
     }
   }
 }

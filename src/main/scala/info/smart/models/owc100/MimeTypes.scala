@@ -37,6 +37,7 @@ object MimeTypes {
     """
         # GeoJson
         application/geojson
+        application/vnd.geo+json
         # Atom RSS Feed is 
         application/rss+xml
         application/atom+xml

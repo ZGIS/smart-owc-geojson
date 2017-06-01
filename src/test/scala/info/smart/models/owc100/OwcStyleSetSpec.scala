@@ -27,90 +27,91 @@ import play.api.libs.json._
 
 class OwcStyleSetSpec extends WordSpec with MustMatchers with LazyLogging{
 
+
+  val jsStyle1 = """{
+                   |"name": "Simple Line"
+                   |}
+                 """.stripMargin
+
+  val jsStyle2 = """{
+                   |"name": "Simple Line",
+                   |"title": "SLD Cook Book: Simple Line"
+                   |}
+                 """.stripMargin
+
+  val abstrakt = "SLD Cook Book: Simple Line extracted from http://docs.geoserver.org/latest/en/user/_downloads/line_simpleline.sld"
+
+  val jsStyle3 = s"""{
+                    |"name": "Simple Line",
+                    |"title": "SLD Cook Book: Simple Line",
+                    |"abstract": "$abstrakt"
+                    |}
+                   """.stripMargin
+
+  val jsStyle4 = s"""{
+                    |"name": "Simple Line",
+                    |"title": "SLD Cook Book: Simple Line",
+                    |"abstract": "$abstrakt",
+                    |"default": true
+                    |}
+                   """.stripMargin
+
+
+  val jsStyle5 = s"""{
+                    |"name": "Simple Line",
+                    |"title": "SLD Cook Book: Simple Line",
+                    |"abstract": "$abstrakt",
+                    |"default": true,
+                    |"legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png",
+                    |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+                    |}
+                   """.stripMargin
+
+  val jsStyle6 = s"""{
+                    |"name": "Simple Line",
+                    |"title": "SLD Cook Book: Simple Line",
+                    |"abstract": "$abstrakt",
+                    |"default": true,
+                    |"legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png",
+                    |"content": {
+                    |  "type": "application/vnd.ogc.sld+xml",
+                    |  "href": "http://docs.geoserver.org/latest/en/user/_downloads/line_simpleline.sld"
+                    |  }
+                    |}
+                   """.stripMargin
+
+  val sldContent = """<StyledLayerDescriptor version="1.0.0"
+                     | xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
+                     | xmlns:xlink="http://www.w3.org/1999/xlink"
+                     | xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     | xsi:schemaLocation="http://www.opengis.net/sld
+                     |   ../../../sld/1.1/StyledLayerDescriptor.xsd">
+                     |<NamedLayer><Name>Simple Line</Name>
+                     |<UserStyle><Title>SLD Cook Book: Simple Line</Title>
+                     |<FeatureTypeStyle><Rule><LineSymbolizer><Stroke>
+                     |<CssParameter name="stroke">#000000</CssParameter>
+                     |<CssParameter name="strokewidth">3</CssParameter></Stroke></LineSymbolizer></Rule></FeatureTypeStyle>
+                     |</UserStyle></NamedLayer></StyledLayerDescriptor>""".stripMargin
+
+  val inlineContent = Json.stringify(JsString(sldContent))
+
+
+  val jsStyle7 = s"""{
+                    |"name": "Simple Line",
+                    |"title": "SLD Cook Book: Simple Line",
+                    |"abstract": "$abstrakt",
+                    |"default": true,
+                    |"legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png",
+                    |"content": {
+                    |  "type": "application/vnd.ogc.sld+xml",
+                    |  "content" : ${inlineContent},
+                    |  "uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
+                    |  },
+                    |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+                    |}
+                   """.stripMargin
+
   "DataType OWC:StyleSet GeoJSON Section 7.1.6" should {
-
-    val jsStyle1 = """{
-        |"name": "Simple Line"
-        |}
-      """.stripMargin
-
-    val jsStyle2 = """{
-                     |"name": "Simple Line",
-                     |"title": "SLD Cook Book: Simple Line"
-                     |}
-                   """.stripMargin
-
-    val abstrakt = "SLD Cook Book: Simple Line extracted from http://docs.geoserver.org/latest/en/user/_downloads/line_simpleline.sld"
-
-    val jsStyle3 = s"""{
-                     |"name": "Simple Line",
-                     |"title": "SLD Cook Book: Simple Line",
-                     |"abstract": "$abstrakt"
-                     |}
-                   """.stripMargin
-
-    val jsStyle4 = s"""{
-                     |"name": "Simple Line",
-                     |"title": "SLD Cook Book: Simple Line",
-                     |"abstract": "$abstrakt",
-                     |"default": true
-                     |}
-                   """.stripMargin
-
-
-    val jsStyle5 = s"""{
-                     |"name": "Simple Line",
-                     |"title": "SLD Cook Book: Simple Line",
-                     |"abstract": "$abstrakt",
-                     |"default": true,
-                     |"legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png",
-                     |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-                     |}
-                   """.stripMargin
-
-    val jsStyle6 = s"""{
-                     |"name": "Simple Line",
-                     |"title": "SLD Cook Book: Simple Line",
-                     |"abstract": "$abstrakt",
-                     |"default": true,
-                     |"legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png",
-                     |"content": {
-                     |  "type": "application/vnd.ogc.sld+xml",
-                     |  "href": "http://docs.geoserver.org/latest/en/user/_downloads/line_simpleline.sld"
-                     |  }
-                     |}
-                   """.stripMargin
-
-    val sldContent = """<StyledLayerDescriptor version="1.0.0"
-                       | xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
-                       | xmlns:xlink="http://www.w3.org/1999/xlink"
-                       | xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                       | xsi:schemaLocation="http://www.opengis.net/sld
-                       |   ../../../sld/1.1/StyledLayerDescriptor.xsd">
-                       |<NamedLayer><Name>Simple Line</Name>
-                       |<UserStyle><Title>SLD Cook Book: Simple Line</Title>
-                       |<FeatureTypeStyle><Rule><LineSymbolizer><Stroke>
-                       |<CssParameter name="stroke">#000000</CssParameter>
-                       |<CssParameter name="strokewidth">3</CssParameter></Stroke></LineSymbolizer></Rule></FeatureTypeStyle>
-                       |</UserStyle></NamedLayer></StyledLayerDescriptor>""".stripMargin
-
-    val inlineContent = Json.stringify(JsString(sldContent))
-
-
-    val jsStyle7 = s"""{
-                     |"name": "Simple Line",
-                     |"title": "SLD Cook Book: Simple Line",
-                     |"abstract": "$abstrakt",
-                     |"default": true,
-                     |"legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png",
-                     |"content": {
-                     |  "type": "application/vnd.ogc.sld+xml",
-                     |  "content" : ${inlineContent},
-                     |  "uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
-                     |  },
-                     |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-                     |}
-                   """.stripMargin
 
     "<style>.name SHALL have Unique name of the styleSet within a given offering" in {
       logger.info(" Uniqueness of name within a given offering deferred to OwcOfferingSpec")
@@ -203,6 +204,26 @@ class OwcStyleSetSpec extends WordSpec with MustMatchers with LazyLogging{
       Json.parse(jsStyle5).validate[OwcStyleSet].get.uuid mustEqual UUID.fromString("b9ea2498-fb32-40ef-91ef-0ba00060fe64")
       Json.parse(jsStyle6).validate[OwcStyleSet].get.uuid.isInstanceOf[UUID] mustBe true
       Json.parse(jsStyle7).validate[OwcStyleSet].get.uuid mustEqual UUID.fromString("b9ea2498-fb32-40ef-91ef-0ba00060fe64")
+    }
+  }
+
+  "OwcStyleSet Writes" should {
+
+    "write OwcStyleSet GeoJSON" in {
+
+      val res1 = Json.parse(jsStyle2).validate[OwcStyleSet].get
+      val res2 = Json.parse(jsStyle3).validate[OwcStyleSet].get
+      val res3 = Json.parse(jsStyle4).validate[OwcStyleSet].get
+      val res4 = Json.parse(jsStyle5).validate[OwcStyleSet].get
+      val res5 = Json.parse(jsStyle6).validate[OwcStyleSet].get
+      val res6 = Json.parse(jsStyle7).validate[OwcStyleSet].get
+
+      res1.toJson.validate[OwcStyleSet].get mustEqual res1
+      res2.toJson.validate[OwcStyleSet].get mustEqual res2
+      res3.toJson.validate[OwcStyleSet].get mustEqual res3
+      res4.toJson.validate[OwcStyleSet].get mustEqual res4
+      res5.toJson.validate[OwcStyleSet].get mustEqual res5
+      res6.toJson.validate[OwcStyleSet].get mustEqual res6
     }
   }
 }

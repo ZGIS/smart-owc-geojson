@@ -27,41 +27,41 @@ import play.api.libs.json._
 
 class OwcCreatorSpec extends WordSpec with MustMatchers with LazyLogging{
 
-  "DataType OWC:CreatorApplication GeoJSON Section 7.1.8" should {
+  val jsCreator1 = """{
+                     |"title": "Web Enterprise Suite"
+                     |}""".stripMargin
 
-    val jsCreator1 = """{
-                       |"title": "Web Enterprise Suite"
-                       |}""".stripMargin
+  val jsCreator2 = """{
+                     |"title": "Web Enterprise Suite",
+                     |"uri": "http://www.somewebside.org/WebEnterpriseSuite"
+                     |}""".stripMargin
 
-    val jsCreator2 = """{
-                       |"title": "Web Enterprise Suite",
-                       |"uri": "http://www.somewebside.org/WebEnterpriseSuite"
-                       |}""".stripMargin
+  val jsCreator3 = """{
+                     |"title": "Web Enterprise Suite",
+                     |"uri": "http://www.somewebside.org/WebEnterpriseSuite",
+                     |"version": "1.0.0"
+                     |}""".stripMargin
 
-    val jsCreator3 = """{
-                       |"title": "Web Enterprise Suite",
-                       |"uri": "http://www.somewebside.org/WebEnterpriseSuite",
-                       |"version": "1.0.0"
-                       |}""".stripMargin
+  val jsCreator4 = """{
+                     |"title": "Web Enterprise Suite",
+                     |"uri": "http://www.somewebside.org/WebEnterpriseSuite",
+                     |"version": "1.0.0",
+                     |"uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
+                     |}""".stripMargin
 
-    val jsCreator4 = """{
-                       |"title": "Web Enterprise Suite",
-                       |"uri": "http://www.somewebside.org/WebEnterpriseSuite",
-                       |"version": "1.0.0",
-                       |"uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
-                       |}""".stripMargin
-
-    val jsCreator2_1 = """{
+  val jsCreator2_1 = """{
                        |"title": "Web Enterprise Suite",
                        |"uri": "xxx://www.somewebside.org/WebEnterpriseSuite",
                        |"version": "1.0.0",
                        |"uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
                        |}""".stripMargin
 
-    val jsCreator2_2 = """{
+  val jsCreator2_2 = """{
                        |"version": "1.0.0",
                        |"uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
                        |}""".stripMargin
+
+  "DataType OWC:CreatorApplication GeoJSON Section 7.1.8" should {
 
     "<xz>.properties.generator.title MAY have Title or name of the application (0..1)" in {
       Json.parse(jsCreator1).validate[OwcCreatorApplication].get.title mustEqual Some("Web Enterprise Suite")
@@ -82,70 +82,85 @@ class OwcCreatorSpec extends WordSpec with MustMatchers with LazyLogging{
     }
   }
 
+  "OwcCreatorApplication Writes" should {
 
-  "DataType OWC:CreatorDisplay GeoJSON Section 7.1.9" should {
+    "write OwcCreatorApplication GeoJSON" in {
 
-    val jsCreator1 = """{
-                       |"pixelWidth": 600,
-                       |"pixelHeight": 400,
-                       |"mmPerPixel": 0.28
-                       |}""".stripMargin
+      val res1 = Json.parse(jsCreator1).validate[OwcCreatorApplication].get
+      val res2 = Json.parse(jsCreator2).validate[OwcCreatorApplication].get
+      val res3 = Json.parse(jsCreator3).validate[OwcCreatorApplication].get
+      val res4 = Json.parse(jsCreator4).validate[OwcCreatorApplication].get
 
-    val jsCreator1_1 = """{
+
+      res1.toJson.validate[OwcCreatorApplication].get mustEqual res1
+      res2.toJson.validate[OwcCreatorApplication].get mustEqual res2
+      res3.toJson.validate[OwcCreatorApplication].get mustEqual res3
+      res4.toJson.validate[OwcCreatorApplication].get mustEqual res4
+    }
+  }
+
+  val jsDisplay1 = """{
+                     |"pixelWidth": 600,
+                     |"pixelHeight": 400,
+                     |"mmPerPixel": 0.28
+                     |}""".stripMargin
+
+  val jsDisplay1_1 = """{
                        |"pixelWidth": -600,
                        |"pixelHeight": 400,
                        |"mmPerPixel": 0.28
                        |}""".stripMargin
 
-    val jsCreator1_2 = """{
+  val jsDisplay1_2 = """{
                        |"pixelWidth": 600,
                        |"pixelHeight": 400,
                        |"mmPerPixel": 28
                        |}""".stripMargin
 
-    val jsCreator1_3 = """{
+  val jsDisplay1_3 = """{
                        |"pixelWidth": "600",
                        |"pixelHeight": 400,
                        |"mmPerPixel": 0.28
                        |}""".stripMargin
 
-    // apparently casts such notations accordingly :-p
-    val jsCreator1_4 = """{
+  // apparently casts such notations accordingly :-p
+  val jsDisplay1_4 = """{
                        |"pixelWidth": 600,
                        |"pixelHeight": 400,
                        |"mmPerPixel": 2.235E+02
                        |}""".stripMargin
 
-    val jsCreator1_5 = """{
+  val jsDisplay1_5 = """{
                        |"pixelWidth": 600,
                        |"pixelHeight": -400,
                        |"mmPerPixel": 0.28
                        |}""".stripMargin
 
-    val jsCreator1_6 = """{
+  val jsDisplay1_6 = """{
                        |"pixelWidth": 600,
                        |"pixelHeight": -400,
                        |"mmPerPixel": -0.28
                        |}""".stripMargin
 
-    val jsCreator2 = """{
-                       |"pixelWidth": 600,
-                       |"pixelHeight": 400,
-                       |"mmPerPixel": 0.28,
-                       |"uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
-                       |}""".stripMargin
+  val jsDisplay2 = """{
+                     |"pixelWidth": 600,
+                     |"pixelHeight": 400,
+                     |"mmPerPixel": 0.28,
+                     |"uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
+                     |}""".stripMargin
 
-    // uuid too short, will fail and then "orElse" creates new UUID on the fly
-    val jsCreator2_1 = """{
+  // uuid too short, will fail and then "orElse" creates new UUID on the fly
+  val jsDisplay2_1 = """{
                        |"pixelWidth": 600,
                        |"pixelHeight": 400,
                        |"mmPerPixel": 0.28,
                        |"uuid": "a12c7aeb-a822-8a66-e77fa713724f"
                        |}""".stripMargin
 
+  "DataType OWC:CreatorDisplay GeoJSON Section 7.1.9" should {
 
     "<xz>.properties.display.pixelWidth MAY have Width measured in pixels of the display showing the Area of Interest, Positive Integer (0..1)" in {
-      val jsVal = Json.parse(jsCreator2_1)
+      val jsVal = Json.parse(jsDisplay2_1)
 
       val fromJson: JsResult[OwcCreatorDisplay] = Json.fromJson[OwcCreatorDisplay](jsVal)
       fromJson match {
@@ -159,31 +174,43 @@ class OwcCreatorSpec extends WordSpec with MustMatchers with LazyLogging{
         case e: JsError => logger.error("Errors: " + JsError.toJson(e).toString())
       }
 
-      Json.parse(jsCreator1).validate[OwcCreatorDisplay].get.pixelWidth mustEqual Some(600)
-      Json.parse(jsCreator1_1).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
-      Json.parse(jsCreator1_3).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
+      Json.parse(jsDisplay1).validate[OwcCreatorDisplay].get.pixelWidth mustEqual Some(600)
+      Json.parse(jsDisplay1_1).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
+      Json.parse(jsDisplay1_3).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
 
     }
 
     "<xz>.properties.display.pixelHeight MAY have Width measured in pixels of the display showing the Area of Interest, Positive Integer (0..1)" in {
-      Json.parse(jsCreator1).validate[OwcCreatorDisplay].get.pixelHeight mustEqual Some(400)
-      Json.parse(jsCreator1_1).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
-      Json.parse(jsCreator1_5).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
+      Json.parse(jsDisplay1).validate[OwcCreatorDisplay].get.pixelHeight mustEqual Some(400)
+      Json.parse(jsDisplay1_1).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
+      Json.parse(jsDisplay1_5).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
     }
 
     "<xz>.properties.display.mmPerPixel MAY have The size of a pixel of the display in milimeters (to allow for the real display size to be calculated), Double (0..1)" in {
-      Json.parse(jsCreator1).validate[OwcCreatorDisplay].get.mmPerPixel mustEqual Some(0.28)
-      Json.parse(jsCreator1_2).validate[OwcCreatorDisplay].get.mmPerPixel mustEqual Some(28.0)
-      Json.parse(jsCreator1_4).validate[OwcCreatorDisplay].get.mmPerPixel mustEqual Some(223.5)
-      Json.parse(jsCreator1_6).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
+      Json.parse(jsDisplay1).validate[OwcCreatorDisplay].get.mmPerPixel mustEqual Some(0.28)
+      Json.parse(jsDisplay1_2).validate[OwcCreatorDisplay].get.mmPerPixel mustEqual Some(28.0)
+      Json.parse(jsDisplay1_4).validate[OwcCreatorDisplay].get.mmPerPixel mustEqual Some(223.5)
+      Json.parse(jsDisplay1_6).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe true
     }
 
     "<xz>.properties.display.* MAY contain Any other element Extension outside of the scope of OWS Context (0..*)" in {
       logger.info("MAY contain <xz>.properties.display.uuid as unique identifier")
 
-      Json.parse(jsCreator1).validate[OwcCreatorDisplay].get.uuid.isInstanceOf[UUID] mustBe true
-      Json.parse(jsCreator2).validate[OwcCreatorDisplay].get.uuid mustEqual UUID.fromString("a12c7aeb-a822-49d7-8a66-e77fa713724f")
-      Json.parse(jsCreator2_1).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe false
+      Json.parse(jsDisplay1).validate[OwcCreatorDisplay].get.uuid.isInstanceOf[UUID] mustBe true
+      Json.parse(jsDisplay2).validate[OwcCreatorDisplay].get.uuid mustEqual UUID.fromString("a12c7aeb-a822-49d7-8a66-e77fa713724f")
+      Json.parse(jsDisplay2_1).validate[OwcCreatorDisplay].isInstanceOf[JsError] mustBe false
+    }
+  }
+
+  "OwcCreatorDisplay Writes" should {
+
+    "write OwcCreatorDisplay GeoJSON" in {
+
+      val res1 = Json.parse(jsDisplay1).validate[OwcCreatorDisplay].get
+      val res2 = Json.parse(jsDisplay2).validate[OwcCreatorDisplay].get
+
+      res1.toJson.validate[OwcCreatorDisplay].get mustEqual res1
+      res2.toJson.validate[OwcCreatorDisplay].get mustEqual res2
     }
   }
 }

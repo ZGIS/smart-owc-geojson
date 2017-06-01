@@ -160,6 +160,65 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
     }
   }
 
+  "JSON BboxArrayFormat" should {
+
+    "Reads BboxArrayFormat" in {
+
+      lazy val jtsCtx = JtsSpatialContext.GEO
+
+      val json1 =
+        Json.parse(
+          """{"bbox": [-180.0, -90.0, 180.0, 90.0]}""".stripMargin)
+
+      (json1 \ "bbox").validate[Rectangle](new BboxArrayFormat).get mustEqual
+        jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0)
+
+      // 500 out of lat bounds
+      val json1_1 =
+        Json.parse(
+          """{"bbox": [164, -50,  500, -31]}""".stripMargin)
+
+      (json1_1 \ "bbox").validate[Rectangle](new BboxArrayFormat).isInstanceOf[JsError] mustBe true
+
+      val json1_2 =
+        Json.parse(
+          """{"bbox": [164, -50,  180, -31]}""".stripMargin)
+
+      (json1_2 \ "bbox").validate[Rectangle](new BboxArrayFormat).get mustEqual
+        jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0)
+
+    }
+
+    /**
+      * RectangleGeometryFormat explicity not using GEO SpatialContext as it does "tricks"
+      * for dateline cross when parsing geojsonpolygon to rectangle
+      */
+    "not fail on reading worldbounds BboxArrayFormat" in {
+      lazy val jtsCtx = JtsSpatialContext.GEO
+
+      val json2 =
+        Json.parse("""{"bbox": [-180.0, -90.0, 180.0, 90.0]}""".stripMargin)
+
+      (json2 \ "bbox").validate[Rectangle](new BboxArrayFormat).get mustEqual
+        jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0)
+
+    }
+
+    "Writes BboxArrayFormat" in {
+      lazy val jtsCtx = JtsSpatialContext.GEO
+
+      val geom1 = jtsCtx.getShapeFactory.rect(100.0, 105.0, 0.0, 1.0)
+      val jsVal1 = Json.toJson[Rectangle](geom1)(new BboxArrayFormat)
+      jsVal1.validate[Rectangle](new BboxArrayFormat).get mustEqual
+        jtsCtx.getShapeFactory.rect(100.0, 105.0, 0.0, 1.0)
+
+      val geom2 = jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0)
+      val jsVal2 = Json.toJson[Rectangle](geom2)(new BboxArrayFormat)
+      jsVal2.validate[Rectangle](new BboxArrayFormat).get mustEqual
+        jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0)
+    }
+  }
+
   "JSON IsoLangFormat" should {
 
     "Reads IsoLangFormat" in {
@@ -179,7 +238,6 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
   }
 
   "JSON TemporalExtentFormat" should {
-
 
     "Reads TemporalExtentFormat Range" in {
 
@@ -228,19 +286,6 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
 
       val jsVal2 = Json.toJson[List[OffsetDateTime]](date2)(new TemporalExtentFormat)
       jsVal2.as[String] mustEqual "2013-11-02T15:24:24.446+12:00"
-    }
-  }
-
-  "JSON BboxDoubleArrayFormat" should {
-
-    "Reads BboxDoubleArrayFormat" in {
-
-      // val json1 = """{bbox": [-180.0, -90.0, 180.0, 90.0]}""".stripMargin
-
-    }
-
-    "Writes BboxDoubleArrayFormat" in {
-
     }
   }
 }

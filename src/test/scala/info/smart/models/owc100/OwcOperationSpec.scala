@@ -28,54 +28,52 @@ import play.api.libs.json._
 
 class OwcOperationSpec extends WordSpec with MustMatchers with LazyLogging{
 
-  "DataType OWC:Operation GeoJSON Section 7.1.4" should {
+  val jsOp1 = """{
+                |  "code" : "GetCapabilities",
+                |  "method" : "GET",
+                |  "href" : "http://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1"
+                |}""".stripMargin
 
-    val jsOp1 = """{
-                  |  "code" : "GetCapabilities",
-                  |  "method" : "GET",
-                  |  "href" : "http://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1"
-                  |}""".stripMargin
-
-    val jsOp1_1 = """{
+  val jsOp1_1 = """{
                   |  "code" : "GetCapabilities",
                   |  "href" : "http://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1"
                   |}""".stripMargin
 
-    val jsOp1_2 = """{
+  val jsOp1_2 = """{
                   |  "code" : "GetCapabilities",
                   |  "method" : "GET",
                   |  "href" : "htt://www.someserver.com/wrs.cgi?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1"
                   |}""".stripMargin
 
-    val jsOp2 = """{
-                  | "code" : "GetRecords",
-                  | "type" : "application/xml",
-                  | "method" : "POST",
-                  | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2"
-                  |}""".stripMargin
+  val jsOp2 = """{
+                | "code" : "GetRecords",
+                | "type" : "application/xml",
+                | "method" : "POST",
+                | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2"
+                |}""".stripMargin
 
-    val jsOp2_1 = """{
+  val jsOp2_1 = """{
                   | "code" : "GetRecords",
                   | "type" : "application/xml",
                   | "method" : "",
                   | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2"
                   |}""".stripMargin
 
-    val jsOp2_2 = """{
+  val jsOp2_2 = """{
                   | "code" : "GetRecords",
                   | "type" : "application/xml",
                   | "method" : "STREAM",
                   | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2"
                   |}""".stripMargin
 
-    val jsOp2_3 = """{
+  val jsOp2_3 = """{
                   | "code" : "GetRecords",
                   | "type" : "not-good-mimetype",
                   | "method" : "POST",
                   | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2"
                   |}""".stripMargin
 
-    val jsOp2_4 = """{
+  val jsOp2_4 = """{
                   | "code" : "GetRecords",
                   | "type" : "application/xml",
                   | "method" : "POST",
@@ -83,66 +81,66 @@ class OwcOperationSpec extends WordSpec with MustMatchers with LazyLogging{
                   | "uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
                   |}""".stripMargin
 
-    val cswRequestContent = """"<csw:GetRecords maxRecords="10"
-                                 | outputFormat="application/xml"
-                                 | outputSchema="http://www.isotc211.org/2005/gmd" resultType="results"
-                                 | service="CSW" startPosition="1" version="2.0.2"
-                                 | xmlns:ogc="http://www.opengis.net/ogc"
-                                 | xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-                                 | <csw:Query>
-                                 |  <csw:ElementSetName typeNames="csw:Record">full</csw:ElementSetName>
-                                 |  <csw:Constraint version="1.1.0">
-                                 |   <ogc:Filter>
-                                 |    <ogc:PropertyIsEqualTo>
-                                 |     <ogc:PropertyName>csw:Record/@id</ogc:PropertyName>
-                                 |     <ogc:Literal>9496276a-4f6e-47c1-94bbf604245fac57</ogc:Literal>
-                                 |    </ogc:PropertyIsEqualTo>
-                                 |   </ogc:Filter>
-                                 |  </csw:Constraint>
-                                 | </csw:Query>
-                                 |</csw:GetRecords>""".stripMargin
+  val cswRequestContent = """"<csw:GetRecords maxRecords="10"
+                            | outputFormat="application/xml"
+                            | outputSchema="http://www.isotc211.org/2005/gmd" resultType="results"
+                            | service="CSW" startPosition="1" version="2.0.2"
+                            | xmlns:ogc="http://www.opengis.net/ogc"
+                            | xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
+                            | <csw:Query>
+                            |  <csw:ElementSetName typeNames="csw:Record">full</csw:ElementSetName>
+                            |  <csw:Constraint version="1.1.0">
+                            |   <ogc:Filter>
+                            |    <ogc:PropertyIsEqualTo>
+                            |     <ogc:PropertyName>csw:Record/@id</ogc:PropertyName>
+                            |     <ogc:Literal>9496276a-4f6e-47c1-94bbf604245fac57</ogc:Literal>
+                            |    </ogc:PropertyIsEqualTo>
+                            |   </ogc:Filter>
+                            |  </csw:Constraint>
+                            | </csw:Query>
+                            |</csw:GetRecords>""".stripMargin
 
-    val inlineRequestContent = Json.stringify(JsString(cswRequestContent))
+  val inlineRequestContent = Json.stringify(JsString(cswRequestContent))
 
-    val jsOp3 = s"""{
-                  | "code" : "GetRecords",
-                  | "type" : "application/xml",
-                  | "method" : "POST",
-                  | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2",
-                  | "request":{
-                  |   "type" : "application/xml",
-                  |   "content" : ${inlineRequestContent}
-                  |  }
-                  |}""".stripMargin
+  val jsOp3 = s"""{
+                 | "code" : "GetRecords",
+                 | "type" : "application/xml",
+                 | "method" : "POST",
+                 | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2",
+                 | "request":{
+                 |   "type" : "application/xml",
+                 |   "content" : ${inlineRequestContent}
+                 |  }
+                 |}""".stripMargin
 
-    val sldContent = """<StyledLayerDescriptor version="1.0.0"
-                       | xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
-                       | xmlns:xlink="http://www.w3.org/1999/xlink"
-                       | xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                       | xsi:schemaLocation="http://www.opengis.net/sld
-                       |   ../../../sld/1.1/StyledLayerDescriptor.xsd">
-                       |<NamedLayer><Name>Simple Line</Name>
-                       |<UserStyle><Title>SLD Cook Book: Simple Line</Title>
-                       |<FeatureTypeStyle><Rule><LineSymbolizer><Stroke>
-                       |<CssParameter name="stroke">#000000</CssParameter>
-                       |<CssParameter name="strokewidth">3</CssParameter></Stroke></LineSymbolizer></Rule></FeatureTypeStyle>
-                       |</UserStyle></NamedLayer></StyledLayerDescriptor>""".stripMargin
+  val sldContent = """<StyledLayerDescriptor version="1.0.0"
+                     | xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
+                     | xmlns:xlink="http://www.w3.org/1999/xlink"
+                     | xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     | xsi:schemaLocation="http://www.opengis.net/sld
+                     |   ../../../sld/1.1/StyledLayerDescriptor.xsd">
+                     |<NamedLayer><Name>Simple Line</Name>
+                     |<UserStyle><Title>SLD Cook Book: Simple Line</Title>
+                     |<FeatureTypeStyle><Rule><LineSymbolizer><Stroke>
+                     |<CssParameter name="stroke">#000000</CssParameter>
+                     |<CssParameter name="strokewidth">3</CssParameter></Stroke></LineSymbolizer></Rule></FeatureTypeStyle>
+                     |</UserStyle></NamedLayer></StyledLayerDescriptor>""".stripMargin
 
-    val inlineResultContent = Json.stringify(JsString(sldContent))
+  val inlineResultContent = Json.stringify(JsString(sldContent))
 
-    val jsOp4 = s"""{
-                   | "code" : "GetRecords",
-                   | "type" : "application/xml",
-                   | "method" : "POST",
-                   | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2",
-                   | "result":{
-                   |   "type" : "application/xml",
-                   |   "content" : ${inlineResultContent},
-                   |   "uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
-                   |  }
-                   |}""".stripMargin
+  val jsOp4 = s"""{
+                 | "code" : "GetRecords",
+                 | "type" : "application/xml",
+                 | "method" : "POST",
+                 | "href" : "http://www.someserver.com/wrs.cgi?service=CSW&request=GetCapabilities&VERSION=2.0.2",
+                 | "result":{
+                 |   "type" : "application/xml",
+                 |   "content" : ${inlineResultContent},
+                 |   "uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
+                 |  }
+                 |}""".stripMargin
 
-    val jsOp4_1 = s"""{
+  val jsOp4_1 = s"""{
                    | "code" : "GetRecords",
                    | "type" : "application/xml",
                    | "method" : "POST",
@@ -155,6 +153,7 @@ class OwcOperationSpec extends WordSpec with MustMatchers with LazyLogging{
                    |  "uuid": "a12c7aeb-a822-49d7-8a66-e77fa713724f"
                    |}""".stripMargin
 
+  "DataType OWC:Operation GeoJSON Section 7.1.4" should {
 
     "<op>.code SHALL have Code identifying the type of Operation" in {
       val jsVal = Json.parse(jsOp1)
@@ -246,6 +245,22 @@ class OwcOperationSpec extends WordSpec with MustMatchers with LazyLogging{
       Json.parse(jsOp3).validate[OwcOperation].get.uuid.isInstanceOf[UUID] mustBe true
       Json.parse(jsOp4).validate[OwcOperation].get.uuid.isInstanceOf[UUID] mustBe true
       Json.parse(jsOp4_1).validate[OwcOperation].get.uuid mustEqual UUID.fromString("a12c7aeb-a822-49d7-8a66-e77fa713724f")
+    }
+  }
+
+  "OwcOperation Writes" should {
+
+    "write OwcOperation GeoJSON" in {
+
+      val res1 = Json.parse(jsOp1).validate[OwcOperation].get
+      val res2 = Json.parse(jsOp2).validate[OwcOperation].get
+      val res3 = Json.parse(jsOp3).validate[OwcOperation].get
+      val res4 = Json.parse(jsOp4).validate[OwcOperation].get
+
+      res1.toJson.validate[OwcOperation].get mustEqual res1
+      res2.toJson.validate[OwcOperation].get mustEqual res2
+      res3.toJson.validate[OwcOperation].get mustEqual res3
+      res4.toJson.validate[OwcOperation].get mustEqual res4
     }
   }
 }

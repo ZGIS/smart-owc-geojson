@@ -55,19 +55,20 @@ case class OwcCreatorApplication(
                                   version: Option[String],
                                   uuid: UUID = UUID.randomUUID()
                                 ) extends LazyLogging {
-  def toJson: JsValue = Json.toJson(this)
+
+  def toJson: JsValue = Json.toJson(this)(OwcCreatorApplication.owc100CreatorApplicationFormat)
 }
 
 object OwcCreatorApplication extends LazyLogging {
 
-  implicit val owc100CreatorApplictionReads: Reads[OwcCreatorApplication] = (
+  private val owc100CreatorApplictionReads: Reads[OwcCreatorApplication] = (
     (JsPath \ "title").readNullable[String](minLength[String](1)) and
       (JsPath \ "uri").readNullable[URL](new UrlFormat) and
       (JsPath \ "version").readNullable[String](minLength[String](1)) and
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
     ) (OwcCreatorApplication.apply _)
 
-  implicit val owc100OCreatorApplicationWrites: Writes[OwcCreatorApplication] = (
+  private val owc100OCreatorApplicationWrites: Writes[OwcCreatorApplication] = (
     (JsPath \ "title").writeNullable[String] and
       (JsPath \ "uri").writeNullable[URL](new UrlFormat) and
       (JsPath \ "version").writeNullable[String] and
@@ -91,19 +92,20 @@ case class OwcCreatorDisplay(
                               mmPerPixel: Option[Double],
                               uuid: UUID = UUID.randomUUID()
                             ) extends LazyLogging {
-  def toJson: JsValue = Json.toJson(this)
+
+  def toJson: JsValue = Json.toJson(this)(OwcCreatorDisplay.owc100CreatorDisplayFormat)
 }
 
 object OwcCreatorDisplay extends LazyLogging {
 
-  implicit val owc100CreatorDisplayReads: Reads[OwcCreatorDisplay] = (
+  private val owc100CreatorDisplayReads: Reads[OwcCreatorDisplay] = (
     (JsPath \ "pixelWidth").readNullable[Int](min[Int](0)) and
       (JsPath \ "pixelHeight").readNullable[Int](min[Int](0)) and
       (JsPath \ "mmPerPixel").readNullable[Double](min[Double](0)) and
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
     ) (OwcCreatorDisplay.apply _)
 
-  implicit val owc100OCreatorDisplayWrites: Writes[OwcCreatorDisplay] = (
+  private val owc100OCreatorDisplayWrites: Writes[OwcCreatorDisplay] = (
     (JsPath \ "pixelWidth").writeNullable[Int] and
       (JsPath \ "pixelHeight").writeNullable[Int] and
       (JsPath \ "mmPerPixel").writeNullable[Double] and

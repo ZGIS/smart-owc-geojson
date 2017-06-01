@@ -47,7 +47,7 @@ case class OwcOperation(
                          uuid: UUID = UUID.randomUUID()
                        ) extends LazyLogging {
 
-  def toJson: JsValue = Json.toJson(this)
+  def toJson: JsValue = Json.toJson(this)(OwcOperation.owc100OperationFormat)
 
 }
 
@@ -73,7 +73,7 @@ object OwcOperation extends LazyLogging {
     }
   }
 
-  implicit val owc100OperationReads: Reads[OwcOperation] = (
+  private val owc100OperationReads: Reads[OwcOperation] = (
     (JsPath \ "code").read[String](minLength[String](1)) and
       (JsPath \ "method").read[String](minLength[String](1) andKeep verifyingHttpMethodsReads) and
       (JsPath \ "type").readNullable[String](minLength[String](1) andKeep new MimeTypeFormat) and
@@ -83,7 +83,7 @@ object OwcOperation extends LazyLogging {
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
     ) (OwcOperation.apply _)
 
-  implicit val owc100OperationWrites: Writes[OwcOperation] = (
+  private val owc100OperationWrites: Writes[OwcOperation] = (
     (JsPath \ "code").write[String] and
       (JsPath \ "method").write[String] and
       (JsPath \ "type").writeNullable[String] and

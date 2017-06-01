@@ -107,8 +107,10 @@ class OwcResourceSpec extends WordSpec with MustMatchers with LazyLogging {
       lazy val jtsCtx = JtsSpatialContext.GEO
 
       (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get.geospatialExtent mustEqual None
-      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.geospatialExtent mustEqual Some(jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0))
-      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.geospatialExtent mustEqual Some(jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0))
+      (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get.geospatialExtent mustEqual
+        Some(jtsCtx.getShapeFactory.rect(-180.0, 180.0, -90.0, 90.0))
+      (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get.geospatialExtent mustEqual
+        Some(jtsCtx.getShapeFactory.rect(164.0, 180.0, -50.0, -31.0))
     }
 
     "<xz>.features[i].properties.date MAY contain date or an interval for the Context resource, " +
@@ -203,24 +205,19 @@ class OwcResourceSpec extends WordSpec with MustMatchers with LazyLogging {
 
     }
 
-    "<xz>.features[i].properties.* MAY contain Any other element Extension outside of the scope of OWS Context (0..*)" in {
-      logger.info("MAY contain <xz>.features[i].properties.uuid, but in Ows:Resource we use <xz>.features[i].id as unique identifier")
+    "Not used: <xz>.features[i].properties.* MAY contain Any other element Extension outside of the scope of OWS Context (0..*)" in {
+      logger.info("Not used: MAY contain <xz>.features[i].properties.uuid, but in Ows:Resource we use <xz>.features[i].id as unique identifier")
     }
   }
 
-  "owcresource writer" should {
+  "OwcResource Writes" should {
 
     val res1 = (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get
     val res2 = (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get
     val res3 = (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get
 
-    "write owcresource geojson" in {
-//      println(Json.prettyPrint(res1.toJson))
-//      val result: JsResult[OwcResource] = res1.toJson.validate[OwcResource]
-//      result match {
-//        case s: JsSuccess[OwcResource] => println("title: " + s.get.title)
-//        case e: JsError => println("Errors: " + JsError.toJson(e).toString())
-//      }
+    "write OwcResource GeoJSON" in {
+
       res1.toJson.validate[OwcResource].get mustEqual res1
       res2.toJson.validate[OwcResource].get mustEqual res2
       res3.toJson.validate[OwcResource].get mustEqual res3

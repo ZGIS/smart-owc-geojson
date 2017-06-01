@@ -41,23 +41,24 @@ case class OwcOffering(
                         styles: List[OwcStyleSet],
                         uuid: UUID = UUID.randomUUID()
                       ) extends LazyLogging {
-  def toJson: JsValue = Json.toJson(this)
+
+  def toJson: JsValue = Json.toJson(this)(OwcOffering.owc100OfferingFormat)
 }
 
 object OwcOffering extends LazyLogging {
 
-  implicit val owc100OfferingReads: Reads[OwcOffering] = (
+  private val owc100OfferingReads: Reads[OwcOffering] = (
     (JsPath \ "code").read[URL](new UrlFormatOfferingExtensions) and
       ((JsPath \ "operations").read[List[OwcOperation]] orElse Reads.pure(List[OwcOperation]())) and
       ((JsPath \ "contents").read[List[OwcContent]] orElse Reads.pure(List[OwcContent]())) and
       ((JsPath \ "styles").read[List[OwcStyleSet]] orElse Reads.pure(List[OwcStyleSet]())) and
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
     ) (OwcOffering.apply _).map { owc =>
-      val distinctStyles = owc.styles.map( sty => (sty.name, sty)).toMap.values.toList
-      owc.copy(styles = distinctStyles)
-    }
+    val distinctStyles = owc.styles.map(sty => (sty.name, sty)).toMap.values.toList
+    owc.copy(styles = distinctStyles)
+  }
 
-  implicit val owc100OfferingWrites: Writes[OwcOffering] = (
+  private val owc100OfferingWrites: Writes[OwcOffering] = (
     (JsPath \ "code").write[URL](new UrlFormat) and
       (JsPath \ "operations").write[List[OwcOperation]] and
       (JsPath \ "contents").write[List[OwcContent]] and

@@ -33,7 +33,7 @@ case class OwcCategory(
                         uuid: UUID = UUID.randomUUID()
                       ) extends LazyLogging {
 
-  def toJson: JsValue = Json.toJson(this)
+  def toJson: JsValue = Json.toJson(this)(OwcCategory.owc100CategoryFormat)
 }
 
 /**
@@ -41,14 +41,14 @@ case class OwcCategory(
   */
 object OwcCategory extends LazyLogging {
 
-  implicit val owc100CategoryReads: Reads[OwcCategory] = (
+  private val owc100CategoryReads: Reads[OwcCategory] = (
     (JsPath \ "term").read[String](minLength[String](1)) and
       (JsPath \ "scheme").readNullable[String](minLength[String](1)) and
       (JsPath \ "label").readNullable[String](minLength[String](1)) and
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
     ) (OwcCategory.apply _)
 
-  implicit val owc100CategoryWrites: Writes[OwcCategory] = (
+  private val owc100CategoryWrites: Writes[OwcCategory] = (
     (JsPath \ "term").write[String] and
       (JsPath \ "scheme").writeNullable[String] and
       (JsPath \ "label").writeNullable[String] and

@@ -46,22 +46,22 @@ case class OwcStyleSet(
                         uuid: UUID = UUID.randomUUID()
                       ) extends LazyLogging {
 
-  def toJson: JsValue = Json.toJson(this)
+  def toJson: JsValue = Json.toJson(this)(OwcStyleSet.owc100StyleSetFormat)
 }
 
 object OwcStyleSet extends LazyLogging {
 
-  implicit val owc100StyleSetReads: Reads[OwcStyleSet] = (
+  private val owc100StyleSetReads: Reads[OwcStyleSet] = (
     (JsPath \ "name").read[String](minLength[String](1)) and
-    (JsPath \ "title").read[String](minLength[String](1)) and
+      (JsPath \ "title").read[String](minLength[String](1)) and
       (JsPath \ "abstract").readNullable[String](minLength[String](1)) and
       (JsPath \ "default").readNullable[Boolean] and
       (JsPath \ "legendURL").readNullable[URL](new UrlFormat) and
       (JsPath \ "content").readNullable[OwcContent] and
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
-    )(OwcStyleSet.apply _)
+    ) (OwcStyleSet.apply _)
 
-  implicit val owc100StyleSetWrites: Writes[OwcStyleSet] = (
+  private val owc100StyleSetWrites: Writes[OwcStyleSet] = (
     (JsPath \ "name").write[String] and
       (JsPath \ "title").write[String] and
       (JsPath \ "abstract").writeNullable[String] and

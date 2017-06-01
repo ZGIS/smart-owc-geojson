@@ -27,7 +27,9 @@ import org.locationtech.spatial4j.shape.Rectangle
 import play.api.data.validation.ValidationError
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
+import play.api.libs.json.Writes._
 import play.api.libs.json._
+
 
 /**
   * + id :CharacterString
@@ -72,23 +74,17 @@ case class OwcResource(
                         folder: Option[String]
                       ) extends LazyLogging {
 
-  // write the "type": "Feature" without using a field in the case class
-  private val addFeatureTypeJsonTransform = JsPath.read[JsObject].map( o => o ++ Json.obj("type" -> "Feature"))
-
-  def toJson: JsValue = {
-    val js = Json.toJson(this)
-    js.transform(addFeatureTypeJsonTransform).getOrElse(js)
-  }
+  def toJson: JsValue = Json.toJson(this)(OwcResource.owc100ResourceFormat)
 }
 
 object OwcResource extends LazyLogging {
 
   private val verifyingFeatureTypeReads = new Reads[String] {
-    def reads(json: JsValue): JsResult[String] = json.validate[String].flatMap{
+    def reads(json: JsValue): JsResult[String] = json.validate[String].flatMap {
       case s if s.equals("Feature") => JsSuccess(s)
       case s => {
-        logger.error("JsError ValidationError error.expected.type=feature")
-        JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.type=feature"))))
+        logger.error("JsError ValidationError error.expected.type->Feature")
+        JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.type->Feature"))))
       }
     }
   }
@@ -101,7 +97,7 @@ object OwcResource extends LazyLogging {
       (JsPath \ "properties" \ "title").read[String](minLength[String](1)) and
       (JsPath \ "properties" \ "abstract").readNullable[String](minLength[String](1)) and
       (JsPath \ "properties" \ "updated").read[OffsetDateTime] and
-      ((JsPath \ "properties" \ "authors" ).read[List[OwcAuthor]] orElse Reads.pure(List[OwcAuthor]())) and
+      ((JsPath \ "properties" \ "authors").read[List[OwcAuthor]] orElse Reads.pure(List[OwcAuthor]())) and
       (JsPath \ "properties" \ "publisher").readNullable[String](minLength[String](1)) and
       (JsPath \ "properties" \ "rights").readNullable[String](minLength[String](1)) and
       (JsPath \ "geometry").readNullable[Rectangle](new RectangleGeometryFormat) and
@@ -112,16 +108,15 @@ object OwcResource extends LazyLogging {
       ((JsPath \ "properties" \ "offerings").read[List[OwcOffering]] orElse Reads.pure(List[OwcOffering]())) and
       (JsPath \ "properties" \ "active").readNullable[Boolean] and
       ((JsPath \ "properties" \ "links" \ "via").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
-      ((JsPath \ "properties" \ "categories" ).read[List[OwcCategory]] orElse Reads.pure(List[OwcCategory]())) and
+      ((JsPath \ "properties" \ "categories").read[List[OwcCategory]] orElse Reads.pure(List[OwcCategory]())) and
       (JsPath \ "properties" \ "minscaledenominator").readNullable[Double](min[Double](0)) and
       (JsPath \ "properties" \ "maxscaledenominator").readNullable[Double](min[Double](0)) and
       (JsPath \ "properties" \ "folder").readNullable[String](minLength[String](1))
     ) (OwcResource.apply _)
 
-  // read and validate first Reads[String] and then second Reads[OwcResource and only keep second result
-  implicit val owc100validatedResourceReads: Reads[OwcResource] = readFeatureTypeJsonTransform andKeep owc100ResourceReads
+  private val owc100validatedResourceReads: Reads[OwcResource] = readFeatureTypeJsonTransform andKeep owc100ResourceReads
 
-  implicit val owc100ResourceWrites: Writes[OwcResource] = (
+  private val owc100ResourceWrites: Writes[OwcResource] = (
     (JsPath \ "id").write[URL](new UrlFormat) and
       (JsPath \ "properties" \ "title").write[String] and
       (JsPath \ "properties" \ "abstract").writeNullable[String] and
@@ -143,6 +138,21 @@ object OwcResource extends LazyLogging {
       (JsPath \ "properties" \ "folder").writeNullable[String]
     ) (unlift(OwcResource.unapply))
 
-  implicit val owc100OfferingFormat: Format[OwcResource] = Format(owc100validatedResourceReads, owc100ResourceWrites)
+  private val addFeatureTypeJsonTransform = JsPath.read[JsObject].map(o => Json.obj("type" -> "Feature") ++ o)
+
+  // write the "type": "Feature" without using a field in the case class
+  private val owc100ResourceWritesWithFeatureType = Writes[OwcResource] { owc =>
+    val js = Json.toJson[OwcResource](owc)(owc100ResourceWrites)
+    val result = js.transform(addFeatureTypeJsonTransform).getOrElse(js)
+    if (result.equals(js)) {
+      logger.error("Couldn't write 'type' -> 'Feature' into Resource GeoJSON")
+    } else {
+      logger.debug("OwResource toJson adding type->Feature")
+    }
+    result
+  }
+
+  implicit val owc100ResourceFormat: Format[OwcResource] =
+    Format(owc100validatedResourceReads, owc100ResourceWritesWithFeatureType)
 
 }

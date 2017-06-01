@@ -28,51 +28,51 @@ import play.api.libs.json._
 
 class OwcCategorySpec extends WordSpec with MustMatchers with LazyLogging {
 
+  val jsCategory1 =
+    """{
+      |"term": "groundwater"
+      |}""".stripMargin
+
+  val jsCategory1_1 =
+    """{
+      |"term": ""
+      |}""".stripMargin
+
+  val jsCategory2 =
+    """{
+      |"term": "groundwater",
+      |"scheme": "nzhs-freshwater-lexicon"
+      |}""".stripMargin
+
+  val jsCategory2_1 =
+    """{
+      |"term": "groundwater",
+      |"scheme": ""
+      |}""".stripMargin
+
+  val jsCategory3 =
+    """{
+      |"term": "groundwater",
+      |"scheme": "nzhs-freshwater-lexicon",
+      |"label": "Water underground in the pores of the rocks"
+      |}""".stripMargin
+
+  val jsCategory3_1 =
+    """{
+      |"term": "groundwater",
+      |"scheme": "nzhs-freshwater-lexicon",
+      |"label": ""
+      |}""".stripMargin
+
+  val jsCategory4 =
+    """{
+      |"term": "groundwater",
+      |"scheme": "nzhs-freshwater-lexicon",
+      |"label": "Water underground in the pores of the rocks",
+      |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
+      |}""".stripMargin
+
   "GeoJSON Category aka keywords" should {
-
-    val jsCategory1 =
-      """{
-        |"term": "groundwater"
-        |}""".stripMargin
-
-    val jsCategory1_1 =
-      """{
-        |"term": ""
-        |}""".stripMargin
-
-    val jsCategory2 =
-      """{
-        |"term": "groundwater",
-        |"scheme": "nzhs-freshwater-lexicon"
-        |}""".stripMargin
-
-    val jsCategory2_1 =
-      """{
-        |"term": "groundwater",
-        |"scheme": ""
-        |}""".stripMargin
-
-    val jsCategory3 =
-      """{
-        |"term": "groundwater",
-        |"scheme": "nzhs-freshwater-lexicon",
-        |"label": "Water underground in the pores of the rocks"
-        |}""".stripMargin
-
-    val jsCategory3_1 =
-      """{
-        |"term": "groundwater",
-        |"scheme": "nzhs-freshwater-lexicon",
-        |"label": ""
-        |}""".stripMargin
-
-    val jsCategory4 =
-      """{
-        |"term": "groundwater",
-        |"scheme": "nzhs-freshwater-lexicon",
-        |"label": "Water underground in the pores of the rocks",
-        |"uuid": "b9ea2498-fb32-40ef-91ef-0ba00060fe64"
-        |}""".stripMargin
 
     "<props>.categories.term SHALL have a keyword related to the context document or resource" in {
       val jsVal = Json.parse(jsCategory1)
@@ -120,7 +120,22 @@ class OwcCategorySpec extends WordSpec with MustMatchers with LazyLogging {
       Json.parse(jsCategory3).validate[OwcCategory].get.uuid.isInstanceOf[UUID] mustBe true
       Json.parse(jsCategory4).validate[OwcCategory].get.uuid mustEqual UUID.fromString("b9ea2498-fb32-40ef-91ef-0ba00060fe64")
     }
+  }
+
+  "OwcCategory Writes" should {
+
+    "write OwcCategory GeoJSON" in {
+
+      val res1 = Json.parse(jsCategory1).validate[OwcCategory].get
+      val res2 = Json.parse(jsCategory2).validate[OwcCategory].get
+      val res3 = Json.parse(jsCategory3).validate[OwcCategory].get
+      val res4 = Json.parse(jsCategory4).validate[OwcCategory].get
 
 
+      res1.toJson.validate[OwcCategory].get mustEqual res1
+      res2.toJson.validate[OwcCategory].get mustEqual res2
+      res3.toJson.validate[OwcCategory].get mustEqual res3
+      res4.toJson.validate[OwcCategory].get mustEqual res4
+    }
   }
 }

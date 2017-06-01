@@ -41,22 +41,22 @@ case class OwcContent(
                        uuid: UUID = UUID.randomUUID()
                      ) extends LazyLogging {
 
-  def toJson: JsValue = Json.toJson(this)
+  def toJson: JsValue = Json.toJson(this)(OwcContent.owc100ContentFormat)
 }
 
 object OwcContent extends LazyLogging {
 
-  implicit val owc100ContentReads: Reads[OwcContent] = (
+  private val owc100ContentReads: Reads[OwcContent] = (
     (JsPath \ "type").read[String](minLength[String](1) andKeep new MimeTypeFormat) and
       (JsPath \ "href").readNullable[URL](new UrlFormat) and
       (JsPath \ "title").readNullable[String](minLength[String](1)) and
       (JsPath \ "content").readNullable[String](minLength[String](1)) and
       ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
-    )(OwcContent.apply _).filter{ owc =>
+    ) (OwcContent.apply _).filter { owc =>
     (owc.url.isDefined && owc.content.isEmpty) || (owc.url.isEmpty && owc.content.isDefined)
   }
 
-  implicit val owc100ContentWrites: Writes[OwcContent] = (
+  private val owc100ContentWrites: Writes[OwcContent] = (
     (JsPath \ "type").write[String] and
       (JsPath \ "href").writeNullable[URL](new UrlFormat) and
       (JsPath \ "title").writeNullable[String] and

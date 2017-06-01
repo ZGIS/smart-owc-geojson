@@ -58,12 +58,13 @@ case class OwcLink(
                     rel: String, // can at least stay here via extension :-)
                     uuid: UUID = UUID.randomUUID()
                   ) extends LazyLogging {
-  def toJson: JsValue = Json.toJson(this)
+
+  def toJson: JsValue = Json.toJson(this)(OwcLink.owc100OfferingFormat)
 }
 
 object OwcLink extends LazyLogging {
 
-  val verifyingKnownRelationsReads = new Reads[String] {
+  private val verifyingKnownRelationsReads = new Reads[String] {
     def reads(json: JsValue): JsResult[String] = {
       val knownRelations = List("profile", "via", "alternate", "icon", "enclosure")
       json match {
@@ -83,17 +84,17 @@ object OwcLink extends LazyLogging {
     }
   }
 
-  implicit val owc100LinkReads: Reads[OwcLink] = (
+  private val owc100LinkReads: Reads[OwcLink] = (
     (JsPath \ "href").read[URL](new UrlFormat) and
       (JsPath \ "type").readNullable[String](minLength[String](1) andKeep new MimeTypeFormat) and
       (JsPath \ "lang").readNullable[String](minLength[String](1) andKeep new IsoLangFormat) and
       (JsPath \ "title").readNullable[String](minLength[String](1)) and
       (JsPath \ "length").readNullable[Int](min[Int](0)) and
-      ((JsPath \ "rel").read[String](verifyingKnownRelationsReads) orElse Reads.pure("alternate") ) and
-      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()) )
+      ((JsPath \ "rel").read[String](verifyingKnownRelationsReads) orElse Reads.pure("alternate")) and
+      ((JsPath \ "uuid").read[UUID] orElse Reads.pure(UUID.randomUUID()))
     ) (OwcLink.apply _)
 
-  implicit val owc100LinkWrites: Writes[OwcLink] = (
+  private val owc100LinkWrites: Writes[OwcLink] = (
     (JsPath \ "href").write[URL](new UrlFormat) and
       (JsPath \ "type").writeNullable[String] and
       (JsPath \ "lang").writeNullable[String] and
