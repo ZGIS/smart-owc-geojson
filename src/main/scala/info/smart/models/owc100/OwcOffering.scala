@@ -59,7 +59,7 @@ object OwcOffering extends LazyLogging {
   }
 
   private val owc100OfferingWrites: Writes[OwcOffering] = (
-    (JsPath \ "code").write[URL](new UrlFormat) and
+    (JsPath \ "code").write[URL](new UrlFormatOfferingExtensions) and
       (JsPath \ "operations").write[List[OwcOperation]] and
       (JsPath \ "contents").write[List[OwcContent]] and
       (JsPath \ "styles").write[List[OwcStyleSet]] and

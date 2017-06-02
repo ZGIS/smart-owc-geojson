@@ -27,6 +27,9 @@ import play.api.libs.json._
 
 class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
 
+  val GEOJSON_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-geojson/1.0/req"
+  val GENERIC_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-offering-type/1.0/req"
+
   val jsOff1 =
     """{
       |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wms"
@@ -129,7 +132,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
   "DataType OWC:Offering GeoJSON Section 7.1.3" should {
 
     "<off>.code SHALL have Code identifying the requirement class identifier (URI) for the type of offering" in {
-      val jsVal = Json.parse(jsOff5)
+      val jsVal = Json.parse(jsOff1)
 
       val fromJson: JsResult[OwcOffering] = Json.fromJson[OwcOffering](jsVal)
       fromJson match {
@@ -143,13 +146,13 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
         case e: JsError => logger.error("Errors: " + JsError.toJson(e).toString())
       }
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
       Json.parse(jsOff1_1).validate[OwcOffering].isInstanceOf[JsError] mustBe true
       Json.parse(jsOff1_2).validate[OwcOffering].isInstanceOf[JsError] mustBe true
-      Json.parse(jsOff2).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms")
-      Json.parse(jsOff3).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms")
-      Json.parse(jsOff4).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms")
-      Json.parse(jsOff5).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wfs")
+      Json.parse(jsOff2).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
+      Json.parse(jsOff3).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
+      Json.parse(jsOff4).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
+      Json.parse(jsOff5).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wfs")
     }
 
     "<off>.operations[k] MAY have Array of operations used to invoke the service owc:OperationType (0..*)" in {
@@ -236,7 +239,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
 
     }
 
@@ -247,7 +250,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wfs")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wfs")
     }
 
     "handle WCS: http://www.opengis.net/spec/owc-geojson/1.0/req/wcs" in {
@@ -257,7 +260,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wcs")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wcs")
     }
 
     "handle WPS: http://www.opengis.net/spec/owc-geojson/1.0/req/wps" in {
@@ -267,7 +270,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wps")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wps")
     }
 
     "not handle WMTS: http://www.opengis.net/spec/owc-geojson/1.0/req/wmts" in {
@@ -287,7 +290,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/csw")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/csw")
     }
 
     "not handle GML: http://www.opengis.net/spec/owc-geojson/1.0/req/gml" in {
@@ -317,7 +320,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/geotiff")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/geotiff")
     }
 
     "not handle GMLJP2: http://www.opengis.net/spec/owc-geojson/1.0/req/gmljp2" in {
@@ -347,7 +350,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL("http://www.opengis.net/spec/owc-geojson/1.0/req/sos")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/sos")
     }
 
   }
@@ -361,7 +364,6 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
       val res3 = Json.parse(jsOff3).validate[OwcOffering].get
       val res4 = Json.parse(jsOff4).validate[OwcOffering].get
       val res5 = Json.parse(jsOff5).validate[OwcOffering].get
-
 
       res1.toJson.validate[OwcOffering].get mustEqual res1
       res2.toJson.validate[OwcOffering].get mustEqual res2

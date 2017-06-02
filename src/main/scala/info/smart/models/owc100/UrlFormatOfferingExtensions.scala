@@ -28,9 +28,22 @@ import scala.util.{Failure, Success, Try}
 
 class UrlFormatOfferingExtensions extends UrlFormat {
 
+  val GEOJSON_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-geojson/1.0/req"
+  val GENERIC_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-offering-type/1.0/req"
+
+  def geojsonOfferingUrlToGenericOfferingUrl(geojsonOfferingUrl: URL) : URL = {
+    val offeringType = "/" + geojsonOfferingUrl.getPath.split("/").last.trim
+    new URL(s"$GENERIC_OFFERING_URL_TEMPLATE$offeringType")
+  }
+
+  def genericOfferingUrlToGeojsonOfferingUrl(genericOfferingUrl: URL) : URL = {
+    val offeringType = "/" + genericOfferingUrl.getPath.split("/").last.trim
+    new URL(s"$GEOJSON_OFFERING_URL_TEMPLATE$offeringType")
+  }
+
   override def parseURL(url: String): Try[URL] = super.parseURL(url)
 
-  override def writes(url: URL): JsValue = super.writes(url)
+  override def writes(url: URL): JsValue = super.writes(genericOfferingUrlToGeojsonOfferingUrl(url))
 
   val supportedGeoJsonOfferingExtensions: List[URL] =
     List(
@@ -49,7 +62,7 @@ class UrlFormatOfferingExtensions extends UrlFormat {
         case Success(u) => {
           if (supportedGeoJsonOfferingExtensions.contains(u)) {
 
-            JsSuccess(u)
+            JsSuccess(geojsonOfferingUrlToGenericOfferingUrl(u))
           } else {
             logger.error("JsError ValidationError error.expected.supportedofferingcode")
             JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.supportedofferingcode"))))
