@@ -32,7 +32,8 @@ import play.api.libs.json._
 
 
 /**
-  * + id :CharacterString
+  * + id :CharacterString - Unambiguous reference to the identification of the resource, SHALL contain an (IRI) URI value
+
   * + title :CharacterString
   * + abstract :CharacterString [0..1]
   * + updateDate :TM_Date [0..1]

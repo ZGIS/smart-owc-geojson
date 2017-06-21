@@ -19,7 +19,6 @@
 
 package info.smart.models.owc100
 
-
 import java.time.OffsetDateTime
 import java.time.format.DateTimeParseException
 

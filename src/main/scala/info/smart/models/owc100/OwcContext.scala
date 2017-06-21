@@ -84,10 +84,29 @@ object OwcContext extends LazyLogging {
   // read validate the "type": "FeatureCollection" without using a field in the case class
   private val readFeatureColTypeJsonTransform: Reads[String] = (JsPath \ "type").read[String](verifyingFeatureColTypeReads)
 
+  /**
+    * validate if authors are available, either at owcContext level, or in every owcResource
+    *
+    * @param owcContext
+    * @return
+    */
+  private def validateAuthorsRequirement(owcContext: OwcContext) : Boolean = {
+    if (owcContext.author.isEmpty) {
+      if (owcContext.resource.filter(res => res.author.length > 0).length < owcContext.resource.length) {
+        logger.error("Couldn't validate Authors Requirement, OwcContext.author.isEmpty and not OwcAuthor provided in every OwcResource")
+        false
+      } else {
+        true
+      }
+    } else {
+      true
+    }
+  }
+
   private val owc100ContextReads: Reads[OwcContext] = (
     (JsPath \ "id").read[URL](new UrlFormat) and
       (JsPath \ "bbox").readNullable[Rectangle](new BboxArrayFormat) and
-      ((JsPath \ "properties" \ "links" \ "profiles").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
+      (JsPath \ "properties" \ "links" \ "profiles").read[List[OwcLink]](new OwcProfileListFormat) and
       ((JsPath \ "properties" \ "links" \ "via").read[List[OwcLink]] orElse Reads.pure(List[OwcLink]())) and
       (JsPath \ "properties" \ "lang").read[String](minLength[String](1)) and
       (JsPath \ "properties" \ "title").read[String](minLength[String](1)) and
@@ -101,13 +120,7 @@ object OwcContext extends LazyLogging {
       (JsPath \ "properties" \ "date").readNullable[List[OffsetDateTime]](new TemporalExtentFormat) and
       ((JsPath \ "properties" \ "categories").read[List[OwcCategory]] orElse Reads.pure(List[OwcCategory]())) and
       ((JsPath \ "features").read[List[OwcResource]] orElse Reads.pure(List[OwcResource]()))
-    ) (OwcContext.apply _).filter { owc =>
-      (owc.author.nonEmpty) || (
-        owc.author.isEmpty && (
-          owc.resource.filter(res => res.author.length > 0).length == owc.resource.length
-          )
-        )
-    }
+    ) (OwcContext.apply _).filter { validateAuthorsRequirement }
 
   // read and validate first Reads[String] and then second Reads[OwcContext and only keep second result
   private val owc100validatedContextReads: Reads[OwcContext] = readFeatureColTypeJsonTransform andKeep owc100ContextReads
@@ -115,7 +128,7 @@ object OwcContext extends LazyLogging {
   private val owc100ContextWrites: Writes[OwcContext] = (
     (JsPath \ "id").write[URL](new UrlFormat) and
       (JsPath \ "bbox").writeNullable[Rectangle](new BboxArrayFormat) and
-      (JsPath \ "properties" \ "links" \ "profiles").write[List[OwcLink]] and
+      (JsPath \ "properties" \ "links" \ "profiles").write[List[OwcLink]](new OwcProfileListFormat) and
       (JsPath \ "properties" \ "links" \ "via").write[List[OwcLink]] and
       (JsPath \ "properties" \ "lang").write[String] and
       (JsPath \ "properties" \ "title").write[String] and

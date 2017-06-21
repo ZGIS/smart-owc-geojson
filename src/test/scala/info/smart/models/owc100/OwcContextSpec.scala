@@ -71,13 +71,13 @@ class OwcContextSpec extends WordSpec with MustMatchers with LazyLogging {
 
 
     "<xz>.properties.links.profiles SHALL have the href value 'http://www.opengis.net/spec/owc-geojson/1.0/req/core'" in {
-      jsonTestCollection1.validate[OwcContext].get.specReference(0).href mustEqual new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/core")
-      jsonTestCollection2.validate[OwcContext].get.specReference(0).href mustEqual new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/core")
-      jsonTestCollection3.validate[OwcContext].get.specReference(0).href mustEqual new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/core")
+      jsonTestCollection1.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.value.href
+      jsonTestCollection2.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.value.href
+      jsonTestCollection3.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.value.href
 
       jsonTestCollection3.validate[OwcContext].get
         .toJson.validate[OwcContext].get
-        .specReference(0).href mustEqual new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/core")
+        .specReference(0).href mustEqual OwcProfile.CORE.value.href
     }
 
     "<xz>.properties.lang SHALL have RFC-3066 language code" in {
@@ -225,6 +225,10 @@ class OwcContextSpec extends WordSpec with MustMatchers with LazyLogging {
       res1.toJson.validate[OwcContext].get mustEqual res1
       res2.toJson.validate[OwcContext].get mustEqual res2
       res3.toJson.validate[OwcContext].get mustEqual res3
+
+      //val specJs = res1.toJson
+      //println(specJs)
+      //(specJs \ "properties" \ "links" \ "profiles" \ "href")(0).as[String] mustEqual "http://www.opengis.net/spec/owc-geojson/1.0/req/core"
     }
   }
 

@@ -67,21 +67,18 @@ class JsonFormatsSpec extends WordSpec with MustMatchers with LazyLogging {
 
   "JSON UrlFormatOfferingExtension" should {
 
-    val GEOJSON_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-geojson/1.0/req"
-    val GENERIC_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-offering-type/1.0/req"
-
     "Reads UrlFormatOfferingExtension" in {
-      val json1 = Json.parse(s"""{"code" : "$GEOJSON_OFFERING_URL_TEMPLATE/wms"}""")
-      (json1 \ "code").validate[URL](new UrlFormatOfferingExtensions).get mustEqual new URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
+      val json1 = Json.parse(s"""{"code" : "$GEOJSON_OWC_SPEC_URL/wms"}""")
+      (json1 \ "code").validate[URL](new OfferingExtensionsUrlFormat).get mustEqual new URL(s"$GENERIC_OWC_SPEC_URL/wms")
 
-      val json2 = Json.parse(s"""{"code" : "$GENERIC_OFFERING_URL_TEMPLATE/xxx"}""")
-      (json2 \ "code").validate[URL](new UrlFormatOfferingExtensions).isInstanceOf[JsError] mustBe true
+      val json2 = Json.parse(s"""{"code" : "$GENERIC_OWC_SPEC_URL/xxx"}""")
+      (json2 \ "code").validate[URL](new OfferingExtensionsUrlFormat).isInstanceOf[JsError] mustBe true
     }
 
     "Writes UrlFormatOfferingExtension" in {
-      val code = new URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
-      val jsVal = Json.toJson[URL](code)(new UrlFormatOfferingExtensions)
-      jsVal.as[String] mustEqual s"$GEOJSON_OFFERING_URL_TEMPLATE/wms"
+      val code = new URL(s"$GENERIC_OWC_SPEC_URL/wms")
+      val jsVal = Json.toJson[URL](code)(new OfferingExtensionsUrlFormat)
+      jsVal.as[String] mustEqual s"$GEOJSON_OWC_SPEC_URL/wms"
     }
   }
 

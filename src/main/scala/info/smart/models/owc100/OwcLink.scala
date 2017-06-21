@@ -59,7 +59,7 @@ case class OwcLink(
                     uuid: UUID = UUID.randomUUID()
                   ) extends LazyLogging {
 
-  def toJson: JsValue = Json.toJson(this)(OwcLink.owc100OfferingFormat)
+  def toJson: JsValue = Json.toJson(this)(OwcLink.owc100LinkFormat)
 }
 
 object OwcLink extends LazyLogging {
@@ -70,6 +70,7 @@ object OwcLink extends LazyLogging {
       json match {
         case JsString(rel) => {
           if (knownRelations.contains(rel.toLowerCase())) {
+
             JsSuccess(rel.toLowerCase)
           } else {
             logger.error("JsError ValidationError error.expected.validrel")
@@ -104,5 +105,5 @@ object OwcLink extends LazyLogging {
       (JsPath \ "uuid").write[UUID]
     ) (unlift(OwcLink.unapply))
 
-  implicit val owc100OfferingFormat: Format[OwcLink] = Format(owc100LinkReads, owc100LinkWrites)
+  implicit val owc100LinkFormat: Format[OwcLink] = Format(owc100LinkReads, owc100LinkWrites)
 }

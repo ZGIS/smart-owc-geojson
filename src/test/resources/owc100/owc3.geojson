@@ -50,9 +50,7 @@
     "links": {
       "profiles": [
         {
-          "rel": "profile",
-          "href": "http://www.opengis.net/spec/owc-geojson/1.0/req/core",
-          "title": "This file is compliant with version 1.0 of OGC Context"
+          "href": "http://www.opengis.net/spec/owc-geojson/1.0/req/core"
         }
       ],
       "via" : [{

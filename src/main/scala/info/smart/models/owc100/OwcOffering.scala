@@ -48,7 +48,7 @@ case class OwcOffering(
 object OwcOffering extends LazyLogging {
 
   private val owc100OfferingReads: Reads[OwcOffering] = (
-    (JsPath \ "code").read[URL](new UrlFormatOfferingExtensions) and
+    (JsPath \ "code").read[URL](new OfferingExtensionsUrlFormat) and
       ((JsPath \ "operations").read[List[OwcOperation]] orElse Reads.pure(List[OwcOperation]())) and
       ((JsPath \ "contents").read[List[OwcContent]] orElse Reads.pure(List[OwcContent]())) and
       ((JsPath \ "styles").read[List[OwcStyleSet]] orElse Reads.pure(List[OwcStyleSet]())) and
@@ -59,7 +59,7 @@ object OwcOffering extends LazyLogging {
   }
 
   private val owc100OfferingWrites: Writes[OwcOffering] = (
-    (JsPath \ "code").write[URL](new UrlFormatOfferingExtensions) and
+    (JsPath \ "code").write[URL](new OfferingExtensionsUrlFormat) and
       (JsPath \ "operations").write[List[OwcOperation]] and
       (JsPath \ "contents").write[List[OwcContent]] and
       (JsPath \ "styles").write[List[OwcStyleSet]] and

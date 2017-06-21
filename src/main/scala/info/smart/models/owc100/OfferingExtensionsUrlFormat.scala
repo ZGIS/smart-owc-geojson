@@ -26,43 +26,19 @@ import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}
 
-class UrlFormatOfferingExtensions extends UrlFormat {
-
-  val GEOJSON_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-geojson/1.0/req"
-  val GENERIC_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-offering-type/1.0/req"
-
-  def geojsonOfferingUrlToGenericOfferingUrl(geojsonOfferingUrl: URL) : URL = {
-    val offeringType = "/" + geojsonOfferingUrl.getPath.split("/").last.trim
-    new URL(s"$GENERIC_OFFERING_URL_TEMPLATE$offeringType")
-  }
-
-  def genericOfferingUrlToGeojsonOfferingUrl(genericOfferingUrl: URL) : URL = {
-    val offeringType = "/" + genericOfferingUrl.getPath.split("/").last.trim
-    new URL(s"$GEOJSON_OFFERING_URL_TEMPLATE$offeringType")
-  }
+class OfferingExtensionsUrlFormat extends UrlFormat {
 
   override def parseURL(url: String): Try[URL] = super.parseURL(url)
 
-  override def writes(url: URL): JsValue = super.writes(genericOfferingUrlToGeojsonOfferingUrl(url))
-
-  val supportedGeoJsonOfferingExtensions: List[URL] =
-    List(
-      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wms"),
-      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wfs"),
-      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wcs"),
-      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/wps"),
-      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/csw"),
-      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/geotiff"),
-      new URL("http://www.opengis.net/spec/owc-geojson/1.0/req/sos")
-    )
+  override def writes(url: URL): JsValue = super.writes(genericSpecUrlToGeojsonSpecUrl(url))
 
   override def reads(json: JsValue): JsResult[URL] = {
     json match {
       case JsString(url) => parseURL(url) match {
         case Success(u) => {
-          if (supportedGeoJsonOfferingExtensions.contains(u)) {
+          if (SUPPORTED_GEOJSON_OFFERING_EXTENSIONS.contains(u)) {
 
-            JsSuccess(geojsonOfferingUrlToGenericOfferingUrl(u))
+            JsSuccess(geojsonSpecUrlToGenericSpecUrl(u))
           } else {
             logger.error("JsError ValidationError error.expected.supportedofferingcode")
             JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.supportedofferingcode"))))

@@ -27,9 +27,6 @@ import play.api.libs.json._
 
 class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
 
-  val GEOJSON_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-geojson/1.0/req"
-  val GENERIC_OFFERING_URL_TEMPLATE = "http://www.opengis.net/spec/owc-offering-type/1.0/req"
-
   val jsOff1 =
     """{
       |"code" : "http://www.opengis.net/spec/owc-geojson/1.0/req/wms"
@@ -146,13 +143,13 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
         case e: JsError => logger.error("Errors: " + JsError.toJson(e).toString())
       }
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.WMS.code
       Json.parse(jsOff1_1).validate[OwcOffering].isInstanceOf[JsError] mustBe true
       Json.parse(jsOff1_2).validate[OwcOffering].isInstanceOf[JsError] mustBe true
-      Json.parse(jsOff2).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
-      Json.parse(jsOff3).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
-      Json.parse(jsOff4).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
-      Json.parse(jsOff5).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wfs")
+      Json.parse(jsOff2).validate[OwcOffering].get.code mustEqual OwcOfferingType.WMS.code
+      Json.parse(jsOff3).validate[OwcOffering].get.code mustEqual OwcOfferingType.WMS.code
+      Json.parse(jsOff4).validate[OwcOffering].get.code mustEqual OwcOfferingType.WMS.code
+      Json.parse(jsOff5).validate[OwcOffering].get.code mustEqual OwcOfferingType.WFS.code
     }
 
     "<off>.operations[k] MAY have Array of operations used to invoke the service owc:OperationType (0..*)" in {
@@ -239,7 +236,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wms")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.WMS.code
 
     }
 
@@ -250,7 +247,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wfs")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.WFS.code
     }
 
     "handle WCS: http://www.opengis.net/spec/owc-geojson/1.0/req/wcs" in {
@@ -260,7 +257,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wcs")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.WCS.code
     }
 
     "handle WPS: http://www.opengis.net/spec/owc-geojson/1.0/req/wps" in {
@@ -270,7 +267,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/wps")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.WPS.code
     }
 
     "not handle WMTS: http://www.opengis.net/spec/owc-geojson/1.0/req/wmts" in {
@@ -290,7 +287,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/csw")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.CSW.code
     }
 
     "not handle GML: http://www.opengis.net/spec/owc-geojson/1.0/req/gml" in {
@@ -320,7 +317,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/geotiff")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.GEOTIFF.code
     }
 
     "not handle GMLJP2: http://www.opengis.net/spec/owc-geojson/1.0/req/gmljp2" in {
@@ -350,7 +347,7 @@ class OwcOfferingSpec extends WordSpec with MustMatchers with LazyLogging {
           |}
         """.stripMargin
 
-      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual new java.net.URL(s"$GENERIC_OFFERING_URL_TEMPLATE/sos")
+      Json.parse(jsOff1).validate[OwcOffering].get.code mustEqual OwcOfferingType.SOS.code
     }
 
   }
