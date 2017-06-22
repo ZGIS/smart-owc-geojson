@@ -6,7 +6,8 @@ resolvers ++= Seq(
   "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
 )
 
-addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.4.0")
+// https://github.com/sbt/sbt-bintray/issues/104
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.3.0")
 
 // addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.2")
 
