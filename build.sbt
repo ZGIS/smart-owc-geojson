@@ -23,7 +23,6 @@ import scoverage.ScoverageKeys._
 
 name := """smart-owc-geojson"""
 organization := "info.smart-project"
-version := "1.0.1"
 scalaVersion := "2.11.8"
 
 scalacOptions in ThisBuild ++= Seq(
@@ -73,22 +72,37 @@ libraryDependencies ++= {
 
 resolvers += Resolver.bintrayRepo("hmrc", "releases")
 
-// bintrayReleaseOnPublish in ThisBuild := false
-publishArtifact in Test := false
-
+// Bintray
+bintrayReleaseOnPublish := false
+bintrayOrganization := Some("allixender")
 bintrayRepository := "ivy2"
-
-publishArtifact in Test := false
-
 publishMavenStyle := false
-
+bintrayPackage := "smart-owc-geojson"
+publishArtifact in Test := false
+bintrayPackageLabels := Seq("owc", "geojson", "play", "scala")
 bintrayVcsUrl := Some("https://github.com/ZGIS/smart-owc-geojson")
 
-bintrayPackageLabels := Seq("owc", "geojson", "play", "scala")
-
-bintrayPackage := "smart-owc-geojson"
-
 licenses += ("Apache-2.0", url("https://opensource.org/licenses/apache-2.0"))
+homepage := Some(url("https://github.com/ZGIS/smart-owc-geojson"))
+
+// Release
+import ReleaseTransformations._
+// releasePublishArtifactsAction := PgpKeys.publishSigned.value
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  publishArtifacts,
+  releaseStepTask(bintrayRelease in `sbt-release`),
+  setNextVersion,
+  commitNextVersion,
+  pushChanges
+)
+
 
 // Scala style task to run with tests
 lazy val testScalastyle = taskKey[Unit]("testScalastyle")
