@@ -20,7 +20,7 @@ We are currently not supporting the ATOM encoding.
 
 [![Build Status][build-status-badge]][build-status-url]
 [![Issues][issues-badge]][issues-url]
-[![Bintray](https://img.shields.io/bintray/v/allixender/ivy2/smart-owc-geojson.svg)](https://bintray.com/allixender/ivy2/smart-owc-geojson)
+[![Bintray](https://api.bintray.com/packages/allixender/ivy2/smart-owc-geojson/images/download.svg?version=1.0.3) ](https://bintray.com/allixender/ivy2/smart-owc-geojson/1.0.3/link)
 
 [![License][license-badge]][license-url]
 [![OpenHUB](https://www.openhub.net/p/smart-owc-geojson/widgets/project_thin_badge.gif)](https://www.openhub.net/p/smart-owc-geojson)
