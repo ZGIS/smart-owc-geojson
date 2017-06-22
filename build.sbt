@@ -21,6 +21,8 @@ import com.sksamuel.scapegoat.sbt._
 import com.sksamuel.scapegoat.sbt.ScapegoatSbtPlugin.autoImport._
 import scoverage.ScoverageKeys._
 
+lazy val `sbt-release` = project in file(".")
+
 name := """smart-owc-geojson"""
 organization := "info.smart-project"
 scalaVersion := "2.11.8"
