@@ -23,7 +23,7 @@ import scoverage.ScoverageKeys._
 
 name := """smart-owc-geojson"""
 organization := "info.smart-project"
-version := "1.0.0"
+version := "1.0.1"
 scalaVersion := "2.11.8"
 
 scalacOptions in ThisBuild ++= Seq(
