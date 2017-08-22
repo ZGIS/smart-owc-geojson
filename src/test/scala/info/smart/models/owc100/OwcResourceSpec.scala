@@ -223,4 +223,45 @@ class OwcResourceSpec extends WordSpec with MustMatchers with LazyLogging {
       res3.toJson.validate[OwcResource].get mustEqual res3
     }
   }
+
+  "OwcResource Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = (jsonTestCollection1 \ "features") (0).get.validate[OwcResource].get
+      val res2 = (jsonTestCollection2 \ "features") (0).get.validate[OwcResource].get
+      val res3 = (jsonTestCollection3 \ "features") (0).get.validate[OwcResource].get
+
+      val res1Clone = res1.newOf()
+      res1Clone must not equal res1
+      res1Clone.sameAs(res1) mustBe true
+
+      res1.id.toString.contains("_copy") mustBe false
+      res1Clone.id.toString.contains("_copy") mustBe true
+
+      val resCloneClone = res1Clone.newOf()
+      resCloneClone must not equal res1Clone
+      resCloneClone must not equal res1
+      resCloneClone.sameAs(res1) mustBe true
+      resCloneClone.sameAs(res1Clone) mustBe true
+
+      val res2Clone = res2.newOf()
+      res2Clone must not equal res2
+      res2Clone.sameAs(res2) mustBe true
+
+      val res3Clone = res3.newOf()
+      res3Clone must not equal res3
+      res3Clone.sameAs(res3) mustBe true
+
+      val resClone2 = OwcResource.newOf(res1)
+      resClone2.id.toString.contains("_copy") mustBe true
+
+      resClone2 must not equal res1
+      resClone2.sameAs(res1) mustBe true
+
+      val resCaseCopy = res1.copy()
+      resCaseCopy mustEqual res1
+      resCaseCopy must not equal res1Clone
+    }
+  }
 }

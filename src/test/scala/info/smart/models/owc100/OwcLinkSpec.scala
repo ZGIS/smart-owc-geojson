@@ -208,10 +208,21 @@ class OwcLinkSpec extends WordSpec with MustMatchers with LazyLogging{
       resClone must not equal res1
       resClone.sameAs(res1) mustBe true
 
+      val resCloneClone = resClone.newOf
+      resCloneClone must not equal resClone
+      resCloneClone must not equal res1
+      resCloneClone.sameAs(res1) mustBe true
+      resCloneClone.sameAs(resClone) mustBe true
+
       val resClone2 = OwcLink.newOf(res1)
 
       resClone2 must not equal res1
       resClone2.sameAs(res1) mustBe true
+
+      val resCaseCopy = res1.copy()
+      resCaseCopy mustEqual res1
+      resCaseCopy must not equal resClone
+
     }
   }
 
@@ -219,7 +230,8 @@ class OwcLinkSpec extends WordSpec with MustMatchers with LazyLogging{
 
     "Copy and Compare" in {
 
-      val res1 = OwcProfile.CORE.value
+      val res1 = OwcLink(href = OwcProfile.CORE.specUrl,
+        rel = "profile")
       val res2 = OwcProfile.CORE.newOf
 
       res1 must not equal res2
@@ -238,7 +250,7 @@ class OwcLinkSpec extends WordSpec with MustMatchers with LazyLogging{
       resClone must not equal resCopy
       resClone.sameAs(resCopy) mustBe false
       OwcProfile.CORE.sameAs(resCopy) mustBe true
-      resCopy.sameAs(OwcProfile.CORE.value) mustBe false
+      resCopy.sameAs(OwcProfile.CORE.newOf) mustBe false
 
     }
   }

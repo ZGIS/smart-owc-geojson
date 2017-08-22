@@ -143,7 +143,7 @@ class OwcCategorySpec extends WordSpec with MustMatchers with LazyLogging {
 
     "Copy and Compare" in {
 
-      val res1 = Json.parse(jsCategory1).validate[OwcCategory].get
+      val res1 = Json.parse(jsCategory3).validate[OwcCategory].get
       val resClone = res1.newOf
 
       resClone must not equal res1
@@ -153,6 +153,10 @@ class OwcCategorySpec extends WordSpec with MustMatchers with LazyLogging {
 
       resClone2 must not equal res1
       resClone2.sameAs(res1) mustBe true
+
+      val resCaseCopy = res1.copy()
+      resCaseCopy mustEqual res1
+      resCaseCopy must not equal resClone
     }
   }
 }

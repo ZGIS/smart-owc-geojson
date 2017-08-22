@@ -51,8 +51,8 @@ CreatorApplication
 
 case class OwcCreatorApplication(
                                   title: Option[String],
-                                  uri: Option[URL],
-                                  version: Option[String],
+                                  uri: Option[URL] = None,
+                                  version: Option[String] = None,
                                   uuid: UUID = UUID.randomUUID()
                                 ) extends CustomCopyCompare with LazyLogging {
 
@@ -100,15 +100,27 @@ CreatorDisplay
 
 case class OwcCreatorDisplay(
                               pixelWidth: Option[Int],
-                              pixelHeight: Option[Int],
-                              mmPerPixel: Option[Double],
+                              pixelHeight: Option[Int] = None,
+                              mmPerPixel: Option[Double] = None,
                               uuid: UUID = UUID.randomUUID()
                             ) extends LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcCreatorDisplay.owc100CreatorDisplayFormat)
+
+  def newOf: OwcCreatorDisplay = this.copy(uuid = UUID.randomUUID())
+
+  def customHashCode: Int = (pixelWidth, pixelHeight, mmPerPixel).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcCreatorDisplay =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 object OwcCreatorDisplay extends LazyLogging {
+
+  def newOf(owcCreatorDisplay: OwcCreatorDisplay): OwcCreatorDisplay = owcCreatorDisplay.copy(uuid = UUID.randomUUID())
 
   private val owc100CreatorDisplayReads: Reads[OwcCreatorDisplay] = (
     (JsPath \ "pixelWidth").readNullable[Int](min[Int](0)) and

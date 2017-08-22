@@ -21,6 +21,7 @@ package info.smart.models.owc100
 
 import java.net.URL
 import java.time.OffsetDateTime
+import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
 import org.locationtech.spatial4j.shape.Rectangle
@@ -49,27 +50,71 @@ import play.api.libs.json._
   */
 case class OwcContext(
                        id: URL,
-                       areaOfInterest: Option[Rectangle],
-                       specReference: List[OwcLink], // aka links.profiles[] and rel=profile
-                       contextMetadata: List[OwcLink], // e.g. links.via[] and rel=via
-                       language: String,
+                       areaOfInterest: Option[Rectangle] = None,
+                       specReference: List[OwcLink] = List(OwcProfile.CORE.newOf), // aka links.profiles[] and rel=profile
+                       contextMetadata: List[OwcLink] = List(), // e.g. links.via[] and rel=via
+                       language: String = "en",
                        title: String,
-                       subtitle: Option[String],
-                       updateDate: OffsetDateTime,
-                       author: List[OwcAuthor],
-                       publisher: Option[String],
-                       creatorApplication: Option[OwcCreatorApplication],
-                       creatorDisplay: Option[OwcCreatorDisplay],
-                       rights: Option[String],
-                       timeIntervalOfInterest: Option[List[OffsetDateTime]],
-                       keyword: List[OwcCategory],
+                       subtitle: Option[String] = None,
+                       updateDate: OffsetDateTime = OffsetDateTime.now(),
+                       author: List[OwcAuthor] = List(),
+                       publisher: Option[String] = None,
+                       creatorApplication: Option[OwcCreatorApplication] = None,
+                       creatorDisplay: Option[OwcCreatorDisplay] = None,
+                       rights: Option[String] = None,
+                       timeIntervalOfInterest: Option[List[OffsetDateTime]] = None,
+                       keyword: List[OwcCategory] = List(),
                        resource: List[OwcResource]
                      ) extends LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcContext.owc100ContextFormat)
+
+  def newOf(newId: URL = new URL(this.id.toString + "_copy_" + UUID.randomUUID().toString)): OwcContext =
+    this.copy(id = newId,
+      specReference = specReference.map(o => o.newOf),
+      contextMetadata = contextMetadata.map(o => o.newOf),
+      creatorApplication = creatorApplication.map(o => o.newOf),
+      creatorDisplay = creatorDisplay.map(o => o.newOf),
+      author = author.map(o => o.newOf),
+      keyword = keyword.map(o => o.newOf),
+      resource = resource.map(o => o.newOf()))
+
+  // we intentially leave id away to allow sameAs function to behave as all other ones, compare contents and ignore (uu)ids
+  def customHashCode: Int = (
+    areaOfInterest,
+    specReference.map(o => o.customHashCode),
+    contextMetadata.map(o => o.customHashCode),
+    language,
+    title,
+    subtitle,
+    updateDate,
+    author.map(o => o.customHashCode),
+    publisher,
+    creatorApplication.map(o => o.customHashCode),
+    creatorDisplay.map(o => o.customHashCode),
+    rights,
+    timeIntervalOfInterest,
+    keyword.map(o => o.customHashCode),
+    resource.map(o => o.customHashCode)).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcContext =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 object OwcContext extends LazyLogging {
+
+  def newOf(owcContext: OwcContext, newId: Option[URL] = None): OwcContext =
+    owcContext.copy(id = newId.getOrElse(new URL(owcContext.id.toString + "_copy_" + UUID.randomUUID().toString)),
+      specReference = owcContext.specReference.map(o => o.newOf),
+      contextMetadata = owcContext.contextMetadata.map(o => o.newOf),
+      creatorApplication = owcContext.creatorApplication.map(o => o.newOf),
+      creatorDisplay = owcContext.creatorDisplay.map(o => o.newOf),
+      author = owcContext.author.map(o => o.newOf),
+      keyword = owcContext.keyword.map(o => o.newOf),
+      resource = owcContext.resource.map(o => o.newOf()))
 
   private val verifyingFeatureColTypeReads = new Reads[String] {
     def reads(json: JsValue): JsResult[String] = json.validate[String].flatMap {

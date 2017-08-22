@@ -51,10 +51,10 @@ import play.api.libs.json._
   */
 case class OwcLink(
                     href: URL,
-                    mimeType: Option[String],
-                    lang: Option[String],
-                    title: Option[String],
-                    length: Option[Int],
+                    mimeType: Option[String] = None,
+                    lang: Option[String] = None,
+                    title: Option[String] = None,
+                    length: Option[Int] = None,
                     rel: String, // can at least stay here via extension :-)
                     uuid: UUID = UUID.randomUUID()
                   ) extends CustomCopyCompare with LazyLogging {

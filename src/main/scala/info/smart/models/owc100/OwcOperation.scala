@@ -40,16 +40,18 @@ import play.api.libs.json._
 case class OwcOperation(
                          code: String, // operation, i.e. GetCapabilities
                          method: String, // HTTP verb
-                         mimeType: Option[String], // MIME media type of the expected results
+                         mimeType: Option[String] = None, // MIME media type of the expected results
                          requestUrl: URL,
-                         request: Option[OwcContent],
-                         result: Option[OwcContent],
+                         request: Option[OwcContent] = None,
+                         result: Option[OwcContent] = None,
                          uuid: UUID = UUID.randomUUID()
                        ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcOperation.owc100OperationFormat)
 
-  def newOf: OwcOperation = this.copy(uuid = UUID.randomUUID())
+  def newOf: OwcOperation = this.copy(uuid = UUID.randomUUID(),
+    request = this.request.map(o => o.newOf),
+    result = this.result.map(o => o.newOf))
 
   def customHashCode: Int = (code, method, mimeType, requestUrl).##
 
@@ -74,6 +76,11 @@ case class OwcOperation(
 }
 
 object OwcOperation extends LazyLogging {
+
+  def newOf(owcOperation: OwcOperation): OwcOperation = owcOperation.copy(
+    uuid = UUID.randomUUID(),
+    request = owcOperation.request.map(o => o.newOf),
+    result = owcOperation.result.map(o => o.newOf))
 
   val verifyingHttpMethodsReads = new Reads[String] {
     def reads(json: JsValue): JsResult[String] = {

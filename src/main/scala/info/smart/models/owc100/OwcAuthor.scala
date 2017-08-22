@@ -31,8 +31,8 @@ import uk.gov.hmrc.emailaddress.{ EmailAddress, PlayJsonFormats}
 
 case class OwcAuthor(
                       name: Option[String],
-                      email: Option[EmailAddress],
-                      uri: Option[URL],
+                      email: Option[EmailAddress] = None,
+                      uri: Option[URL] = None,
                       uuid: UUID = UUID.randomUUID()
                     ) extends CustomCopyCompare with LazyLogging {
 

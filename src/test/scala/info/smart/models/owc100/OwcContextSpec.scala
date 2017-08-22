@@ -71,13 +71,13 @@ class OwcContextSpec extends WordSpec with MustMatchers with LazyLogging {
 
 
     "<xz>.properties.links.profiles SHALL have the href value 'http://www.opengis.net/spec/owc-geojson/1.0/req/core'" in {
-      jsonTestCollection1.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.value.href
-      jsonTestCollection2.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.value.href
-      jsonTestCollection3.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.value.href
+      jsonTestCollection1.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.specUrl
+      jsonTestCollection2.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.specUrl
+      jsonTestCollection3.validate[OwcContext].get.specReference(0).href mustEqual OwcProfile.CORE.specUrl
 
       jsonTestCollection3.validate[OwcContext].get
         .toJson.validate[OwcContext].get
-        .specReference(0).href mustEqual OwcProfile.CORE.value.href
+        .specReference(0).href mustEqual OwcProfile.CORE.specUrl
     }
 
     "<xz>.properties.lang SHALL have RFC-3066 language code" in {
@@ -229,6 +229,47 @@ class OwcContextSpec extends WordSpec with MustMatchers with LazyLogging {
       //val specJs = res1.toJson
       //println(specJs)
       //(specJs \ "properties" \ "links" \ "profiles" \ "href")(0).as[String] mustEqual "http://www.opengis.net/spec/owc-geojson/1.0/req/core"
+    }
+  }
+
+  "OwcContext Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = jsonTestCollection1.validate[OwcContext].get
+      val res2 = jsonTestCollection2.validate[OwcContext].get
+      val res3 = jsonTestCollection3.validate[OwcContext].get
+
+      val res1Clone = res1.newOf()
+      res1Clone must not equal res1
+      res1Clone.sameAs(res1) mustBe true
+
+      res1.id.toString.contains("_copy") mustBe false
+      res1Clone.id.toString.contains("_copy") mustBe true
+
+      val resCloneClone = res1Clone.newOf()
+      resCloneClone must not equal res1Clone
+      resCloneClone must not equal res1
+      resCloneClone.sameAs(res1) mustBe true
+      resCloneClone.sameAs(res1Clone) mustBe true
+
+      val res2Clone = res2.newOf()
+      res2Clone must not equal res2
+      res2Clone.sameAs(res2) mustBe true
+
+      val res3Clone = res3.newOf()
+      res3Clone must not equal res3
+      res3Clone.sameAs(res3) mustBe true
+
+      val resClone2 = OwcContext.newOf(res1)
+      resClone2.id.toString.contains("_copy") mustBe true
+
+      resClone2 must not equal res1
+      resClone2.sameAs(res1) mustBe true
+
+      val resCaseCopy = res1.copy()
+      resCaseCopy mustEqual res1
+      resCaseCopy must not equal res1Clone
     }
   }
 

@@ -35,9 +35,9 @@ import play.api.libs.json._
   */
 case class OwcContent(
                        mimeType: String,
-                       url: Option[URL],
-                       title: Option[String],
-                       content: Option[String],
+                       url: Option[URL] = None,
+                       title: Option[String] = None,
+                       content: Option[String] = None,
                        uuid: UUID = UUID.randomUUID()
                      ) extends CustomCopyCompare with LazyLogging {
 

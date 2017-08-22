@@ -39,10 +39,10 @@ import play.api.libs.json._
 case class OwcStyleSet(
                         name: String,
                         title: String,
-                        abstrakt: Option[String],
-                        default: Option[Boolean],
-                        legendUrl: Option[URL],
-                        content: Option[OwcContent],
+                        abstrakt: Option[String] = None,
+                        default: Option[Boolean] = None,
+                        legendUrl: Option[URL] = None,
+                        content: Option[OwcContent] = None,
                         uuid: UUID = UUID.randomUUID()
                       ) extends CustomCopyCompare with LazyLogging {
 

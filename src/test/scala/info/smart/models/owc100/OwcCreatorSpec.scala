@@ -113,6 +113,10 @@ class OwcCreatorSpec extends WordSpec with MustMatchers with LazyLogging{
 
       resClone2 must not equal res1
       resClone2.sameAs(res1) mustBe true
+
+      val resCaseCopy = res1.copy()
+      resCaseCopy mustEqual res1
+      resCaseCopy must not equal resClone
     }
   }
 
@@ -228,6 +232,27 @@ class OwcCreatorSpec extends WordSpec with MustMatchers with LazyLogging{
 
       res1.toJson.validate[OwcCreatorDisplay].get mustEqual res1
       res2.toJson.validate[OwcCreatorDisplay].get mustEqual res2
+    }
+  }
+
+  "OwcCreatorDisplay Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = Json.parse(jsDisplay1).validate[OwcCreatorDisplay].get
+      val resClone = res1.newOf
+
+      resClone must not equal res1
+      resClone.sameAs(res1) mustBe true
+
+      val resClone2 = OwcCreatorDisplay.newOf(res1)
+
+      resClone2 must not equal res1
+      resClone2.sameAs(res1) mustBe true
+
+      val resCaseCopy = res1.copy()
+      resCaseCopy mustEqual res1
+      resCaseCopy must not equal resClone
     }
   }
 }

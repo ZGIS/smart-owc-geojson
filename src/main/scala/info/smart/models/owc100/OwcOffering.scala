@@ -37,15 +37,36 @@ import play.api.libs.json._
 case class OwcOffering(
                         code: URL,
                         operations: List[OwcOperation],
-                        contents: List[OwcContent],
-                        styles: List[OwcStyleSet],
+                        contents: List[OwcContent] = List(),
+                        styles: List[OwcStyleSet] = List(),
                         uuid: UUID = UUID.randomUUID()
                       ) extends LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcOffering.owc100OfferingFormat)
+
+  def newOf: OwcOffering = this.copy(uuid = UUID.randomUUID(),
+    operations = operations.map(o => o.newOf),
+    contents = contents.map(o => o.newOf),
+    styles = styles.map(o => o.newOf))
+
+  def customHashCode: Int = (code,
+    operations.map(o => o.customHashCode),
+    contents.map(o => o.customHashCode),
+    styles.map(o => o.customHashCode)).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcOffering =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 object OwcOffering extends LazyLogging {
+
+  def newOf(owcOffering: OwcOffering): OwcOffering = owcOffering.copy(uuid = UUID.randomUUID(),
+    operations = owcOffering.operations.map(o => o.newOf),
+    contents = owcOffering.contents.map(o => o.newOf),
+    styles = owcOffering.styles.map(o => o.newOf))
 
   private val owc100OfferingReads: Reads[OwcOffering] = (
     (JsPath \ "code").read[URL](new OfferingExtensionsUrlFormat) and

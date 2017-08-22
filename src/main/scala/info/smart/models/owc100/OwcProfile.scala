@@ -25,8 +25,7 @@ import java.util.UUID
 import com.typesafe.scalalogging.LazyLogging
 
 sealed trait OwcProfile {
-  def value: OwcLink
-  def newOf: OwcLink = this.value.copy(uuid = UUID.randomUUID())
+  def newOf: OwcLink
   def sameAs(o: Any): Boolean
 }
 
@@ -34,14 +33,13 @@ object OwcProfile extends LazyLogging {
 
   case object CORE extends OwcProfile {
 
-    val value = OwcLink(
+    val specUrl = new URL(s"$GENERIC_OWC_SPEC_URL/core")
+
+    private val value = OwcLink(
       rel = "profile",
-      href = new URL(s"$GENERIC_OWC_SPEC_URL/core"),
-      mimeType = None,
-      lang = None,
-      title = None,
-      length = None,
-      uuid = UUID.randomUUID())
+      href = specUrl)
+
+    def newOf: OwcLink = this.value.copy(uuid = UUID.randomUUID())
 
     def sameAs(o: Any): Boolean = o match {
       case that: OwcLink =>

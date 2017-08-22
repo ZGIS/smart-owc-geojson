@@ -21,6 +21,7 @@ package info.smart.models.owc100
 
 import java.net.URL
 import java.time.OffsetDateTime
+import java.util.UUID
 
 import com.typesafe.scalalogging.LazyLogging
 import org.locationtech.spatial4j.shape.Rectangle
@@ -56,29 +57,75 @@ import play.api.libs.json._
 case class OwcResource(
                         id: URL,
                         title: String,
-                        subtitle: Option[String],
-                        updateDate: OffsetDateTime,
-                        author: List[OwcAuthor],
-                        publisher: Option[String],
-                        rights: Option[String],
-                        geospatialExtent: Option[Rectangle],
-                        temporalExtent: Option[List[OffsetDateTime]],
-                        contentDescription: List[OwcLink], // links.alternates[] and rel=alternate
-                        preview: List[OwcLink], // aka links.previews[] and rel=icon (atom)
-                        contentByRef: List[OwcLink], // aka links.data[] and rel=enclosure (atom)
-                        offering: List[OwcOffering],
-                        active: Option[Boolean],
-                        resourceMetadata: List[OwcLink], // aka links.via[] & rel=via
-                        keyword: List[OwcCategory],
-                        minScaleDenominator: Option[Double],
-                        maxScaleDenominator: Option[Double],
-                        folder: Option[String]
+                        subtitle: Option[String] = None,
+                        updateDate: OffsetDateTime = OffsetDateTime.now(),
+                        author: List[OwcAuthor] = List(),
+                        publisher: Option[String] = None,
+                        rights: Option[String] = None,
+                        geospatialExtent: Option[Rectangle] = None,
+                        temporalExtent: Option[List[OffsetDateTime]] = None,
+                        contentDescription: List[OwcLink] = List(), // links.alternates[] and rel=alternate
+                        preview: List[OwcLink] = List(), // aka links.previews[] and rel=icon (atom)
+                        contentByRef: List[OwcLink] = List(), // aka links.data[] and rel=enclosure (atom)
+                        offering: List[OwcOffering] = List(),
+                        active: Option[Boolean] = None,
+                        resourceMetadata: List[OwcLink] = List(), // aka links.via[] & rel=via
+                        keyword: List[OwcCategory] = List(),
+                        minScaleDenominator: Option[Double] = None,
+                        maxScaleDenominator: Option[Double] = None,
+                        folder: Option[String] = None
                       ) extends LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcResource.owc100ResourceFormat)
+
+  def newOf(newId: URL = new URL(this.id.toString + "_copy_" + UUID.randomUUID().toString)): OwcResource =
+    this.copy(id = newId,
+      author = author.map(o => o.newOf),
+      contentDescription = contentDescription.map(o => o.newOf),
+      preview = preview.map(o => o.newOf),
+      contentByRef = contentByRef.map(o => o.newOf),
+      offering = offering.map(o => o.newOf),
+      resourceMetadata = resourceMetadata.map(o => o.newOf),
+      keyword = keyword.map(o => o.newOf))
+
+  // we intentially leave id away to allow sameAs function to behave as all other ones, compare contents and ignore (uu)ids
+  def customHashCode: Int = (
+    title,
+    subtitle,
+    updateDate,
+    author.map(o => o.customHashCode),
+    publisher,
+    rights,
+    geospatialExtent,
+    contentDescription.map(o => o.customHashCode),
+    preview.map(o => o.customHashCode),
+    contentByRef.map(o => o.customHashCode),
+    offering.map(o => o.customHashCode),
+    active,
+    resourceMetadata.map(o => o.customHashCode),
+    keyword.map(o => o.customHashCode),
+    minScaleDenominator,
+    maxScaleDenominator,
+    folder).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcResource =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 object OwcResource extends LazyLogging {
+
+  def newOf(owcResource: OwcResource, newId: Option[URL] = None): OwcResource =
+    owcResource.copy(id = newId.getOrElse(new URL(owcResource.id.toString + "_copy_" + UUID.randomUUID().toString)),
+      author = owcResource.author.map(o => o.newOf),
+      contentDescription = owcResource.contentDescription.map(o => o.newOf),
+      preview = owcResource.preview.map(o => o.newOf),
+      contentByRef = owcResource.contentByRef.map(o => o.newOf),
+      offering = owcResource.offering.map(o => o.newOf),
+      resourceMetadata = owcResource.resourceMetadata.map(o => o.newOf),
+      keyword = owcResource.keyword.map(o => o.newOf))
 
   private val verifyingFeatureTypeReads = new Reads[String] {
     def reads(json: JsValue): JsResult[String] = json.validate[String].flatMap {
