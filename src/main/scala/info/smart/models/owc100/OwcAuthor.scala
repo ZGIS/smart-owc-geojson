@@ -34,15 +34,27 @@ case class OwcAuthor(
                       email: Option[EmailAddress],
                       uri: Option[URL],
                       uuid: UUID = UUID.randomUUID()
-                    ) extends LazyLogging {
+                    ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)
+
+  def newOf: OwcAuthor = this.copy(uuid = UUID.randomUUID())
+
+  def customHashCode: Int = (name, email, uri).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcAuthor =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 /**
   * companion object for [[OwcAuthor]]
   */
 object OwcAuthor extends LazyLogging {
+
+  def newOf(owcAuthor: OwcAuthor): OwcAuthor = owcAuthor.copy(uuid = UUID.randomUUID())
 
   implicit val owcAuthorReads: Reads[OwcAuthor] = (
     (JsPath \ "name").readNullable[String](minLength[String](1)) and

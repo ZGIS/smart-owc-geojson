@@ -39,12 +39,24 @@ case class OwcContent(
                        title: Option[String],
                        content: Option[String],
                        uuid: UUID = UUID.randomUUID()
-                     ) extends LazyLogging {
+                     ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcContent.owc100ContentFormat)
+
+  def newOf: OwcContent = this.copy(uuid = UUID.randomUUID())
+
+  def customHashCode: Int = (mimeType, url, title, content).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcContent =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 object OwcContent extends LazyLogging {
+
+  def newOf(owcContent: OwcContent): OwcContent = owcContent.copy(uuid = UUID.randomUUID())
 
   private val owc100ContentReads: Reads[OwcContent] = (
     (JsPath \ "type").read[String](minLength[String](1) andKeep new MimeTypeFormat) and

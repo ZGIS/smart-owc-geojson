@@ -54,12 +54,24 @@ case class OwcCreatorApplication(
                                   uri: Option[URL],
                                   version: Option[String],
                                   uuid: UUID = UUID.randomUUID()
-                                ) extends LazyLogging {
+                                ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcCreatorApplication.owc100CreatorApplicationFormat)
+
+  def newOf: OwcCreatorApplication = this.copy(uuid = UUID.randomUUID())
+
+  def customHashCode: Int = (title, uri, version).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcCreatorApplication =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 object OwcCreatorApplication extends LazyLogging {
+
+  def newOf(owcCreatorApplication: OwcCreatorApplication): OwcCreatorApplication = owcCreatorApplication.copy(uuid = UUID.randomUUID())
 
   private val owc100CreatorApplictionReads: Reads[OwcCreatorApplication] = (
     (JsPath \ "title").readNullable[String](minLength[String](1)) and

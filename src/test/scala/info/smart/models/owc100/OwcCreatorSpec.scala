@@ -99,6 +99,23 @@ class OwcCreatorSpec extends WordSpec with MustMatchers with LazyLogging{
     }
   }
 
+  "OwcCreatorApplication Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = Json.parse(jsCreator1).validate[OwcCreatorApplication].get
+      val resClone = res1.newOf
+
+      resClone must not equal res1
+      resClone.sameAs(res1) mustBe true
+
+      val resClone2 = OwcCreatorApplication.newOf(res1)
+
+      resClone2 must not equal res1
+      resClone2.sameAs(res1) mustBe true
+    }
+  }
+
   val jsDisplay1 = """{
                      |"pixelWidth": 600,
                      |"pixelHeight": 400,

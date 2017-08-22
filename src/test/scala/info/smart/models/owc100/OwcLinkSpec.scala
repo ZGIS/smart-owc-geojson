@@ -197,4 +197,49 @@ class OwcLinkSpec extends WordSpec with MustMatchers with LazyLogging{
       res5.toJson.validate[OwcLink].get mustEqual res5
     }
   }
+
+  "OwcLink Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = Json.parse(jsLink1).validate[OwcLink].get
+      val resClone = res1.newOf
+
+      resClone must not equal res1
+      resClone.sameAs(res1) mustBe true
+
+      val resClone2 = OwcLink.newOf(res1)
+
+      resClone2 must not equal res1
+      resClone2.sameAs(res1) mustBe true
+    }
+  }
+
+  "OwcProfile Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = OwcProfile.CORE.value
+      val res2 = OwcProfile.CORE.newOf
+
+      res1 must not equal res2
+      OwcProfile.CORE.sameAs(res1) mustBe true
+      OwcProfile.CORE.sameAs(res2) mustBe true
+
+      val resClone = res1.newOf
+
+      resClone must not equal res1
+      resClone must not equal res2
+      resClone.sameAs(res1) mustBe true
+      OwcProfile.CORE.sameAs(resClone) mustBe true
+
+      val resCopy = resClone.copy(uuid = UUID.randomUUID(), title = Some("Optional title"))
+
+      resClone must not equal resCopy
+      resClone.sameAs(resCopy) mustBe false
+      OwcProfile.CORE.sameAs(resCopy) mustBe true
+      resCopy.sameAs(OwcProfile.CORE.value) mustBe false
+
+    }
+  }
 }

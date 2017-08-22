@@ -57,12 +57,24 @@ case class OwcLink(
                     length: Option[Int],
                     rel: String, // can at least stay here via extension :-)
                     uuid: UUID = UUID.randomUUID()
-                  ) extends LazyLogging {
+                  ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcLink.owc100LinkFormat)
+
+  def newOf: OwcLink = this.copy(uuid = UUID.randomUUID())
+
+  def customHashCode: Int = (href, mimeType, lang, title, length, rel).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcLink =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 object OwcLink extends LazyLogging {
+
+  def newOf(owcLink: OwcLink): OwcLink = owcLink.copy(uuid = UUID.randomUUID())
 
   private val verifyingKnownRelationsReads = new Reads[String] {
     def reads(json: JsValue): JsResult[String] = {
@@ -85,6 +97,11 @@ object OwcLink extends LazyLogging {
     }
   }
 
+  /*
+  FIXME the 'orElse Reads.pure("alternate")' Reads is relly last resort,
+  instead the 'rel -> verifyingKnownRelationsReads' Reads should take a parameter to name the rel for the calling upstream
+  Reads (e.g. from OwcContext or OwcResource)
+   */
   private val owc100LinkReads: Reads[OwcLink] = (
     (JsPath \ "href").read[URL](new UrlFormat) and
       (JsPath \ "type").readNullable[String](minLength[String](1) andKeep new MimeTypeFormat) and

@@ -53,4 +53,5 @@ package object owc100 {
     val specCode = genericSpecUrl.getPath.split("/").last.trim
     new URL(s"$GEOJSON_OWC_SPEC_URL/$specCode")
   }
+
 }

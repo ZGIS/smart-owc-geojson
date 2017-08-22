@@ -45,10 +45,32 @@ case class OwcOperation(
                          request: Option[OwcContent],
                          result: Option[OwcContent],
                          uuid: UUID = UUID.randomUUID()
-                       ) extends LazyLogging {
+                       ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcOperation.owc100OperationFormat)
 
+  def newOf: OwcOperation = this.copy(uuid = UUID.randomUUID())
+
+  def customHashCode: Int = (code, method, mimeType, requestUrl).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcOperation => {
+      val hash = this.customHashCode.equals(that.customHashCode)
+      val request = this.request match {
+        case tc: Option[OwcContent] if tc.isDefined => that.request.exists(ac => tc.get.sameAs(ac))
+        case tc: Option[OwcContent] if tc.isEmpty => that.request.isEmpty
+        case _ => false
+      }
+      val result = this.result match {
+        case tc: Option[OwcContent] if tc.isDefined => that.result.exists(ac => tc.get.sameAs(ac))
+        case tc: Option[OwcContent] if tc.isEmpty => that.result.isEmpty
+        case _ => false
+      }
+
+      hash && request && result
+    }
+    case _ => false
+  }
 }
 
 object OwcOperation extends LazyLogging {

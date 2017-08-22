@@ -138,4 +138,22 @@ class OwcAuthorSpec extends WordSpec with MustMatchers with LazyLogging {
       res4.toJson.validate[OwcAuthor].get mustEqual res4
     }
   }
+
+  "OwcAuthor Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = Json.parse(jsAuthor1).validate[OwcAuthor].get
+      val resClone = res1.newOf
+
+      resClone must not equal res1
+      resClone.sameAs(res1) mustBe true
+
+      val resClone2 = OwcAuthor.newOf(res1)
+
+      resClone2 must not equal res1
+      resClone2.sameAs(res1) mustBe true
+
+    }
+  }
 }

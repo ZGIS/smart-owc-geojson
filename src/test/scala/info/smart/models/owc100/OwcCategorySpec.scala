@@ -138,4 +138,21 @@ class OwcCategorySpec extends WordSpec with MustMatchers with LazyLogging {
       res4.toJson.validate[OwcCategory].get mustEqual res4
     }
   }
+
+  "OwcCategory Custom" should {
+
+    "Copy and Compare" in {
+
+      val res1 = Json.parse(jsCategory1).validate[OwcCategory].get
+      val resClone = res1.newOf
+
+      resClone must not equal res1
+      resClone.sameAs(res1) mustBe true
+
+      val resClone2 = OwcCategory.newOf(res1)
+
+      resClone2 must not equal res1
+      resClone2.sameAs(res1) mustBe true
+    }
+  }
 }

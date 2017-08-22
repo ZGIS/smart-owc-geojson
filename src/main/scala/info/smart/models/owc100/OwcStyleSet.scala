@@ -44,12 +44,32 @@ case class OwcStyleSet(
                         legendUrl: Option[URL],
                         content: Option[OwcContent],
                         uuid: UUID = UUID.randomUUID()
-                      ) extends LazyLogging {
+                      ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcStyleSet.owc100StyleSetFormat)
+
+  def newOf: OwcStyleSet = this.copy(uuid = UUID.randomUUID(), content = this.content.map(o => o.newOf))
+
+  def customHashCode: Int = (name, title, abstrakt, default, legendUrl).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcStyleSet => {
+      val hash = this.customHashCode.equals(that.customHashCode)
+      val content = this.content match {
+        case tc: Option[OwcContent] if tc.isDefined => that.content.exists(ac => tc.get.sameAs(ac))
+        case tc: Option[OwcContent] if tc.isEmpty => that.content.isEmpty
+        case _ => false
+      }
+
+      hash && content
+    }
+    case _ => false
+  }
 }
 
 object OwcStyleSet extends LazyLogging {
+
+  def newOf(owcStyleSet: OwcStyleSet): OwcStyleSet = owcStyleSet.copy(uuid = UUID.randomUUID(), content = owcStyleSet.content.map(o => o.newOf))
 
   private val owc100StyleSetReads: Reads[OwcStyleSet] = (
     (JsPath \ "name").read[String](minLength[String](1)) and

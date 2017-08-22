@@ -31,15 +31,27 @@ case class OwcCategory(
                         scheme: Option[String],
                         label: Option[String],
                         uuid: UUID = UUID.randomUUID()
-                      ) extends LazyLogging {
+                      ) extends CustomCopyCompare with LazyLogging {
 
   def toJson: JsValue = Json.toJson(this)(OwcCategory.owc100CategoryFormat)
+
+  def newOf: OwcCategory = this.copy(uuid = UUID.randomUUID())
+
+  def customHashCode: Int = (term, scheme, label).##
+
+  def sameAs(o: Any): Boolean = o match {
+    case that: OwcCategory =>
+      this.customHashCode.equals(that.customHashCode)
+    case _ => false
+  }
 }
 
 /**
   * companion object for [[OwcCategory]]
   */
 object OwcCategory extends LazyLogging {
+
+  def newOf(owcCategory: OwcCategory): OwcCategory = owcCategory.copy(uuid = UUID.randomUUID())
 
   private val owc100CategoryReads: Reads[OwcCategory] = (
     (JsPath \ "term").read[String](minLength[String](1)) and
