@@ -1,0 +1,891 @@
+{
+  "type": "FeatureCollection",
+  "id": "https://portal.smart-project.info/context/document/08f0bb58-b54f-47b8-8aa1-f8e92c18dfd7",
+  "bbox": [
+    176.1,
+    -38.15,
+    176.2,
+    -38.1
+  ],
+  "properties": {
+    "links": {
+      "profiles": [
+        {
+          "href": "http://www.opengis.net/spec/owc-geojson/1.0/req/core",
+          "rel": "profile"
+        }
+      ],
+      "via": [
+        {
+          "href": "https://portal.smart-project.info/context/document/08f0bb58-b54f-47b8-8aa1-f8e92c18dfd7",
+          "rel": "via"
+        }
+      ]
+    },
+    "lang": "en",
+    "title": "Ngongotha DTS",
+    "subtitle": "DTS Experiment (Ngongotaha Valley)",
+    "updated": "2018-02-16T04:14:56.884Z",
+    "generator": {
+      "title": "Groundwater Hub"
+    },
+    "authors": [
+      {
+        "name": "Alex Kmoch",
+        "email": "allixender@gmail.com",
+        "uri": "https://portal.smart-project.info"
+      }
+    ],
+    "publisher": "GNS Science",
+    "rights": "CC BY SA 4.0 NZ",
+    "categories": [
+      {
+        "scheme": "view-groups",
+        "term": "ng",
+        "label": "Ngongotha DTS"
+      }
+    ]
+  },
+  "features": [
+    {
+      "id": "https://portal.smart-project.info/context/resource/396560d4-8218-4a0a-abb3-f4f4f557a252",
+      "properties": {
+        "title": "layer-50765",
+        "abstract": "Linz NZ Terrain Relief (Topo50)",
+        "updated": "2018-02-16T04:14:56.884Z",
+        "authors": [
+          {
+            "name": "Alex Kmoch",
+            "email": "allixender@gmail.com",
+            "uri": "https://portal.smart-project.info"
+          }
+        ],
+        "publisher": "GNS Science",
+        "rights": "CC BY SA 4.0 NZ",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                176.1,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.15
+              ]
+            ]
+          ]
+        },
+        "links": {
+          "alternates": [],
+          "previews": [
+            {
+              "href": "https://portal.smart-project.info/fs/images/DTS_banner.png",
+              "type": "image/png",
+              "rel": "icon"
+            },
+            {
+              "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=layer-50765",
+              "type": "image/png",
+              "rel": "icon"
+            }
+          ],
+          "data": [
+            {
+              "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms",
+              "type": "application/xml",
+              "title": "Linz NZ Terrain Relief (Topo50):layer-50765"
+            }
+          ],
+          "via": [
+            {
+              "href": "https://portal.smart-project.info/context/resource/396560d4-8218-4a0a-abb3-f4f4f557a252",
+              "rel": "via"
+            }
+          ]
+        },
+        "offerings": [
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetMap",
+                "method": "GET",
+                "type": "image/png",
+                "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=176.1,-38.15,176.2,-38.1&WIDTH=800&HEIGHT=600&LAYERS=layer-50765&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+              }
+            ],
+            "contents": [],
+            "styles": []
+          },
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/pycsw/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetRecordById",
+                "method": "POST",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/journalcsw/journalcsw?request=GetRecordById&version=2.0.2&service=CSW&elementSetName=full&outputSchema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&Id=undefined"
+              }
+            ],
+            "contents": []
+          }
+        ],
+        "categories": [
+          {
+            "scheme": "view-groups",
+            "term": "ng_dts_exp",
+            "label": "DTS Experiment (Ngongotaha Valley)"
+          }
+        ],
+        "active": false,
+        "folder": "ng_dts_exp"
+      }
+    },
+    {
+      "id": "https://portal.smart-project.info/context/resource/b21b491e-dce9-45e8-819c-0cf442cd557b",
+      "properties": {
+        "title": "layer-50767",
+        "abstract": "Linz NZ Mainland Topo50",
+        "updated": "2018-02-16T04:14:56.884Z",
+        "authors": [
+          {
+            "name": "Alex Kmoch",
+            "email": "allixender@gmail.com",
+            "uri": "https://portal.smart-project.info"
+          }
+        ],
+        "publisher": "GNS Science",
+        "rights": "CC BY SA 4.0 NZ",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                176.1,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.15
+              ]
+            ]
+          ]
+        },
+        "links": {
+          "alternates": [],
+          "previews": [
+            {
+              "href": "https://portal.smart-project.info/fs/images/DTS_banner.png",
+              "type": "image/png",
+              "rel": "icon"
+            },
+            {
+              "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=layer-50767",
+              "type": "image/png",
+              "rel": "icon"
+            }
+          ],
+          "data": [
+            {
+              "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms",
+              "type": "application/xml",
+              "title": "Linz NZ Mainland Topo50:layer-50767"
+            }
+          ],
+          "via": [
+            {
+              "href": "https://portal.smart-project.info/context/resource/b21b491e-dce9-45e8-819c-0cf442cd557b",
+              "rel": "via"
+            }
+          ]
+        },
+        "offerings": [
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetMap",
+                "method": "GET",
+                "type": "image/png",
+                "href": "https://data.linz.govt.nz/services;key=a8fb9bcd52684b7abe14dd4664ce9df9/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=176.1,-38.15,176.2,-38.1&WIDTH=800&HEIGHT=600&LAYERS=layer-50767&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+              }
+            ],
+            "contents": [],
+            "styles": []
+          },
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/pycsw/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetRecordById",
+                "method": "POST",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/journalcsw/journalcsw?request=GetRecordById&version=2.0.2&service=CSW&elementSetName=full&outputSchema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&Id=undefined"
+              }
+            ],
+            "contents": []
+          }
+        ],
+        "categories": [
+          {
+            "scheme": "view-groups",
+            "term": "ng_dts_exp",
+            "label": "DTS Experiment (Ngongotaha Valley)"
+          }
+        ],
+        "active": false,
+        "folder": "ng_dts_exp"
+      }
+    },
+    {
+      "id": "https://portal.smart-project.info/context/resource/23057288-06ad-4d78-ae9e-06eaf944ee5f",
+      "properties": {
+        "title": "horowhenua_ws:nz-dtm-100x100",
+        "abstract": "NZ DTM 100x100",
+        "updated": "2018-02-16T04:14:56.884Z",
+        "authors": [
+          {
+            "name": "Alex Kmoch",
+            "email": "allixender@gmail.com",
+            "uri": "https://portal.smart-project.info"
+          }
+        ],
+        "publisher": "GNS Science",
+        "rights": "CC BY SA 4.0 NZ",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                176.1,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.15
+              ]
+            ]
+          ]
+        },
+        "links": {
+          "alternates": [],
+          "previews": [
+            {
+              "href": "https://portal.smart-project.info/fs/images/DTS_banner.png",
+              "type": "image/png",
+              "rel": "icon"
+            },
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=horowhenua_ws:nz-dtm-100x100",
+              "type": "image/png",
+              "rel": "icon"
+            }
+          ],
+          "data": [
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms",
+              "type": "application/xml",
+              "title": "NZ DTM 100x100:horowhenua_ws:nz-dtm-100x100"
+            }
+          ],
+          "via": [
+            {
+              "href": "https://portal.smart-project.info/context/resource/23057288-06ad-4d78-ae9e-06eaf944ee5f",
+              "rel": "via"
+            }
+          ]
+        },
+        "offerings": [
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetMap",
+                "method": "GET",
+                "type": "image/png",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=176.1,-38.15,176.2,-38.1&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz-dtm-100x100&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+              }
+            ],
+            "contents": [],
+            "styles": []
+          },
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/pycsw/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetRecordById",
+                "method": "POST",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/journalcsw/journalcsw?request=GetRecordById&version=2.0.2&service=CSW&elementSetName=full&outputSchema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&Id=undefined"
+              }
+            ],
+            "contents": []
+          }
+        ],
+        "categories": [
+          {
+            "scheme": "view-groups",
+            "term": "ng_dts_exp",
+            "label": "DTS Experiment (Ngongotaha Valley)"
+          }
+        ],
+        "active": false,
+        "folder": "ng_dts_exp"
+      }
+    },
+    {
+      "id": "https://portal.smart-project.info/context/resource/df4276ea-6407-4c5e-87e5-53f91e3576ce",
+      "properties": {
+        "title": "horowhenua_ws:ewt_nzprj_new",
+        "abstract": "Equilibrium Water Table",
+        "updated": "2018-02-16T04:14:56.884Z",
+        "authors": [
+          {
+            "name": "Alex Kmoch",
+            "email": "allixender@gmail.com",
+            "uri": "https://portal.smart-project.info"
+          }
+        ],
+        "publisher": "GNS Science",
+        "rights": "CC BY SA 4.0 NZ",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                176.1,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.15
+              ]
+            ]
+          ]
+        },
+        "links": {
+          "alternates": [],
+          "previews": [
+            {
+              "href": "https://portal.smart-project.info/fs/images/DTS_banner.png",
+              "type": "image/png",
+              "rel": "icon"
+            },
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=horowhenua_ws:ewt_nzprj_new",
+              "type": "image/png",
+              "rel": "icon"
+            }
+          ],
+          "data": [
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms",
+              "type": "application/xml",
+              "title": "Equilibrium Water Table:horowhenua_ws:ewt_nzprj_new"
+            }
+          ],
+          "via": [
+            {
+              "href": "https://portal.smart-project.info/context/resource/df4276ea-6407-4c5e-87e5-53f91e3576ce",
+              "rel": "via"
+            }
+          ]
+        },
+        "offerings": [
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetMap",
+                "method": "GET",
+                "type": "image/png",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=176.1,-38.15,176.2,-38.1&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:ewt_nzprj_new&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+              }
+            ],
+            "contents": [],
+            "styles": []
+          },
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/pycsw/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetRecordById",
+                "method": "POST",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/journalcsw/journalcsw?request=GetRecordById&version=2.0.2&service=CSW&elementSetName=full&outputSchema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&Id=undefined"
+              }
+            ],
+            "contents": []
+          }
+        ],
+        "categories": [
+          {
+            "scheme": "view-groups",
+            "term": "ng_dts_exp",
+            "label": "DTS Experiment (Ngongotaha Valley)"
+          }
+        ],
+        "active": false,
+        "folder": "ng_dts_exp"
+      }
+    },
+    {
+      "id": "https://portal.smart-project.info/context/resource/9441569b-9f10-47de-8fae-cad56e7f33c8",
+      "properties": {
+        "title": "horowhenua_ws:nz_aquifers",
+        "abstract": "NZ Aquifers (White 2001)",
+        "updated": "2018-02-16T04:14:56.884Z",
+        "authors": [
+          {
+            "name": "Alex Kmoch",
+            "email": "allixender@gmail.com",
+            "uri": "https://portal.smart-project.info"
+          }
+        ],
+        "publisher": "GNS Science",
+        "rights": "CC BY SA 4.0 NZ",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                176.1,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.15
+              ]
+            ]
+          ]
+        },
+        "links": {
+          "alternates": [],
+          "previews": [
+            {
+              "href": "https://portal.smart-project.info/fs/images/DTS_banner.png",
+              "type": "image/png",
+              "rel": "icon"
+            },
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=horowhenua_ws:nz_aquifers",
+              "type": "image/png",
+              "rel": "icon"
+            }
+          ],
+          "data": [
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms",
+              "type": "application/xml",
+              "title": "NZ Aquifers (White 2001):horowhenua_ws:nz_aquifers"
+            }
+          ],
+          "via": [
+            {
+              "href": "https://portal.smart-project.info/context/resource/9441569b-9f10-47de-8fae-cad56e7f33c8",
+              "rel": "via"
+            }
+          ]
+        },
+        "offerings": [
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetMap",
+                "method": "GET",
+                "type": "image/png",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=176.1,-38.15,176.2,-38.1&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz_aquifers&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+              }
+            ],
+            "contents": [],
+            "styles": []
+          },
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/pycsw/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetRecordById",
+                "method": "POST",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/journalcsw/journalcsw?request=GetRecordById&version=2.0.2&service=CSW&elementSetName=full&outputSchema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&Id=undefined"
+              }
+            ],
+            "contents": []
+          }
+        ],
+        "categories": [
+          {
+            "scheme": "view-groups",
+            "term": "ng_dts_exp",
+            "label": "DTS Experiment (Ngongotaha Valley)"
+          }
+        ],
+        "active": false,
+        "folder": "ng_dts_exp"
+      }
+    },
+    {
+      "id": "https://portal.smart-project.info/context/resource/c2da7288-321a-4ae9-bcc0-a56a626090dc",
+      "properties": {
+        "title": "horowhenua_ws:DTS_Cable_Position",
+        "abstract": "DTS Cable Position(Ngongotaha Valley)",
+        "updated": "2018-02-16T04:14:56.884Z",
+        "authors": [
+          {
+            "name": "Alex Kmoch",
+            "email": "allixender@gmail.com",
+            "uri": "https://portal.smart-project.info"
+          }
+        ],
+        "publisher": "GNS Science",
+        "rights": "CC BY SA 4.0 NZ",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                176.1,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.15
+              ]
+            ]
+          ]
+        },
+        "links": {
+          "alternates": [],
+          "previews": [
+            {
+              "href": "https://portal.smart-project.info/fs/images/DTS_banner.png",
+              "type": "image/png",
+              "rel": "icon"
+            },
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=horowhenua_ws:DTS_Cable_Position",
+              "type": "image/png",
+              "rel": "icon"
+            }
+          ],
+          "data": [
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms",
+              "type": "application/xml",
+              "title": "DTS Cable Position(Ngongotaha Valley):horowhenua_ws:DTS_Cable_Position"
+            }
+          ],
+          "via": [
+            {
+              "href": "https://portal.smart-project.info/context/resource/c2da7288-321a-4ae9-bcc0-a56a626090dc",
+              "rel": "via"
+            }
+          ]
+        },
+        "offerings": [
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetMap",
+                "method": "GET",
+                "type": "image/png",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=176.1,-38.15,176.2,-38.1&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:DTS_Cable_Position&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+              }
+            ],
+            "contents": [],
+            "styles": []
+          },
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/pycsw/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetRecordById",
+                "method": "POST",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/journalcsw/journalcsw?request=GetRecordById&version=2.0.2&service=CSW&elementSetName=full&outputSchema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&Id=undefined"
+              }
+            ],
+            "contents": []
+          }
+        ],
+        "categories": [
+          {
+            "scheme": "view-groups",
+            "term": "ng_dts_exp",
+            "label": "DTS Experiment (Ngongotaha Valley)"
+          }
+        ],
+        "active": true,
+        "folder": "ng_dts_exp"
+      }
+    },
+    {
+      "id": "https://portal.smart-project.info/context/resource/259f28d0-4adb-435d-9e4c-7b3d0fbb1e98",
+      "properties": {
+        "title": "horowhenua_ws:rotorua_model",
+        "abstract": "Rotorua geological model",
+        "updated": "2018-02-16T04:14:56.884Z",
+        "authors": [
+          {
+            "name": "Alex Kmoch",
+            "email": "allixender@gmail.com",
+            "uri": "https://portal.smart-project.info"
+          }
+        ],
+        "publisher": "GNS Science",
+        "rights": "CC BY SA 4.0 NZ",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                176.1,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.15
+              ],
+              [
+                176.2,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.1
+              ],
+              [
+                176.1,
+                -38.15
+              ]
+            ]
+          ]
+        },
+        "links": {
+          "alternates": [],
+          "previews": [
+            {
+              "href": "https://portal.smart-project.info/fs/images/DTS_banner.png",
+              "type": "image/png",
+              "rel": "icon"
+            },
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=horowhenua_ws:rotorua_model",
+              "type": "image/png",
+              "rel": "icon"
+            }
+          ],
+          "data": [
+            {
+              "href": "https://portal.smart-project.info/geoserver/wms",
+              "type": "application/xml",
+              "title": "Rotorua geological model:horowhenua_ws:rotorua_model"
+            }
+          ],
+          "via": [
+            {
+              "href": "https://portal.smart-project.info/context/resource/259f28d0-4adb-435d-9e4c-7b3d0fbb1e98",
+              "rel": "via"
+            }
+          ]
+        },
+        "offerings": [
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetMap",
+                "method": "GET",
+                "type": "image/png",
+                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=176.1,-38.15,176.2,-38.1&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:rotorua_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+              }
+            ],
+            "contents": [],
+            "styles": []
+          },
+          {
+            "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
+            "operations": [
+              {
+                "code": "GetCapabilities",
+                "method": "GET",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/pycsw/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetCapabilities"
+              },
+              {
+                "code": "GetRecordById",
+                "method": "POST",
+                "type": "application/xml",
+                "href": "https://portal.smart-project.info/journalcsw/journalcsw?request=GetRecordById&version=2.0.2&service=CSW&elementSetName=full&outputSchema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&Id=undefined"
+              }
+            ],
+            "contents": []
+          }
+        ],
+        "categories": [
+          {
+            "scheme": "view-groups",
+            "term": "ng_dts_exp",
+            "label": "DTS Experiment (Ngongotaha Valley)"
+          }
+        ],
+        "active": true,
+        "folder": "ng_dts_exp"
+      }
+    }
+  ]
+}
