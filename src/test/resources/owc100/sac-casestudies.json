@@ -1,6 +1,6 @@
 {
   "type": "FeatureCollection",
-  "id": "https://portal.smart-project.info/context/document/b2d50be3-2933-4900-871a-424559b47906",
+  "id": "https://portal.smart-project.info/context/document/02ea67bc-16bb-413c-83e2-62baccf172bc",
   "bbox": [
     164,
     -48,
@@ -17,7 +17,7 @@
       ],
       "via": [
         {
-          "href": "https://portal.smart-project.info/context/document/b2d50be3-2933-4900-871a-424559b47906",
+          "href": "https://portal.smart-project.info/context/document/02ea67bc-16bb-413c-83e2-62baccf172bc",
           "rel": "via"
         }
       ]
@@ -49,7 +49,34 @@
   "features": [
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/49128e55-976c-411f-a922-41cc355fa12b",
+      "id": "https://portal.smart-project.info/context/resource/fe2f9546-09cf-43f3-bdf5-4f68acbfae70",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:ngmp-locations",
         "abstract": "NGMP Sites",
@@ -63,33 +90,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -113,7 +113,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/49128e55-976c-411f-a922-41cc355fa12b",
+              "href": "https://portal.smart-project.info/context/resource/fe2f9546-09cf-43f3-bdf5-4f68acbfae70",
               "rel": "via"
             }
           ]
@@ -170,7 +170,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/95d53fdb-e088-4590-8967-2ccf889dd40c",
+      "id": "https://portal.smart-project.info/context/resource/1ac11759-7e0e-4645-8c89-63a19ef96d46",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:nz_aquifers",
         "abstract": "NZ Aquifers (White 2001)",
@@ -184,33 +211,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -234,7 +234,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/95d53fdb-e088-4590-8967-2ccf889dd40c",
+              "href": "https://portal.smart-project.info/context/resource/1ac11759-7e0e-4645-8c89-63a19ef96d46",
               "rel": "via"
             }
           ]
@@ -291,7 +291,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/9c7a5fdf-2d7d-48a6-a4aa-ea2df36c7329",
+      "id": "https://portal.smart-project.info/context/resource/fbee2f6b-5657-4407-bfba-09a2a698101e",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:nz_regions",
         "abstract": "New Zealand regions",
@@ -305,33 +332,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -355,7 +355,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/9c7a5fdf-2d7d-48a6-a4aa-ea2df36c7329",
+              "href": "https://portal.smart-project.info/context/resource/fbee2f6b-5657-4407-bfba-09a2a698101e",
               "rel": "via"
             }
           ]
@@ -412,7 +412,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/1f85166b-d23b-4cc6-8e1a-f2942606723f",
+      "id": "https://portal.smart-project.info/context/resource/9a358b9d-505e-4c16-beb7-0d34318a7dcc",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:nz-dtm-100x100",
         "abstract": "NZ DTM 100x100",
@@ -426,33 +453,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -476,7 +476,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/1f85166b-d23b-4cc6-8e1a-f2942606723f",
+              "href": "https://portal.smart-project.info/context/resource/9a358b9d-505e-4c16-beb7-0d34318a7dcc",
               "rel": "via"
             }
           ]
@@ -533,7 +533,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/00d2ef05-70f5-487f-a7b3-78d0935541fe",
+      "id": "https://portal.smart-project.info/context/resource/1680380e-45e9-47f1-9926-4133c6e0e0c5",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:ewt_nzprj_new",
         "abstract": "Equilibrium Water Table (NZ)",
@@ -547,33 +574,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -597,7 +597,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/00d2ef05-70f5-487f-a7b3-78d0935541fe",
+              "href": "https://portal.smart-project.info/context/resource/1680380e-45e9-47f1-9926-4133c6e0e0c5",
               "rel": "via"
             }
           ]
@@ -654,7 +654,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/b0cd9a98-fe72-4170-b6f2-b8f0084390c0",
+      "id": "https://portal.smart-project.info/context/resource/fb6bc91e-37f5-4407-ab2f-c8bee0c143d6",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "PET",
         "abstract": "Monthly Potential Evapotranspiration (NZ)",
@@ -668,33 +695,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -718,7 +718,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/b0cd9a98-fe72-4170-b6f2-b8f0084390c0",
+              "href": "https://portal.smart-project.info/context/resource/fb6bc91e-37f5-4407-ab2f-c8bee0c143d6",
               "rel": "via"
             }
           ]
@@ -775,7 +775,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/041be925-66ee-4199-8c46-2be14fa14e1f",
+      "id": "https://portal.smart-project.info/context/resource/d1519cce-bd68-4db6-be90-420f7932e4fe",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "Uncertainty",
         "abstract": "PET Uncertainty (NZ)",
@@ -789,33 +816,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -839,7 +839,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/041be925-66ee-4199-8c46-2be14fa14e1f",
+              "href": "https://portal.smart-project.info/context/resource/d1519cce-bd68-4db6-be90-420f7932e4fe",
               "rel": "via"
             }
           ]
@@ -896,7 +896,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/b67ef722-0a5c-4cdb-a7ef-73a4625cd775",
+      "id": "https://portal.smart-project.info/context/resource/f59d010e-0b46-4088-9e21-83f8e09a3554",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:HawkesBay_geophys",
         "abstract": "Hawkes Bay",
@@ -910,33 +937,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -960,7 +960,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/b67ef722-0a5c-4cdb-a7ef-73a4625cd775",
+              "href": "https://portal.smart-project.info/context/resource/f59d010e-0b46-4088-9e21-83f8e09a3554",
               "rel": "via"
             }
           ]
@@ -1017,7 +1017,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/42a5885e-db62-4a3f-80b8-bffe46721497",
+      "id": "https://portal.smart-project.info/context/resource/fcc815d3-2b4c-4032-b6a7-55c564901fcd",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:canterbury_region",
         "abstract": "Canterbury",
@@ -1031,33 +1058,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -1081,7 +1081,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/42a5885e-db62-4a3f-80b8-bffe46721497",
+              "href": "https://portal.smart-project.info/context/resource/fcc815d3-2b4c-4032-b6a7-55c564901fcd",
               "rel": "via"
             }
           ]
@@ -1138,7 +1138,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/15aa2ef5-16fb-4512-b858-9d001ba8970c",
+      "id": "https://portal.smart-project.info/context/resource/2fceee06-dd79-465a-a62e-9f94e408d6c2",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:Horizons_Tararua",
         "abstract": "Horizons Tararua",
@@ -1152,33 +1179,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -1202,7 +1202,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/15aa2ef5-16fb-4512-b858-9d001ba8970c",
+              "href": "https://portal.smart-project.info/context/resource/2fceee06-dd79-465a-a62e-9f94e408d6c2",
               "rel": "via"
             }
           ]
@@ -1259,7 +1259,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/244385e1-f60f-4b91-bc59-1f9bd20477d3",
+      "id": "https://portal.smart-project.info/context/resource/3dca326b-de8f-44a8-b2af-c56b4aa9ce7d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:OtagoEM",
         "abstract": "Otago EM",
@@ -1273,33 +1300,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -1323,7 +1323,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/244385e1-f60f-4b91-bc59-1f9bd20477d3",
+              "href": "https://portal.smart-project.info/context/resource/3dca326b-de8f-44a8-b2af-c56b4aa9ce7d",
               "rel": "via"
             }
           ]
@@ -1380,7 +1380,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/8b276aab-d95a-48fd-a632-2bba6b308ad5",
+      "id": "https://portal.smart-project.info/context/resource/32fcfca7-9f55-45b0-8e6b-17aadad94076",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:waipa_catchment",
         "abstract": "Waipa Catchment",
@@ -1394,33 +1421,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -1444,7 +1444,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/8b276aab-d95a-48fd-a632-2bba6b308ad5",
+              "href": "https://portal.smart-project.info/context/resource/32fcfca7-9f55-45b0-8e6b-17aadad94076",
               "rel": "via"
             }
           ]
@@ -1501,7 +1501,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/72d787ab-7464-4c65-9ad5-7d28020bcdae",
+      "id": "https://portal.smart-project.info/context/resource/eccc4cb0-f3e7-4d5b-a2d5-66b31d6178b1",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:FODTS-Testsites",
         "abstract": "FODTS Testsites",
@@ -1515,33 +1542,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -1565,7 +1565,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/72d787ab-7464-4c65-9ad5-7d28020bcdae",
+              "href": "https://portal.smart-project.info/context/resource/eccc4cb0-f3e7-4d5b-a2d5-66b31d6178b1",
               "rel": "via"
             }
           ]
@@ -1622,7 +1622,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/b349ae6e-9f9a-4156-addc-ad85b0c05365",
+      "id": "https://portal.smart-project.info/context/resource/133bb9bc-f735-4be4-93e8-b616b3e3bc8c",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:hutt_halon_sites",
         "abstract": "Halon-1301 Sampling Sites",
@@ -1636,33 +1663,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -1686,7 +1686,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/b349ae6e-9f9a-4156-addc-ad85b0c05365",
+              "href": "https://portal.smart-project.info/context/resource/133bb9bc-f735-4be4-93e8-b616b3e3bc8c",
               "rel": "via"
             }
           ]
@@ -1743,7 +1743,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/c0a88222-f8b6-4005-a00c-02d6d7d17874",
+      "id": "https://portal.smart-project.info/context/resource/73535274-2929-4a40-8a56-43bf456efc46",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -48
+            ],
+            [
+              180,
+              -48
+            ],
+            [
+              180,
+              -33
+            ],
+            [
+              164,
+              -33
+            ],
+            [
+              164,
+              -48
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:study_area",
         "abstract": "Horowhenua Area (3D)",
@@ -1757,33 +1784,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                164,
-                -48
-              ],
-              [
-                180,
-                -48
-              ],
-              [
-                180,
-                -33
-              ],
-              [
-                164,
-                -33
-              ],
-              [
-                164,
-                -48
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -1807,7 +1807,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/c0a88222-f8b6-4005-a00c-02d6d7d17874",
+              "href": "https://portal.smart-project.info/context/resource/73535274-2929-4a40-8a56-43bf456efc46",
               "rel": "via"
             }
           ]

@@ -1,6 +1,6 @@
 {
   "type": "FeatureCollection",
-  "id": "https://portal.smart-project.info/context/document/08f0bb58-b54f-47b8-8aa1-f8e92c18dfd7",
+  "id": "https://portal.smart-project.info/context/document/d7bf02d3-90f3-4d0f-99fa-7fc9be4133ea",
   "bbox": [
     176.1,
     -38.15,
@@ -17,7 +17,7 @@
       ],
       "via": [
         {
-          "href": "https://portal.smart-project.info/context/document/08f0bb58-b54f-47b8-8aa1-f8e92c18dfd7",
+          "href": "https://portal.smart-project.info/context/document/d7bf02d3-90f3-4d0f-99fa-7fc9be4133ea",
           "rel": "via"
         }
       ]
@@ -49,7 +49,34 @@
   "features": [
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/396560d4-8218-4a0a-abb3-f4f4f557a252",
+      "id": "https://portal.smart-project.info/context/resource/475e3ca4-9319-4176-a940-a037b24a4e24",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              176.1,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.15
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "layer-50765",
         "abstract": "Linz NZ Terrain Relief (Topo50)",
@@ -63,33 +90,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                176.1,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.15
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -113,7 +113,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/396560d4-8218-4a0a-abb3-f4f4f557a252",
+              "href": "https://portal.smart-project.info/context/resource/475e3ca4-9319-4176-a940-a037b24a4e24",
               "rel": "via"
             }
           ]
@@ -170,7 +170,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/b21b491e-dce9-45e8-819c-0cf442cd557b",
+      "id": "https://portal.smart-project.info/context/resource/7216fd6c-924d-4956-98a6-0f8c6fca75b0",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              176.1,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.15
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "layer-50767",
         "abstract": "Linz NZ Mainland Topo50",
@@ -184,33 +211,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                176.1,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.15
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -234,7 +234,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/b21b491e-dce9-45e8-819c-0cf442cd557b",
+              "href": "https://portal.smart-project.info/context/resource/7216fd6c-924d-4956-98a6-0f8c6fca75b0",
               "rel": "via"
             }
           ]
@@ -291,7 +291,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/23057288-06ad-4d78-ae9e-06eaf944ee5f",
+      "id": "https://portal.smart-project.info/context/resource/0a21514a-32d8-45d4-a744-3dfa44d0804f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              176.1,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.15
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:nz-dtm-100x100",
         "abstract": "NZ DTM 100x100",
@@ -305,33 +332,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                176.1,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.15
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -355,7 +355,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/23057288-06ad-4d78-ae9e-06eaf944ee5f",
+              "href": "https://portal.smart-project.info/context/resource/0a21514a-32d8-45d4-a744-3dfa44d0804f",
               "rel": "via"
             }
           ]
@@ -412,7 +412,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/df4276ea-6407-4c5e-87e5-53f91e3576ce",
+      "id": "https://portal.smart-project.info/context/resource/11a79838-0e10-4d65-b78f-a03a94d88c91",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              176.1,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.15
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:ewt_nzprj_new",
         "abstract": "Equilibrium Water Table",
@@ -426,33 +453,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                176.1,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.15
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -476,7 +476,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/df4276ea-6407-4c5e-87e5-53f91e3576ce",
+              "href": "https://portal.smart-project.info/context/resource/11a79838-0e10-4d65-b78f-a03a94d88c91",
               "rel": "via"
             }
           ]
@@ -533,7 +533,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/9441569b-9f10-47de-8fae-cad56e7f33c8",
+      "id": "https://portal.smart-project.info/context/resource/cdc8beee-ba8b-47d8-8267-61bbe97df258",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              176.1,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.15
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:nz_aquifers",
         "abstract": "NZ Aquifers (White 2001)",
@@ -547,33 +574,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                176.1,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.15
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -597,7 +597,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/9441569b-9f10-47de-8fae-cad56e7f33c8",
+              "href": "https://portal.smart-project.info/context/resource/cdc8beee-ba8b-47d8-8267-61bbe97df258",
               "rel": "via"
             }
           ]
@@ -654,7 +654,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/c2da7288-321a-4ae9-bcc0-a56a626090dc",
+      "id": "https://portal.smart-project.info/context/resource/f8934ff7-a07b-4c40-93e2-851fe819b500",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              176.1,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.15
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:DTS_Cable_Position",
         "abstract": "DTS Cable Position(Ngongotaha Valley)",
@@ -668,33 +695,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                176.1,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.15
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -718,7 +718,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/c2da7288-321a-4ae9-bcc0-a56a626090dc",
+              "href": "https://portal.smart-project.info/context/resource/f8934ff7-a07b-4c40-93e2-851fe819b500",
               "rel": "via"
             }
           ]
@@ -775,7 +775,34 @@
     },
     {
       "type": "Feature",
-      "id": "https://portal.smart-project.info/context/resource/259f28d0-4adb-435d-9e4c-7b3d0fbb1e98",
+      "id": "https://portal.smart-project.info/context/resource/a4cb1cc0-cfdb-488a-ba59-af6cd8ed225e",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              176.1,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.15
+            ],
+            [
+              176.2,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.1
+            ],
+            [
+              176.1,
+              -38.15
+            ]
+          ]
+        ]
+      },
       "properties": {
         "title": "horowhenua_ws:rotorua_model",
         "abstract": "Rotorua geological model",
@@ -789,33 +816,6 @@
         ],
         "publisher": "GNS Science",
         "rights": "CC BY SA 4.0 NZ",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                176.1,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.15
-              ],
-              [
-                176.2,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.1
-              ],
-              [
-                176.1,
-                -38.15
-              ]
-            ]
-          ]
-        },
         "links": {
           "alternates": [],
           "previews": [
@@ -839,7 +839,7 @@
           ],
           "via": [
             {
-              "href": "https://portal.smart-project.info/context/resource/259f28d0-4adb-435d-9e4c-7b3d0fbb1e98",
+              "href": "https://portal.smart-project.info/context/resource/a4cb1cc0-cfdb-488a-ba59-af6cd8ed225e",
               "rel": "via"
             }
           ]

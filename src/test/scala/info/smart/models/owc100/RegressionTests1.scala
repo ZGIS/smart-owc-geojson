@@ -72,20 +72,7 @@ class RegressionTests1 extends WordSpec with MustMatchers with GivenWhenThen wit
       val demoResourceText = """{
                                |      "type": "Feature",
                                |      "id": "https://portal.smart-project.info/context/resource/3a1c7634-817e-4442-9cd8-0eeaefdd0f89",
-                               |      "properties": {
-                               |        "title": "horowhenua_ws:Rotorua_subcatchments",
-                               |        "abstract": "Lake Rotorua Sub Catchments (June 2014)",
-                               |        "updated": "2018-02-16T04:14:56.884Z",
-                               |        "authors": [
-                               |          {
-                               |            "name": "Alex Kmoch",
-                               |            "email": "allixender@gmail.com",
-                               |            "uri": "https://portal.smart-project.info"
-                               |          }
-                               |        ],
-                               |        "publisher": "GNS Science",
-                               |        "rights": "CC BY SA 4.0 NZ",
-                               |        "geometry": {
+                               |      "geometry": {
                                |          "type": "Polygon",
                                |          "coordinates": [
                                |            [
@@ -112,6 +99,19 @@ class RegressionTests1 extends WordSpec with MustMatchers with GivenWhenThen wit
                                |            ]
                                |          ]
                                |        },
+                               |      "properties": {
+                               |        "title": "horowhenua_ws:Rotorua_subcatchments",
+                               |        "abstract": "Lake Rotorua Sub Catchments (June 2014)",
+                               |        "updated": "2018-02-16T04:14:56.884Z",
+                               |        "authors": [
+                               |          {
+                               |            "name": "Alex Kmoch",
+                               |            "email": "allixender@gmail.com",
+                               |            "uri": "https://portal.smart-project.info"
+                               |          }
+                               |        ],
+                               |        "publisher": "GNS Science",
+                               |        "rights": "CC BY SA 4.0 NZ",
                                |        "links": {
                                |          "alternates": [],
                                |          "previews": [
@@ -197,6 +197,8 @@ class RegressionTests1 extends WordSpec with MustMatchers with GivenWhenThen wit
       Json.parse(demoResourceText).validate[OwcResource].isSuccess mustBe true
       Then("count elements offerings")
       Json.parse(demoResourceText).validate[OwcResource].asOpt.map(_.offering.length mustBe 2)
+      Then("check geometry")
+      Json.parse(demoResourceText).validate[OwcResource].asOpt.map(_.geospatialExtent mustBe defined)
     }
 
     "have all the features" in {
@@ -214,16 +216,33 @@ class RegressionTests1 extends WordSpec with MustMatchers with GivenWhenThen wit
       Then("jsonNewzealand newzealand must have 13 owcResources")
       // jsonNewzealand.validate[OwcContext].asOpt.map(o => o.resource.foreach(r => println(r.id)))
       jsonNewzealand.validate[OwcContext].asOpt.map(o => o.resource.length mustBe 13)
+      jsonNewzealand.validate[OwcContext].asOpt.map(o => o.resource.count(_.geospatialExtent.isDefined) mustBe 13)
 
       Then("jsonHorowhenua horowhenua must have 27 owcResources")
       jsonHorowhenua.validate[OwcContext].asOpt.map(o => o.resource.length mustBe 27)
+      jsonHorowhenua.validate[OwcContext].asOpt.map(o => o.resource.count(_.geospatialExtent.isDefined) mustBe 27)
 
       Then("jsonNogongotaha ngongotaha must have 7 owcResources")
       jsonNogongotaha.validate[OwcContext].asOpt.map(o => o.resource.length mustBe 7)
+      jsonNogongotaha.validate[OwcContext].asOpt.map(o => o.resource.count(_.geospatialExtent.isDefined) mustBe 7)
 
       Then("jsonSaccasestudies sac-casestudies must have 15 owcResources")
       jsonSaccasestudies.validate[OwcContext].asOpt.map(o => o.resource.length mustBe 15)
+      jsonSaccasestudies.validate[OwcContext].asOpt.map(o => o.resource.count(_.geospatialExtent.isDefined) mustBe 15)
 
+    }
+
+    "OwcContext have geometry" in {
+      Then("jsonAwahou must have geometry as [OwcContext]")
+      jsonAwahou.validate[OwcContext].asOpt.map(o => o.areaOfInterest.isDefined mustBe true)
+      Then("jsonNewzealand must have geometry as [OwcContext]")
+      jsonNewzealand.validate[OwcContext].asOpt.map(o => o.areaOfInterest.isDefined mustBe true)
+      Then("jsonHorowhenua must have geometry as [OwcContext]")
+      jsonHorowhenua.validate[OwcContext].asOpt.map(o => o.areaOfInterest.isDefined mustBe true)
+      Then("jsonNogongotaha must have geometry as [OwcContext]")
+      jsonNogongotaha.validate[OwcContext].asOpt.map(o => o.areaOfInterest.isDefined mustBe true)
+      Then("jsonSaccasestudies must have geometry as [OwcContext]")
+      jsonSaccasestudies.validate[OwcContext].asOpt.map(o => o.areaOfInterest.isDefined mustBe true)
     }
   }
 }
