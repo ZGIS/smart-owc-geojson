@@ -8,13 +8,13 @@ resolvers ++= Seq(
 
 // https://github.com/sbt/sbt-bintray/issues/104
 // addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.4.0")
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
+addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0" exclude("org.slf4j", "slf4j-nop"))
 
 // addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.2")
 
 // addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.6.1")
 
-addSbtPlugin("com.scalapenos" % "sbt-prompt" % "1.0.0")
+// addSbtPlugin("com.scalapenos" % "sbt-prompt" % "1.0.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.2.0")
 

@@ -48,6 +48,7 @@
   },
   "features": [
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/49128e55-976c-411f-a922-41cc355fa12b",
       "properties": {
         "title": "horowhenua_ws:ngmp-locations",
@@ -168,6 +169,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/95d53fdb-e088-4590-8967-2ccf889dd40c",
       "properties": {
         "title": "horowhenua_ws:nz_aquifers",
@@ -288,6 +290,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/9c7a5fdf-2d7d-48a6-a4aa-ea2df36c7329",
       "properties": {
         "title": "horowhenua_ws:nz_regions",
@@ -408,6 +411,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/1f85166b-d23b-4cc6-8e1a-f2942606723f",
       "properties": {
         "title": "horowhenua_ws:nz-dtm-100x100",
@@ -528,6 +532,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/00d2ef05-70f5-487f-a7b3-78d0935541fe",
       "properties": {
         "title": "horowhenua_ws:ewt_nzprj_new",
@@ -648,6 +653,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/b0cd9a98-fe72-4170-b6f2-b8f0084390c0",
       "properties": {
         "title": "PET",
@@ -768,6 +774,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/041be925-66ee-4199-8c46-2be14fa14e1f",
       "properties": {
         "title": "Uncertainty",
@@ -888,6 +895,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/b67ef722-0a5c-4cdb-a7ef-73a4625cd775",
       "properties": {
         "title": "horowhenua_ws:HawkesBay_geophys",
@@ -1008,6 +1016,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/42a5885e-db62-4a3f-80b8-bffe46721497",
       "properties": {
         "title": "horowhenua_ws:canterbury_region",
@@ -1128,6 +1137,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/15aa2ef5-16fb-4512-b858-9d001ba8970c",
       "properties": {
         "title": "horowhenua_ws:Horizons_Tararua",
@@ -1248,6 +1258,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/244385e1-f60f-4b91-bc59-1f9bd20477d3",
       "properties": {
         "title": "horowhenua_ws:OtagoEM",
@@ -1368,6 +1379,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/8b276aab-d95a-48fd-a632-2bba6b308ad5",
       "properties": {
         "title": "horowhenua_ws:waipa_catchment",
@@ -1488,6 +1500,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/72d787ab-7464-4c65-9ad5-7d28020bcdae",
       "properties": {
         "title": "horowhenua_ws:FODTS-Testsites",
@@ -1608,6 +1621,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/b349ae6e-9f9a-4156-addc-ad85b0c05365",
       "properties": {
         "title": "horowhenua_ws:hutt_halon_sites",
@@ -1728,6 +1742,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/c0a88222-f8b6-4005-a00c-02d6d7d17874",
       "properties": {
         "title": "horowhenua_ws:study_area",

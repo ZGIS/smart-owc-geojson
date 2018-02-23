@@ -164,7 +164,7 @@ object OwcContext extends LazyLogging {
       (JsPath \ "properties" \ "rights").readNullable[String](minLength[String](1)) and
       (JsPath \ "properties" \ "date").readNullable[List[OffsetDateTime]](new TemporalExtentFormat) and
       ((JsPath \ "properties" \ "categories").read[List[OwcCategory]] orElse Reads.pure(List[OwcCategory]())) and
-      ((JsPath \ "features").read[List[OwcResource]] orElse Reads.pure(List[OwcResource]()))
+      ((JsPath \ "features").read[List[OwcResource]])
     ) (OwcContext.apply _).filter { validateAuthorsRequirement }
 
   // read and validate first Reads[String] and then second Reads[OwcContext and only keep second result

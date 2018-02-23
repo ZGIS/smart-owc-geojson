@@ -63,14 +63,16 @@ libraryDependencies ++= {
     "uk.gov.hmrc"  %% "emailaddress" % "2.1.0",
 
     "com.typesafe"        % "config"           % "1.3.1",
-    "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
-    "ch.qos.logback" % "logback-classic" % "1.1.7",
+    "com.typesafe.scala-logging" %% "scala-logging" % "3.8.0",
+    "ch.qos.logback" % "logback-classic" % "1.2.3",
 
     "org.scalatest"       %%  "scalatest"      % ScalaTestV  % Test,
     "org.scalacheck"      %% "scalacheck"      % ScalaCheckV  % Test,
     "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % Test
   )
 }
+
+libraryDependencies ~= { _.map(_.exclude("org.slf4j", "slf4j-nop")) }
 
 resolvers += Resolver.bintrayRepo("hmrc", "releases")
 

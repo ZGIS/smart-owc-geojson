@@ -48,6 +48,7 @@
   },
   "features": [
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/3a1c7634-817e-4442-9cd8-0eeaefdd0f89",
       "properties": {
         "title": "horowhenua_ws:Rotorua_subcatchments",
@@ -168,6 +169,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/e33164a0-4dfc-4ecb-8a0a-f27cefa0f029",
       "properties": {
         "title": "horowhenua_ws:QMAP_clips",
@@ -288,6 +290,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/00bfb2f5-0fd5-4f17-985a-39fe63ecaca0",
       "properties": {
         "title": "horowhenua_ws:AwahouCatchment",
@@ -408,6 +411,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/45b474fc-0090-4814-bbfb-b4430496a014",
       "properties": {
         "title": "horowhenua_ws:GW_Awahou_1_10000_9_June_2014",
@@ -528,6 +532,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/cc27a2c3-8c4d-4d22-9057-ba4a3cb3e7b0",
       "properties": {
         "title": "horowhenua_ws:Hamurana_Springs",
@@ -648,6 +653,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/efb605c6-e79b-4c67-9c27-bccf557d2284",
       "properties": {
         "title": "horowhenua_ws:Taniwha_Spring",
@@ -768,6 +774,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/210fa656-2cf1-4dac-b89a-6a501f56aadc",
       "properties": {
         "title": "horowhenua_ws:Bores_Dewhurst1996",
@@ -888,6 +895,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/91b98eff-8f20-4b0e-99d5-90a29eda5d47",
       "properties": {
         "title": "horowhenua_ws:ConsentedTakes",
@@ -1008,6 +1016,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/a51bc117-013e-43e5-939e-99538287bf8f",
       "properties": {
         "title": "horowhenua_ws:BOPRC_SW_sites",
@@ -1128,6 +1137,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/7a1099d3-5b49-4532-b3cb-b14963065267",
       "properties": {
         "title": "horowhenua_ws:BOPRC_SWflow",
@@ -1248,6 +1258,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/ccf1d075-a4ca-450b-8efc-65dceca81fb0",
       "properties": {
         "title": "horowhenua_ws:MRT",
@@ -1368,6 +1379,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/1c8e5be4-f287-42df-8c8d-7de08bba19a5",
       "properties": {
         "title": "layer-50765",
@@ -1488,6 +1500,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/34a70e9b-411c-4265-bdf1-e56e23e39c4e",
       "properties": {
         "title": "horowhenua_ws:nz-dtm-100x100",
@@ -1608,6 +1621,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/9854a964-f558-405f-a77d-de0dd305a933",
       "properties": {
         "title": "gns:NZL_GNS_1M_Lithostratigraphy",
@@ -1728,6 +1742,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/4c94d6ba-d36f-4035-a810-15e644c96484",
       "properties": {
         "title": "horowhenua_ws:nz_aquifers",
@@ -1848,6 +1863,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/54953c51-06a9-4a8e-8135-3283e8ecdb4f",
       "properties": {
         "title": "horowhenua_ws:rotorua_model",
@@ -1968,6 +1984,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/dd8d5d7b-68b7-42a5-a580-d2ac20fea7d0",
       "properties": {
         "title": "horowhenua_ws:ngmp-locations",

@@ -32,9 +32,9 @@
 
   <logger name="play" level="INFO" />
   <logger name="application" level="INFO" />
-  <logger name="services" level="INFO" />
-  <logger name="utils" level="INFO" />
-  <logger name="models" level="INFO" />
+  <logger name="services" level="DEBUG" />
+  <logger name="utils" level="DEBUG" />
+  <logger name="models" level="DEBUG" />
 
   <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
   <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />

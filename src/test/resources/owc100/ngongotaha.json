@@ -48,6 +48,7 @@
   },
   "features": [
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/396560d4-8218-4a0a-abb3-f4f4f557a252",
       "properties": {
         "title": "layer-50765",
@@ -168,6 +169,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/b21b491e-dce9-45e8-819c-0cf442cd557b",
       "properties": {
         "title": "layer-50767",
@@ -288,6 +290,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/23057288-06ad-4d78-ae9e-06eaf944ee5f",
       "properties": {
         "title": "horowhenua_ws:nz-dtm-100x100",
@@ -408,6 +411,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/df4276ea-6407-4c5e-87e5-53f91e3576ce",
       "properties": {
         "title": "horowhenua_ws:ewt_nzprj_new",
@@ -528,6 +532,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/9441569b-9f10-47de-8fae-cad56e7f33c8",
       "properties": {
         "title": "horowhenua_ws:nz_aquifers",
@@ -648,6 +653,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/c2da7288-321a-4ae9-bcc0-a56a626090dc",
       "properties": {
         "title": "horowhenua_ws:DTS_Cable_Position",
@@ -768,6 +774,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/259f28d0-4adb-435d-9e4c-7b3d0fbb1e98",
       "properties": {
         "title": "horowhenua_ws:rotorua_model",

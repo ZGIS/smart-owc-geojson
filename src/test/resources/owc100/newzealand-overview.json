@@ -48,6 +48,7 @@
   },
   "features": [
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/af398d03-5fc3-406e-86d5-80f2e34bab52",
       "properties": {
         "title": "horowhenua_ws:matata_model",
@@ -168,6 +169,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/93268d59-0a04-4407-ae7d-3ddee9945030",
       "properties": {
         "title": "horowhenua_ws:tauranga_model",
@@ -288,6 +290,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/1558e7ce-d5a3-46d0-a837-b335d182fbd4",
       "properties": {
         "title": "horowhenua_ws:rotorua_model",
@@ -408,6 +411,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/42a38afb-ab4b-49aa-bbcf-443da049a3ea",
       "properties": {
         "title": "horowhenua_ws:rangitaiki_model",
@@ -528,6 +532,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/dd3765a5-22a3-4584-867a-7224152cdadd",
       "properties": {
         "title": "horowhenua_ws:study_area",
@@ -648,6 +653,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/b6d4c30d-0891-4992-9df9-dc7eebcb1126",
       "properties": {
         "title": "horowhenua_ws:ngmp-locations",
@@ -768,6 +774,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/3f52cdc6-cc4a-40a8-879f-cbe30d7f15f1",
       "properties": {
         "title": "layer-50765",
@@ -888,6 +895,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/7830c40c-2fd5-406c-b0fe-8cb625fc5d07",
       "properties": {
         "title": "layer-50767",
@@ -1008,6 +1016,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/3ea5d321-5fab-4537-b58f-dada12a24fe5",
       "properties": {
         "title": "gns:NZL_GNS_1M_Lithostratigraphy",
@@ -1128,6 +1137,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/587b71f6-9733-401a-a304-e4fbf7258048",
       "properties": {
         "title": "horowhenua_ws:nz-dtm-100x100",
@@ -1248,6 +1258,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/1e08567d-3e30-450b-a351-962237527c0e",
       "properties": {
         "title": "horowhenua_ws:nz_aquifers",
@@ -1368,6 +1379,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/2d3096d7-6c67-422d-9d42-74f317e41cd7",
       "properties": {
         "title": "horowhenua_ws:nz_regions",
@@ -1488,6 +1500,7 @@
       }
     },
     {
+      "type": "Feature",
       "id": "https://portal.smart-project.info/context/resource/a8304ef5-bce0-48df-9169-649849e77dd3",
       "properties": {
         "title": "horowhenua_ws:DTS_Cable_Position",
