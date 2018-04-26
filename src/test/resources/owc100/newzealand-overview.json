@@ -126,13 +126,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:matata_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:matata_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -247,13 +247,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:tauranga_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:tauranga_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -368,13 +368,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:rotorua_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:rotorua_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -489,13 +489,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:rangitaiki_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:rangitaiki_model&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -610,13 +610,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:study_area&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:study_area&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -731,13 +731,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:ngmp-locations&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:ngmp-locations&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -1215,13 +1215,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz-dtm-100x100&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz-dtm-100x100&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -1336,13 +1336,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz_aquifers&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz_aquifers&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -1457,13 +1457,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz_regions&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz_regions&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
@@ -1578,13 +1578,13 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "https://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:DTS_Cable_Position&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "https://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-48,180,-33&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:DTS_Cable_Position&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],

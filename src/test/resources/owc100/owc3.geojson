@@ -1,14 +1,34 @@
 {
   "type": "FeatureCollection",
   "id": "http://portal.smart-project.info/context/smart-sac/",
-  "bbox": [164, -50,  180, -31],
+  "bbox": [
+    164,
+    -50,
+    180,
+    -31
+  ],
   "properties": {
+    "links": {
+      "profiles": [
+        {
+          "href": "http://www.opengis.net/spec/owc-geojson/1.0/req/core",
+          "rel": "profile"
+        }
+      ],
+      "via": [
+        {
+          "href": "http://portal.smart-project.info/context/smart-sac.owc.json",
+          "type": "application/json",
+          "lang": "en",
+          "title": "SMARt Project Case Studies",
+          "rel": "via"
+        }
+      ]
+    },
     "lang": "en",
     "title": "SMART Case Studies",
     "subtitle": "SMART Case Studies Informative Layers, Sel. Geophysics, GW-SW Interaction, FODTS, Novel Tracers, DataVis and SOS",
     "updated": "2012-02-21T11:58:23Z",
-    "date": "2011-11-04T00:01:23Z/2017-12-05T17:28:56Z",
-    "rights": "Copyright (c) 2012. Some rights reserved. This feed licensed under a Creative Commons Attribution 3.0 License.",
     "authors": [
       {
         "name": "Alex Kmoch",
@@ -20,106 +40,61 @@
       "pixelWidth": 800,
       "pixelHeight": 600
     },
+    "rights": "Copyright (c) 2012. Some rights reserved. This feed licensed under a Creative Commons Attribution 3.0 License.",
+    "date": "2011-11-04T00:01:23Z/2017-12-05T17:28:56Z",
     "categories": [
       {
-        "scheme": "http://gw-hub.info/vocab/view-groups",
         "term": "sac_add",
+        "scheme": "http://gw-hub.info/vocab/view-groups",
         "label": "Informative Layers"
       },
       {
-        "scheme": "http://gw-hub.info/vocab/view-groups",
         "term": "sac_geophys",
+        "scheme": "http://gw-hub.info/vocab/view-groups",
         "label": "Sel. Geophysics"
       },
       {
-        "scheme": "http://gw-hub.info/vocab/view-groups",
         "term": "sac_dts",
+        "scheme": "http://gw-hub.info/vocab/view-groups",
         "label": "GW-SW Interaction, FODTS"
       },
       {
-        "scheme": "http://gw-hub.info/vocab/view-groups",
         "term": "sac_tracers",
+        "scheme": "http://gw-hub.info/vocab/view-groups",
         "label": "Novel Tracers"
       },
       {
-        "scheme": "http://gw-hub.info/vocab/view-groups",
         "term": "sac_datavis",
+        "scheme": "http://gw-hub.info/vocab/view-groups",
         "label": "DataVis and SOS"
       }
-    ],
-    "links": {
-      "profiles": [
-        {
-          "href": "http://www.opengis.net/spec/owc-geojson/1.0/req/core"
-        }
-      ],
-      "via" : [{
-        "rel": "via",
-        "type": "application/json",
-        "href": "http://portal.smart-project.info/context/smart-sac.owc.json",
-        "title": "SMARt Project Case Studies",
-        "lang" : "en"
-      }]
-    }
+    ]
   },
   "features": [
     {
       "type": "Feature",
       "id": "http://portal.smart-project.info/context/smart-sac_add-nz-dtm-100x100/",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              164,
-              -50
-            ],
-            [
-              180,
-              -50
-            ],
-            [
-              180,
-              -31
-            ],
-            [
-              164,
-              -31
-            ],
-            [
-              164,
-              -50
-            ]
-          ]
-        ]
-      },
       "properties": {
         "title": "NZ DTM 100x100",
         "abstract": "New Zealand Digital Terrain Model 100m by 100m resolution",
         "updated": "2016-02-21T11:58:23Z",
-        "date": "2011-11-04T00:01:23Z/2017-12-05T17:28:56Z",
+        "authors": [],
         "publisher": "GNS Science and Salzburg Uni ZGIS Dept",
-        "categories": [
-          {
-            "scheme": "view-groups",
-            "term": "sac_add",
-            "label": "Informative Layers"
-          }
-        ],
+        "date": "2011-11-04T00:01:23Z/2017-12-05T17:28:56Z",
         "links": {
-          "alternates" : [],
-          "previews" : [{
-            "rel": "icon",
-            "type": "image/png",
-            "href": "http://portal.smart-project.info/fs/images/nz_m.png",
-            "title": "NZ Flag",
-            "length": 46200
-          }],
-          "data" : [],
-          "via" : []
+          "alternates": [],
+          "previews": [
+            {
+              "href": "http://portal.smart-project.info/fs/images/nz_m.png",
+              "type": "image/png",
+              "title": "NZ Flag",
+              "length": 46200,
+              "rel": "icon"
+            }
+          ],
+          "data": [],
+          "via": []
         },
-        "active": true,
-        "folder": "/view-groups/sac_add",
         "offerings": [
           {
             "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/wms",
@@ -128,24 +103,25 @@
                 "code": "GetCapabilities",
                 "method": "GET",
                 "type": "application/xml",
-                "href": "http://portal.smart-project.info/geoserver/wms?VERSION=1.3.0&REQUEST=GetCapabilities"
+                "href": "http://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
               },
               {
                 "code": "GetMap",
                 "method": "GET",
                 "type": "image/png",
-                "href": "http://portal.smart-project.info/geoserver/wms?VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-50,180,-31&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz-dtm-100x100&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
+                "href": "http://portal.smart-project.info/geoserver/wms?SERVICE=WMS&VERSION=1.3&REQUEST=GetMap&SRS=EPSG:4326&BBOX=164,-50,180,-31&WIDTH=800&HEIGHT=600&LAYERS=horowhenua_ws:nz-dtm-100x100&FORMAT=image/png&TRANSPARENT=TRUE&EXCEPTIONS=application/vnd.ogc.se_xml"
               }
             ],
             "contents": [],
-            "styles": [{
-              "name": "Simple Line",
-              "title": "SLD Cook Book: Simple Line",
-              "abstract": "SLD Cook Book: Simple Line extracted from http://docs.geoserver.org/latest/en/user/_downloads/line_simpleline.sld",
-              "default": true,
-              "legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png"
-            }],
-            "uuid": "012c7aeb-a822-49d7-8a66-e77fa7137240"
+            "styles": [
+              {
+                "name": "Simple Line",
+                "title": "SLD Cook Book: Simple Line",
+                "abstract": "SLD Cook Book: Simple Line extracted from http://docs.geoserver.org/latest/en/user/_downloads/line_simpleline.sld",
+                "default": true,
+                "legendURL": "http://docs.geoserver.org/latest/en/user/_images/line_simpleline1.png"
+              }
+            ]
           },
           {
             "code": "http://www.opengis.net/spec/owc-geojson/1.0/req/csw",
@@ -167,8 +143,45 @@
                 }
               }
             ],
-            "contents": []
+            "contents": [],
+            "styles": []
           }
+        ],
+        "active": true,
+        "categories": [
+          {
+            "term": "sac_add",
+            "scheme": "view-groups",
+            "label": "Informative Layers"
+          }
+        ],
+        "folder": "/view-groups/sac_add"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              164,
+              -50
+            ],
+            [
+              164,
+              -31
+            ],
+            [
+              180,
+              -31
+            ],
+            [
+              180,
+              -50
+            ],
+            [
+              164,
+              -50
+            ]
+          ]
         ]
       }
     }
