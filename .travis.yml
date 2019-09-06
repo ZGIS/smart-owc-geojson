@@ -9,8 +9,8 @@ before_script:
 - sudo chmod +x /usr/local/bin/sbt
 
 script:
-- travis_wait sbt compile coverage test scapegoat dependencyCheckAggregate coverageReport dependencyUpdatesReport copyCoverage
-- sbt dependencyList dependencyLicenseInfo dependencyStats makeSite
+- travis_wait 30 sbt compile coverage test scapegoat coverageReport dependencyUpdatesReport copyCoverage
+- sbt dependencyCheckAggregate dependencyList dependencyLicenseInfo dependencyStats makeSite
 # - sbt ghpagesPushSite
 
 notifications:
